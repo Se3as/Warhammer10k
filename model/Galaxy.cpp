@@ -1,13 +1,21 @@
 #include "Galaxy.h"
 
-Galaxy::Galaxy() {}
+Galaxy::Galaxy(string name, string entryPlanet, string exitPlanet):
+    name(name), entryPlanet(entryPlanet), exitPlanet(exitPlanet) {}
 
 void Galaxy::chartist() {
 
-    planetarium = vector<vector<Planet*>> (latitude, vector<Planet*>(longitude, nullptr)) ;
-
+    planetarium = vector<vector<Planet*>> (latitude, vector<Planet*>
+        (longitude, nullptr)) ;
 
 }
+
+void Galaxy:: addPlanet(Planet* planet, int row, int col){
+    if (row < this->latitude && col < this->longitude) {
+        planetarium[row][col] = planet;
+    }
+}
+
 
 void Galaxy::printer() {
     

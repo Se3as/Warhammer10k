@@ -1,14 +1,16 @@
-#include "Galaxy.h"
+#include "Model.h"
 
 #include <iostream>
 
 using namespace std;
 
 int main() {
-    Galaxy ultramar;
 
-    ultramar.chartist();
-    ultramar.printer();
+    Model model;
+
+    string test = "test.csv";
+    model.loadGalaxy(test);
+    model.printGalaxy();
 
 }
 

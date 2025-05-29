@@ -1,6 +1,6 @@
 #include "Planet.h"
 
-Planet::Planet() : N(nullptr), S(nullptr), E(nullptr), W(nullptr) {}
+Planet::Planet(string name) : name(name), N(nullptr), S(nullptr), E(nullptr), W(nullptr) {}
 
 void Planet::setPosX(int x){
     posX = x;

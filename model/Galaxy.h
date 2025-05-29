@@ -11,6 +11,12 @@ using namespace std;
 class Galaxy {
 
 private:
+
+    string name;
+
+    string entryPlanet;
+    string exitPlanet;
+
     vector<vector<Planet*>> planetarium;
 
     static constexpr int latitude = 10;
@@ -18,10 +24,12 @@ private:
 
 
 public:
-    Galaxy();
+    Galaxy(string name, string entryPlanet, string exitPlanet);
     ~Galaxy();
 
     void chartist();    //cartografo
+
+    void addPlanet(Planet* planet, int row, int col);
 
     void link_probability();
 

@@ -1,10 +1,14 @@
 #pragma once
 
+#include <iostream>
+
 using namespace std;
 
 class Planet {
 
 private:
+
+    string name;
 
     int posX;
     int posY;
@@ -15,7 +19,7 @@ private:
     Planet* W;
 
 public:
-    Planet();
+    Planet(string name);
     ~Planet();
 
     void setPosX(int x);
