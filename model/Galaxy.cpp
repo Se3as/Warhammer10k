@@ -1,10 +1,29 @@
-#include "galaxy.h"
+#include "Galaxy.h"
 
-galaxy::galaxy() {}
+Galaxy::Galaxy() {}
 
-void galaxy::chartist() {
+void Galaxy::chartist() {
 
-    constelation = vector<vector<int*>> (latitude, vector<int*>(longitude, nullptr)) ;
+    planetarium = vector<vector<Planet*>> (latitude, vector<Planet*>(longitude, nullptr)) ;
 
+
+}
+
+void Galaxy::printer() {
+    
+    for (int i = 0; i < planetarium.size(); ++i) {
+        for (int j = 0; j < planetarium[i].size(); ++j) {
+            if (planetarium[i][j] != nullptr) {
+                std::cout << "1 ";
+            } else {
+                std::cout << "0 ";
+            }
+        }
+        std::cout << "\n";
+    }
+    
+}
+
+Galaxy::~Galaxy() {
 
 }

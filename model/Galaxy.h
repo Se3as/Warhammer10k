@@ -3,27 +3,27 @@
 #include <iostream>
 #include <vector>
 
+#include "Planet.h"
 
 using namespace std;
 
 
-class galaxy {
+class Galaxy {
 
 private:
-vector<vector<int*>> constelation;
+    vector<vector<Planet*>> planetarium;
 
-static constexpr int latitude = 10;
-static constexpr int longitude = 10;
+    static constexpr int latitude = 10;
+    static constexpr int longitude = 10;
 
 
 public:
-    galaxy();
-    ~galaxy();
+    Galaxy();
+    ~Galaxy();
 
-
-    void chartist();
+    void chartist();    //cartografo
 
     void link_probability();
 
-
+    void printer();
 };
