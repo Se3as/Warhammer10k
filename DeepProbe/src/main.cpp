@@ -1,52 +1,52 @@
 #include <iostream>
-using namespace std;
-#include <vector>
 
-// Recursive function for DFS traversal
-void dfsRec(vector<vector<int>> &adj, vector<bool> &visited, int s, vector<int> &res)
-{
+#include "Graph.h"
+#include "DFS.h"
 
-    visited[s] = true;
+#define NUMBERS 5
 
-    res.push_back(s);
+int main() {
+  // Crear el grafo
+  Graph graph(NUMBERS);
 
-    // Recursively visit all adjacent vertices
-    // that are not visited yet
-    for (int i : adj[s])
-        if (visited[i] == false)
-            dfsRec(adj, visited, i, res);
-}
+  // 0 - 1 - 2
+  // |     /
+  // 3 - 4 
+  graph.addEdge(0, 1);
+  graph.addEdge(1, 2);
+  graph.addEdge(0, 3);
+  graph.addEdge(3, 4);
+  graph.addEdge(2, 4);
 
-// Main DFS function that initializes the visited array
-// and call DFSRec
-vector<int> DFS(vector<vector<int>> &adj)
-{
-    vector<bool> visited(adj.size(), false);
-    vector<int> res;
-    dfsRec(adj, visited, 0, res);
-    return res;
-}
 
-// To add an edge in an undirected graph
-void addEdge(vector<vector<int>> &adj, int s, int t)
-{
-    adj[s].push_back(t);
-    adj[t].push_back(s);
-}
+  std::cout << "Estructura del grafo:\n";
+  graph.printGraph();
+  std::cout << std::endl;
 
-int main()
-{
-    int V = 5;
-    vector<vector<int>> adj(V);
+  DFS visitador(graph);
+  int lote = 1;
 
-    // Add edges
-    vector<vector<int>> edges = {{1, 2}, {1, 0}, {2, 0}, {2, 3}, {2, 4}};
-    for (auto &e : edges)
-        addEdge(adj, e[0], e[1]);
+  // Primera ejecución (nodo inicial + 3 nodos)
+  std::cout << "Lote " << lote++ << ":\n";
+  auto visita = visitador.executeDFS(0, 3);
+  for (int nodo : visita) {
+    std::cout << "Visitado: " << nodo << std::endl;
+  }
 
-    // Starting vertex for DFS
-    vector<int> res = DFS(adj); // Perform DFS starting from the source verte 0;
+  // Ejecuciones posteriores hasta visitar todos los nodos
+  while (!visitador.allVisited()) {
+    std::cout << "\nLote " << lote++ << ":\n";
+    visita = visitador.executeDFS(0, 3);
+    for (int nodo : visita) {
+      std::cout << "Visitado: " << nodo << std::endl;
+    }
+  }
 
-    for (int i = 0; i < V; i++)
-        cout << res[i] << " ";
+  std::cout << "\nTodos los nodos visitados:\n";
+  for (int nodo : visitador.getVisited()) {
+    std::cout << nodo << " ";
+  }
+  std::cout << std::endl;
+
+  return 0;
 }
