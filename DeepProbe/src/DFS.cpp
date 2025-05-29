@@ -1,7 +1,9 @@
 #include "DFS.h"
 
-DFS::DFS(const Graph& g) : graph(g) {}
+/// Constructor for the DFS class.
+DFS::DFS(const Graph& graph) : graph(graph) {}
 
+/// Discovers neighbors of a given node and adds them to the pending set.
 void DFS::discoverNeighbors(int node) {
   for (int neighbor : this->graph.getAdjacents(node)) {
     if (this->visitedGlobal.find(neighbor) == this->visitedGlobal.end()) {
@@ -10,6 +12,7 @@ void DFS::discoverNeighbors(int node) {
   }
 }
 
+/// Executes the DFS algorithm starting from a given node.
 std::vector<int> DFS::executeDFS(int startNode, int limit) {
   std::vector<int> currentBatch;
 
@@ -39,16 +42,19 @@ std::vector<int> DFS::executeDFS(int startNode, int limit) {
   return currentBatch;
 }
 
+/// Checks if all nodes in the graph have been visited.
 bool DFS::allVisited() const {
   int visitedCount = this->visitedGlobal.size();
   return visitedCount == this->graph.getNumberOfVertices();
 }
 
+/// Resets the DFS state, clearing visited and pending nodes.
 void DFS::reset() {
   this->visitedGlobal.clear();
   this->pending.clear();
 }
 
+/// Gets the set of globally visited nodes.
 const std::unordered_set<int>& DFS::getVisited() const {
   return this->visitedGlobal;
 }
