@@ -2,18 +2,23 @@
 
 #include <iostream>
 #include <galaxy.h>
-
+#include <player.h>
+#include <view.h>
 using namespace std;
 
-class waaagh {
+class Controller {
 
 private:
-    //galaxy conquest;
-    int turn;
-
-
+    View View;
+    Galaxy galaxy;
+    Player player;
 public:
-    waaagh();
+    void load_galaxy();
+    void explore(string explorador);
+    void attack(string nave);
+    void buy(string product);
+    void updateEther();
+    void travel(string planet);
     void run();
 
 };
