@@ -1,7 +1,7 @@
 #include "Galaxy.h"
 
 Galaxy::Galaxy(string name, string entryPlanet, string exitPlanet):
-    name(name), entryPlanet(entryPlanet), exitPlanet(exitPlanet) {}
+    name(name), entryPlanet(entryPlanet), exitPlanet(exitPlanet) , graph(0){}
 
 void Galaxy::chartist() {
 
@@ -30,10 +30,40 @@ void Galaxy::chartist() {
 
 }
 
-void Galaxy:: addPlanet(Planet* planet, int row, int col){
-    if (row < this->latitude && col < this->longitude) {
-        planetarium[row][col] = planet;
+void Galaxy:: addPlanet(Planet* planet){
+    int posX = planet->getPosX();
+    int posY = planet->getPosY();
+    if (posX < this->latitude && posY < this->longitude) {
+        planetarium[posX][posY] = planet;
     }
+    planets.push_back(planet);
+
+}
+
+void Galaxy:: makeConnections(){
+    this->graph = Graph(planets.size());
+    for (int i = 0; i < planets.size(); i++){
+        for (int j = i + 1; j < planets.size(); j++){
+            int pOrigen = planets[i]->getSectorID();
+            int pDestino = planets[j]->getSectorID();
+            // Solo para representar que existe la connexion, no es la distancia real
+            int distancia = 1;
+
+            this->graph.addCon(pOrigen, pDestino, distancia);
+        }
+    }
+    for (int i = 0; i < planets.size(); i++){
+        for (int j = i + 1; j < planets.size(); j++){
+            int pOrigen = planets[i]->getSectorID();
+            int pDestino = planets[j]->getSectorID();
+
+            int num = rand() % 3 + 1;
+            if(num == 3){
+                // Falta implementar validacion para ver si es nodo articulacion
+                this->graph.deleteCon(pOrigen, pDestino);
+            }
+        }
+    }   
 }
 
 void Galaxy::printer() {
@@ -51,6 +81,9 @@ void Galaxy::printer() {
         cout << "\n";
     }
     cout << "\n";
+
+    this->graph.printList();
+    this->graph.printMat();
     
     
     //print for warps for each planet

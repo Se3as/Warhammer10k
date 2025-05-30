@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Planet.h"
-
+#include "Graph.h"
 using namespace std;
 
 
@@ -17,8 +17,10 @@ private:
     string entryPlanet;
     string exitPlanet;
 
-    vector<vector<Planet*>> planetarium;
+    Graph graph;
 
+    vector<vector<Planet*>> planetarium;
+    vector<Planet*> planets;
     static constexpr int latitude = 10;
     static constexpr int longitude = 10;
 
@@ -29,7 +31,8 @@ public:
 
     void chartist();    //cartografo
 
-    void addPlanet(Planet* planet, int row, int col);
+    void addPlanet(Planet* planet);
+    void makeConnections();
 
     void link_probability();
 

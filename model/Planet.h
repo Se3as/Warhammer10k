@@ -16,25 +16,15 @@ private:
     int posX;
     int posY;
 
-    vector<int> warps;
-
-    Planet* N;
-    Planet* S;
-    Planet* E;
-    Planet* W;
 
 public:
-    Planet(string name);
+    Planet(string name, int x, int y, int id);
     ~Planet();
 
     void setSectorID(int id);
 
     int getSectorID() const;
-
-    void setWarp(int w);
-
-    int getWarps(int id);
-
+    
     void setPosX(int x);
     void setPosY(int y);
 

@@ -1,6 +1,6 @@
 #include "Planet.h"
 
-Planet::Planet(string name) : name(name), N(nullptr), S(nullptr), E(nullptr), W(nullptr) {}
+Planet::Planet(string name, int x, int y, int id) : name(name), posX(x), posY(y), sectorID(id){}
 
 
 
@@ -10,14 +10,6 @@ void Planet::setSectorID(int id){
 
 int Planet::getSectorID() const {
     return sectorID;
-}
-
-void Planet::setWarp(int w){
-    warps.push_back(w);
-}
-
-int Planet::getWarps(int id){
-    return warps[id];
 }
 
 
