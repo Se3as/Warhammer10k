@@ -1,9 +1,25 @@
 #!/bin/bash
 
+mkdir -p build
+
+g++ -std=c++17 \
+    -Isrc -Imodel -Icommon \
+    src/main.cpp \
+    model/Galaxy.cpp model/Planet.cpp model/Model.cpp \
+    common/Reader.cpp \
+    -o build/Warhammer10k
+
+
+
+
+
+#!/bin/bash
+
 OUTPUT="warhammer10k"
 SRC_DIRS=(
+    "."
     "common"
-    "controller"
+
     "model"
     "src"
     "view"
@@ -37,11 +53,11 @@ DEBUG_FLAGS="-g"  # Opciones de depuración
 INCLUDE_DIRS="-I. -Icommon -Icontroller -Imodel -Isrc -Iview"  # Todos los directorios de includes
 
 echo "🔨 Compilando WARHAMMER10K..."
-#echo "📝 Archivos fuente encontrados:"
-#printf '• %s\n' "${SOURCES[@]}"
+echo "📝 Archivos fuente encontrados:"
+printf '• %s\n' "${SOURCES[@]}"
 
 echo ""
-echo "🚀 Corriendo..."
+echo "🚀 Compilando..."
 
 # Comando de compilación
 g++ "${SOURCES[@]}" $CXX_FLAGS $DEBUG_FLAGS $INCLUDE_DIRS -o $OUTPUT

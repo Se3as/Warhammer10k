@@ -12,6 +12,7 @@ class Model {
 private: 
     vector<Galaxy> galaxies;
     int actualGalaxy;
+    
 public:
     Model();
     ~Model();

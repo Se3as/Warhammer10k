@@ -2,6 +2,25 @@
 
 Planet::Planet(string name) : name(name), N(nullptr), S(nullptr), E(nullptr), W(nullptr) {}
 
+
+
+void Planet::setSectorID(int id){
+    sectorID = id;
+}
+
+int Planet::getSectorID() const {
+    return sectorID;
+}
+
+void Planet::setWarp(int w){
+    warps.push_back(w);
+}
+
+int Planet::getWarps(int id){
+    return warps[id];
+}
+
+
 void Planet::setPosX(int x){
     posX = x;
 }
@@ -16,22 +35,6 @@ int Planet::getPosX() const {
 
 int Planet::getPosY() const {
     return posY;
-}
-
-void Planet::setNorth(Planet* n) {
-    N = n;
-}
-
-void Planet::setSouth(Planet* s) {
-    S = s;
-}
-
-void Planet::setEast(Planet* e) {
-    E = e;
-}
-
-void Planet::setWest(Planet* w) {
-    W = w;
 }
 
 Planet::~Planet() {
