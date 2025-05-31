@@ -21,6 +21,7 @@ private:
 
     vector<vector<Planet*>> planetarium;
     vector<Planet*> planets;
+    
     static constexpr int latitude = 10;
     static constexpr int longitude = 10;
 

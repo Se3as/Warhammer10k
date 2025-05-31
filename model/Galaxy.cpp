@@ -75,7 +75,7 @@ void Galaxy::printer() {
                 cout << "1 ";
                 //cout << planetarium[i][j]->getSectorID() << " ";
             } else {
-                cout << "0 ";
+                cout << "  ";
             }
         }
         cout << "\n";
