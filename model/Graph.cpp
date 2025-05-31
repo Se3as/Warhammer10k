@@ -20,14 +20,14 @@ void Graph::deleteCon(int iPO, int iPD) {
     matAd[iPO][iPD] = INVALID;
     matAd[iPD][iPO] = INVALID;
 
-    for (int i = 0; i < listAd[iPO].size(); ++i) {
+    for (size_t i = 0; i < listAd[iPO].size(); ++i) {
         if (listAd[iPO][i].first == iPD) {
             listAd[iPO].erase(listAd[iPO].begin() + i);
             break;
         }
     }
 
-    for (int i = 0; i < listAd[iPD].size(); ++i) {
+    for (size_t i = 0; i < listAd[iPD].size(); ++i) {
         if (listAd[iPD][i].first == iPO) {
             listAd[iPD].erase(listAd[iPD].begin() + i);
             break;

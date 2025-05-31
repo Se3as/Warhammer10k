@@ -42,8 +42,8 @@ void Galaxy:: addPlanet(Planet* planet){
 
 void Galaxy:: makeConnections(){
     this->graph = Graph(planets.size());
-    for (int i = 0; i < planets.size(); i++){
-        for (int j = i + 1; j < planets.size(); j++){
+    for (size_t i = 0; i < planets.size(); i++){
+        for (size_t j = i + 1; j < planets.size(); j++){
             int pOrigen = planets[i]->getSectorID();
             int pDestino = planets[j]->getSectorID();
             // Solo para representar que existe la connexion, no es la distancia real
@@ -52,8 +52,8 @@ void Galaxy:: makeConnections(){
             this->graph.addCon(pOrigen, pDestino, distancia);
         }
     }
-    for (int i = 0; i < planets.size(); i++){
-        for (int j = i + 1; j < planets.size(); j++){
+    for (size_t i = 0; i < planets.size(); i++){
+        for (size_t j = i + 1; j < planets.size(); j++){
             int pOrigen = planets[i]->getSectorID();
             int pDestino = planets[j]->getSectorID();
 
