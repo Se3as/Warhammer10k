@@ -18,7 +18,13 @@ command -v g++ >/dev/null 2>&1 || {
     exit 1
 }
 
-# Encontrar todos los archivos .cpp en los directorios fuente
+# Verificar que FLTK esté instalado
+command -v fltk-config >/dev/null 2>&1 || { 
+    echo "❌ FLTK no está instalado. Ejecutá: sudo apt install libfltk1.3-dev"
+    exit 1
+}
+
+# Reunir todos los archivos fuente .cpp de las carpetas
 SOURCES=()
 for dir in "${SRC_DIRS[@]}"; do
     while IFS= read -r -d $'\0' file; do
@@ -31,28 +37,27 @@ if [ ${#SOURCES[@]} -eq 0 ]; then
     exit 1
 fi
 
-# Flags de compilación
-CXX_FLAGS="-std=c++11 -Wall -Wextra"
-DEBUG_FLAGS="-g"  # Opciones de depuración
-INCLUDE_DIRS="-I. -Icommon -Icontroller -Imodel -Isrc -Iview"  # Todos los directorios de includes
+# Flags
+CXX_FLAGS="-std=c++17 -Wall -Wextra"
+DEBUG_FLAGS="-g -Og"
+INCLUDE_DIRS="-I. -Icommon -Icontroller -Imodel -Isrc -Iview"
 
-echo "🔨 Compilando WARHAMMER10K..."
-#echo "📝 Archivos fuente encontrados:"
-#printf '• %s\n' "${SOURCES[@]}"
+# FLTK flags
+FLTK_FLAGS=$(fltk-config --cxxflags)
+FLTK_LIBS=$(fltk-config --ldflags)
+EXTRA_LIBS="-lfltk_images"
 
-echo ""
-echo "🚀 Corriendo..."
+echo "🔨 Compilando WARHAMMER10K con backend y frontend (FLTK)..."
 
 # Comando de compilación
-g++ "${SOURCES[@]}" $CXX_FLAGS $DEBUG_FLAGS $INCLUDE_DIRS -o $OUTPUT
+g++ "${SOURCES[@]}" $CXX_FLAGS $DEBUG_FLAGS $INCLUDE_DIRS $FLTK_FLAGS $FLTK_LIBS $EXTRA_LIBS -o $OUTPUT
 
 if [ $? -eq 0 ]; then
     echo ""
     echo "✅ Compilado correctamente: ./$OUTPUT"
     
-    # Ejecutar el programa automáticamente
     echo ""
-    ./$OUTPUT
+    ./warhammer10k
 else
     echo ""
     echo "❌ Error de compilación"
