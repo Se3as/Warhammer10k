@@ -3,10 +3,11 @@
 #include <iostream>
 #include <vector>
 #include "Math.h"
+#include <limits>
 
 using namespace std;
 
-#define INVALID -1
+static constexpr size_t INVALID = numeric_limits<size_t>::max();
 
 class Graph {
 private:
