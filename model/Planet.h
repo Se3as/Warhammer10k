@@ -11,11 +11,9 @@ private:
 
     string name;
 
-    int sectorID;
-
     int posX;
     int posY;
-
+    int sectorID;
 
 public:
     Planet(string name, int x, int y, int id);

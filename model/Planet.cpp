@@ -12,7 +12,6 @@ int Planet::getSectorID() const {
     return sectorID;
 }
 
-
 void Planet::setPosX(int x){
     posX = x;
 }
