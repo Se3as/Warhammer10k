@@ -41,10 +41,12 @@ void Graph::deleteCon(size_t origin, size_t destination) {
         }
     }
 }
+
 bool Graph:: hasEdge(size_t origin, size_t destination) {
       if (matAd[origin][destination]!= INVALID){
         return true;
       }
+      return false;
 }
 
 void Graph::printMat() {
@@ -71,4 +73,3 @@ void Graph::printList() {
         cout << endl;
     }
 }
-
