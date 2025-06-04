@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(){}
-
+Player::Player(size_t numPlanets): pVisited(numPlanets,false){
+    pVisited[0] = true;
+}
 
 
 void Player::setPlayerID(string id){
@@ -15,4 +16,12 @@ void Player::addEterium(int coin){
 
 int Player::getEterium() const {
     return eterium;
+}
+
+void Player::addPVisited(size_t pVisitado){
+    this->pVisited[pVisitado] = true;
+}
+
+vector<bool> Player:: getPVisited(){
+    return this->pVisited;
 }

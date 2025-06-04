@@ -2,6 +2,15 @@
 #include "Model.h"
 #include "Reader.h"
 #include "Math.h"
+#include "Explorer.h"
+#include "Starship.h"
+#include "Cartographer.h"
+#include "SpaceUnit.h"
+#include "BFS.h"
+#include "DFS.h"
+#include "Dijkstra.h"
+#include "FloydWarshall.h"
+#include "Graph.h"
 
 #define MIN_HEADERS_CSV 3
 #define MAX_X 10
@@ -20,10 +29,9 @@ void Model::loadGalaxy(string& filename) {
         string exitPlanet = columns[2];
 
         Galaxy galaxy(galaxyName, entryPlanet, exitPlanet);
-        galaxy.chartist();
 
         set<pair<int, int>> takenCoordinates;
-        int id = 0;
+        size_t id = 0;
         for (size_t i = MIN_HEADERS_CSV; i < columns.size(); ++i) {
             
             pair<int, int> coord = generateUniqueCoordinate(takenCoordinates, MAX_X, MAX_Y);
@@ -44,6 +52,43 @@ void Model::printGalaxy() {
     galaxies[this->actualGalaxy].printer();
 }
 
+// void Model::printAlgorithms(){
+//     Graph& graph = galaxies[this->actualGalaxy].getGraph();
+
+
+//  }
+
 vector<Galaxy> Model::getGalaxies() {
     return galaxies;
+}
+
+SpaceUnit* Model::setSpaceUnit(size_t& id) {
+    SpaceUnit* spaceUnit = nullptr;
+  if (id == 1) {
+       spaceUnit = new RapidSight("rapidSight", 100);
+  }
+  else if (id == 2) {
+       spaceUnit = new DeepProbe ("deepProbe", 100);  
+  }
+  else if (id == 3) {
+     spaceUnit = new Pathﬁnder ("pathfinder", 100);  
+  }
+  else if (id == 4) {
+     spaceUnit = new StarMapper ("starMapper", 100);  
+  }
+  else if (id == 5) {
+     spaceUnit = new LightAssault ("lightAssault", 100);  
+  } 
+  else if (id == 6) {
+     spaceUnit = new MediumAssault ("mediumAssault", 100);  
+  }
+    else if (id == 7) {
+     spaceUnit = new HeavyAssault ("heavyAssault", 100);  
+  } 
+  else if (id == 8) {
+     spaceUnit = new SupHeavyAssault ("supHeavyAssault", 100);  
+  }
+
+
+  return spaceUnit;
 }

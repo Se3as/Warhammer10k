@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Math.h"
 
 #include "Planet.h"
 #include "Graph.h"
@@ -19,8 +20,9 @@ private:
 
     Graph graph;
 
-    vector<vector<Planet*>> planetarium;
-    vector<Planet*> planets;
+    // vector<vector<Planet*>> planetarium;
+
+    vector<Planet*> planetarium;
     
     static constexpr int latitude = 10;
     static constexpr int longitude = 10;
@@ -30,12 +32,14 @@ public:
     Galaxy(string name, string entryPlanet, string exitPlanet);
     ~Galaxy();
 
-    void chartist();    //cartografo
 
     void addPlanet(Planet* planet);
+
     void makeConnections();
 
     void link_probability();
+
+    Graph& getGraph();
 
     void printer();
 };

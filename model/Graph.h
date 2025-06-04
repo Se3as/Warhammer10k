@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Math.h"
 
 using namespace std;
 
@@ -9,15 +10,17 @@ using namespace std;
 
 class Graph {
 private:
-    int numPlanetas; 
-    vector<vector<int>> matAd; 
-    vector<vector<pair<int, int>>> listAd; 
+    size_t numPlanets; 
+    vector<vector<size_t>> matAd; 
+    vector<vector<Edge>> listAd; 
 
 public:
-    Graph(int numPlanetas);
-
-    void addCon(int iPO, int iPD, int distancia);
-    void deleteCon(int iPO, int iPD);
+    Graph(size_t numPlanets);
+    vector<vector<Edge>> getListAd();
+    vector<vector<size_t>> getMatAd();
+    void addCon(size_t origin, size_t destination, size_t distance);
+    void deleteCon(size_t origin, size_t destination);
+    bool hasEdge(size_t u, size_t v);
 
     void printMat();
     void printList();

@@ -6,6 +6,11 @@
 
 using namespace std;
 
+struct Edge {
+    size_t id;
+    size_t dist;
+};
+
 int generateRandomNumber(int min, int max);
 
 pair<int, int> generateUniqueCoordinate(set<pair<int, int>>& takenCoordinates, 

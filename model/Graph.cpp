@@ -1,44 +1,56 @@
 #include "Graph.h"
 
-Graph::Graph(int numPlanetas) : numPlanetas(numPlanetas) {
-    matAd = vector<vector<int>>(numPlanetas, vector<int>(numPlanetas, INVALID));
-    listAd = vector<vector<pair<int, int>>>(numPlanetas);
+Graph::Graph(size_t numPlanets) : numPlanets(numPlanets) {
+    matAd = vector<vector<size_t>>(numPlanets, vector<size_t>(numPlanets, INVALID));
+    listAd = vector<vector<Edge>>(numPlanets);
 }
 
-// Para ue no se vea cargado iPO: ID planeta origen iPD: ID planeta destino
-void Graph::addCon(int iPO, int iPD, int distancia) {
+vector<vector<Edge>> Graph:: getListAd(){
+    return listAd;
+}
+vector<vector<size_t>> Graph:: getMatAd(){
+    return matAd;
+}
+
+// Para ue no se vea cargado origin: ID planeta origen destination: ID planeta destino
+void Graph::addCon(size_t origin, size_t destination, size_t distance) {
     
-    matAd[iPO][iPD] = distancia;
-    matAd[iPD][iPO] = distancia;
+    matAd[origin][destination] = distance;
+    matAd[destination][origin] = distance;
 
-    listAd[iPO].push_back({iPD, distancia});
-    listAd[iPD].push_back({iPO, distancia});
+    listAd[origin].push_back({destination, distance});
+    listAd[destination].push_back({origin, distance});
 }
-// Para ue no se vea cargado iPO: ID planeta origen iPD: ID planeta destino
-void Graph::deleteCon(int iPO, int iPD) {
+// Para ue no se vea cargado origin: ID planeta origen destination: ID planeta destino
+void Graph::deleteCon(size_t origin, size_t destination) {
 
-    matAd[iPO][iPD] = INVALID;
-    matAd[iPD][iPO] = INVALID;
+    matAd[origin][destination] = INVALID;
+    matAd[destination][origin] = INVALID;
 
-    for (size_t i = 0; i < listAd[iPO].size(); ++i) {
-        if (listAd[iPO][i].first == iPD) {
-            listAd[iPO].erase(listAd[iPO].begin() + i);
+    for (size_t i = 0; i < listAd[origin].size(); ++i) {
+        if (listAd[origin][i].id == destination) {
+            listAd[origin].erase(listAd[origin].begin() + i);
             break;
         }
     }
 
-    for (size_t i = 0; i < listAd[iPD].size(); ++i) {
-        if (listAd[iPD][i].first == iPO) {
-            listAd[iPD].erase(listAd[iPD].begin() + i);
+    for (size_t i = 0; i < listAd[destination].size(); ++i) {
+        if (listAd[destination][i].id == origin) {
+            listAd[destination].erase(listAd[destination].begin() + i);
             break;
         }
     }
+}
+bool Graph:: hasEdge(size_t origin, size_t destination) {
+      if (matAd[origin][destination]!= INVALID){
+        return true;
+      }
 }
 
 void Graph::printMat() {
     cout << "Matriz de adyacencia:\n";
-    for (int i = 0; i < numPlanetas; ++i) {
-        for (int j = 0; j < numPlanetas; ++j) {
+    for (size_t i = 0; i < numPlanets; ++i) {
+        for (size_t j = 0; j < numPlanets; ++j) {
             if (matAd[i][j] == INVALID) {
                 cout << "INVALID ";
             } else {
@@ -51,10 +63,10 @@ void Graph::printMat() {
 
 void Graph::printList() {
     cout << "Lista de adyacencia:\n";
-    for (int i = 0; i < numPlanetas; ++i) {
+    for (size_t i = 0; i < numPlanets; ++i) {
         cout << i << ": ";
-        for (std::pair<int, int> vecino : listAd[i]) {
-            cout << "(" << vecino.first << ", " << vecino.second << ") ";
+        for (Edge neighbor : listAd[i]) {
+            cout << "(" << neighbor.id << ", " << neighbor.dist << ") ";
         }
         cout << endl;
     }
