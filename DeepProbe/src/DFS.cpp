@@ -55,6 +55,6 @@ void DFS::reset() {
 }
 
 /// Gets the set of globally visited nodes.
-const std::unordered_set<int>& DFS::getVisited() const {
+const std::set<int>& DFS::getVisited() const {
   return this->visitedGlobal;
 }

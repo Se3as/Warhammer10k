@@ -1,7 +1,7 @@
 #pragma once
 #include "Graph.h"
 #include <vector>
-#include <unordered_set>
+#include <set>
 #include <stack>
 
 /**
@@ -16,11 +16,11 @@ private:
   /**
    * @brief Set of globally visited nodes.
    */
-  std::unordered_set<int> visitedGlobal;
+  std::set<int> visitedGlobal;
   /**
    * @brief Set of pending nodes to be visited.
    */
-  std::unordered_set<int> pending;
+  std::set<int> pending;
   /**
    * @brief Discovers neighbors of a given node and adds them to the 
    * pending set.
@@ -54,5 +54,5 @@ public:
    * @brief Gets the set of globally visited nodes.
    * @return A reference to the set of visited nodes.
    */
-  const std::unordered_set<int>& getVisited() const;
+  const std::set<int>& getVisited() const;
 };

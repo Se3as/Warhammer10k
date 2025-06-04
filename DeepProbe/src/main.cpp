@@ -3,7 +3,7 @@
 #include "Graph.h"
 #include "DFS.h"
 
-#define NUMBERS 5
+#define NUMBERS 10
 
 int main() {
   // Crear el grafo
@@ -17,6 +17,12 @@ int main() {
   graph.addEdge(0, 3);
   graph.addEdge(3, 4);
   graph.addEdge(2, 4);
+  graph.addEdge(4, 5);
+  graph.addEdge(5, 6);
+  graph.addEdge(6, 7);
+  graph.addEdge(7, 8);
+  graph.addEdge(8, 9);
+  graph.addEdge(9, 0); // Crea un ciclo para que el grafo sea conexo
 
 
   std::cout << "Estructura del grafo:\n";
@@ -28,15 +34,21 @@ int main() {
 
   // Primera ejecución (nodo inicial + 3 nodos)
   std::cout << "Lote " << lote++ << ":\n";
-  auto visita = visitador.executeDFS(0, 3);
+  auto visita = visitador.executeDFS(5, 3);
   for (int nodo : visita) {
     std::cout << "Visitado: " << nodo << std::endl;
   }
 
+  std::cout << "\nTodos los nodos visitados:\n";
+  for (int nodo : visitador.getVisited()) {
+    std::cout << nodo << " ";
+  }
+  std::cout << std::endl;
+
   // Ejecuciones posteriores hasta visitar todos los nodos
   while (!visitador.allVisited()) {
     std::cout << "\nLote " << lote++ << ":\n";
-    visita = visitador.executeDFS(0, 3);
+    visita = visitador.executeDFS(5, 3);
     for (int nodo : visita) {
       std::cout << "Visitado: " << nodo << std::endl;
     }
