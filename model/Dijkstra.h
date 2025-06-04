@@ -1,31 +1,21 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
-#include <unordered_map>
-#include <queue>         
-#include <algorithm>
-#include <climits>  
-
-#include "Planet.h"
+#include <queue>
+#include <limits>
+#include "Math.h"
 
 using namespace std;
 
-class Pathfinder {
 
-private:
+struct Node {
+    size_t planet;
+    size_t distance;
 
-    struct PlanetPriority {
-        Planet* planet;
-        int added_cost;  // acumulacion de Etereum 
-
-        // Sobrecarga para que la priority_queue sea un min-heap
-        bool operator<(const PlanetPriority& other) const {
-            return added_cost > other.added_cost;  //">" me da la prioridad menor
-        }
-    };
-
-public:
-    
-    pair<int, vector<Planet*>> getCheapestPath(Planet* start, Planet* target);
-
+    bool operator<(const Node& other) const {
+        return distance > other.distance;
+    }
 };
+
+size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination);
