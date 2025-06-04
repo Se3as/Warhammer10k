@@ -19,3 +19,4 @@ struct Node {
 };
 
 size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination);
+
