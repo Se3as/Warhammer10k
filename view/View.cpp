@@ -37,8 +37,11 @@
 
 #define PLANETSPACING 60
 
-View::View(): conquered(false), escape(false), attacking(false), exploring(false), mapping(false), shopping(false){
+View::View(): conquered(false), escape(false), attacking(false), exploring(false), mapping(false), shopping(false){}
 
+void View::run(Model& model){
+    this->model = model;
+    
     load_maps();
     
     load_ships();
@@ -47,10 +50,14 @@ View::View(): conquered(false), escape(false), attacking(false), exploring(false
 
     load_menus();
 
-
     load_planets();
 
+
+    manage_planets();
+
+
 }
+
 
 //WIN CONDITION
 bool View::exterminatused(){
@@ -194,13 +201,25 @@ void View::load_ships(){
 
 
 void View::manage_ship_click(Fl_Widget* w, void* user_data){
-    View* oribt = static_cast<View*>(user_data);
+    View* orbit = static_cast<View*>(user_data);
     
-    
-    //ESTA FUNCION ABE CUAL DE TODOS LOS BOTONES SE CLIKEO PARA LLAMARLA
+    if (w == orbit->interceptor){
+        cout<<"\nInterceptor";
+    } 
+    else if (w == orbit->barracuda){
+        cout<<"\nBarracuda";
 
+    } else if(w == orbit->saboteur){
+        cout<<"\nSaboteur";
 
+    } else if(w == orbit->annihilator){
+        cout<<"\nAnihhilator";
+        
+    } else if(w == orbit->battleray){
+        cout<<"\nBattleray";
+    } 
 
+    cout<<"\n";
 }
 
 
@@ -347,7 +366,7 @@ void View::load_planets(){
 }
 
 
-void View::manage_planet_location(){
+void View::manage_planets(){
     
     // for(){
 
@@ -355,6 +374,8 @@ void View::manage_planet_location(){
 
 
     //vector de coordenadas de planetas (0[POSX], 0[POSY])
+
+    //planets[1]->position(this->model->getGalaxy()->getPlanets()->);
 
 
 }

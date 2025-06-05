@@ -27,4 +27,7 @@ public:
     vector<Galaxy> getGalaxies();
 
     SpaceUnit* setSpaceUnit(size_t& id) ;
+
+    const Galaxy& getGalaxy(int index) const;
+
 };

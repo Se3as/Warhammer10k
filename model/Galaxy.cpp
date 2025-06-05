@@ -44,15 +44,23 @@ void Galaxy::makeConnections() {
 Graph& Galaxy:: getGraph(){
     return this->graph;
 }
-const vector<Planet*>& Galaxy::getPlanetarium() const{
-    return this->planetarium;
-}
+
 void Galaxy::printer() {
     
     this->graph.printList();
     this->graph.printMat();
     
 }
+
+const Planet* Galaxy::getPlanet(int index) const{
+    return planetarium[index];
+}
+
+const int Galaxy::getGalaxySize(){
+    return planetarium.size();
+}
+
+
 
 
 Galaxy::~Galaxy() {

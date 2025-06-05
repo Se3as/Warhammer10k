@@ -16,6 +16,7 @@ int main() {
     model.loadGalaxy(test);
     model.printGalaxy();
 
+    view.run(model);
 
     view.show();
 
@@ -24,6 +25,12 @@ int main() {
     }
     
     cout<<"Battle in progress..."<<endl;
+
+    // size_t indice = model.getActualGalaxy();
+
+    // Galaxy a = model.getGalaxy(indice);
+
+    // cout<<"\nX del Planeta 1: " <<a.getPlanet(1)->getPosX();
 
 
     if(view.exterminatused() || view.abort()){

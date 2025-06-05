@@ -16,7 +16,7 @@
 #include <FL/fl_ask.H>
 
 
-//#include de Math.h
+#include "Model.h"
 
 
 using namespace std;
@@ -25,6 +25,8 @@ namespace fs = std::filesystem;
 class View {
 
 private:
+
+    Model model;
 
     Fl_Window* frame;
     Fl_Box* background;
@@ -70,6 +72,8 @@ public:
     View();
     ~View();
 
+    void run(Model& model);
+
     void show();
     void hide();
 
@@ -109,6 +113,6 @@ public:
     void reset_modes();
 
     void load_planets();
-    void manage_planet_location();
+    void manage_planets();
 
 };

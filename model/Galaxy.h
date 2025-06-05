@@ -42,7 +42,10 @@ public:
     Graph& getGraph();
 
 
-    const vector<Planet*>& getPlanetarium() const;
+    const Planet* getPlanet(int index) const;
+
+    const int getGalaxySize();
+
 
     void printer();
 };

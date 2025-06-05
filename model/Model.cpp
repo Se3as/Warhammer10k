@@ -74,6 +74,13 @@ void Model::printGalaxy() {
 
 //  }
 
+
+const Galaxy& Model::getGalaxy(int index) const {
+    return galaxies[index];
+}
+
+
+
 vector<Galaxy> Model::getGalaxies() {
     return galaxies;
 }
