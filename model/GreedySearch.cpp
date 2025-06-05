@@ -1,6 +1,8 @@
 #include "GreedySearch.h"
 #include <queue>
 #include <set>
+#include <algorithm>
+#include <cstdint>
 
 size_t greedySearch(const vector<vector<Edge>>& adj,
                     vector<bool>& visited, size_t origin, size_t destination) {
