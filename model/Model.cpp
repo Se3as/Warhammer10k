@@ -19,33 +19,49 @@
 Model::Model(): actualGalaxy(0) {}
 Model::~Model() {}
 
-void Model::loadGalaxy(string& filename) {
-    vector<vector<string>> rows = readCSV(filename);
-    for (vector<string>& columns : rows) {
+void Model::loadGalaxy(std::string& filename) {
+
+    std::vector<Range> parts = divideWindow();
+
+    std::vector<std::vector<std::string>> rows = readCSV(filename);
+    for (std::vector<std::string>& columns : rows) {
         if (columns.size() < MIN_HEADERS_CSV) continue;
 
-        string galaxyName = columns[0];
-        string entryPlanet = columns[1];
-        string exitPlanet = columns[2];
+        std::string galaxyName   = columns[0];
+        std::string entryPlanet  = columns[1];
+        std::string exitPlanet   = columns[2];
 
         Galaxy galaxy(galaxyName, entryPlanet, exitPlanet);
 
-        set<pair<int, int>> takenCoordinates;
+        std::set<std::pair<int, int>> takenCoordinates;
         size_t id = 0;
+
+        std::vector<Range> availableParts = parts;
+
         for (size_t i = MIN_HEADERS_CSV; i < columns.size(); ++i) {
-            
-            pair<int, int> coord = generateUniqueCoordinate(takenCoordinates, MAX_X, MAX_Y);
+            if (columns[i].empty()) continue;
+
+            int idPart = generateRandomNumber(0, static_cast<int>(availableParts.size()) - 1);
+            Range part   = availableParts[idPart];
+
+            availableParts.erase(availableParts.begin() + idPart);
+
+            std::pair<int, int> coord = generateUniqueCoordinate(
+                { part.x_min, part.x_max },
+                { part.y_min, part.y_max }
+            );
+
             int x = coord.first;
             int y = coord.second;
-            if (columns[i].empty()) continue;
+
             Planet* planet = new Planet(columns[i], x, y, id);
             galaxy.addPlanet(planet);
             id++;
         }
+
         galaxy.makeConnections();
-        galaxies.push_back(move(galaxy));
+        galaxies.push_back(std::move(galaxy));
     }
-    
 }
 
 void Model::printGalaxy() {

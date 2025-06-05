@@ -41,5 +41,8 @@ public:
 
     Graph& getGraph();
 
+
+    const vector<Planet*>& getPlanetarium() const;
+
     void printer();
 };

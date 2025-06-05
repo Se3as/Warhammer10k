@@ -44,7 +44,9 @@ void Galaxy::makeConnections() {
 Graph& Galaxy:: getGraph(){
     return this->graph;
 }
-
+const vector<Planet*>& Galaxy::getPlanetarium() const{
+    return this->planetarium;
+}
 void Galaxy::printer() {
     
     this->graph.printList();
