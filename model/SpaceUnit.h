@@ -7,8 +7,6 @@
 #include <ctime>
 using namespace std;
 
-
-
 class SpaceUnit {
 private:
 

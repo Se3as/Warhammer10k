@@ -1,43 +1,16 @@
-#include "Model.h"
 #include "View.h"
+#include "Controller.h"
+#include "Model.h"
 
-//#include "Galaxy.h"
+int main(int argc, char** argv) {
 
-#include <iostream>
-
-using namespace std;
-
-int main() {
     Model model;
-    View view;
+    View* view = new View(model);      
+    Controller* controller = new Controller(model, view);
 
+    controller->run();
 
-    string test = "test.csv";
-    model.loadGalaxy(test);
-    model.printGalaxy();
-
-    view.run(model);
-
-    view.show();
-
-    while(!view.exterminatused() && !view.abort()){
-        Fl::wait();
-    }
-    
-    cout<<"Battle in progress..."<<endl;
-
-    // size_t indice = model.getActualGalaxy();
-
-    // Galaxy a = model.getGalaxy(indice);
-
-    // cout<<"\nX del Planeta 1: " <<a.getPlanet(1)->getPosX();
-
-
-    if(view.exterminatused() || view.abort()){
-        view.hide();
-        Fl::check();
-    }
-
-
+    delete controller;
+    delete view;
+    return 0;
 }
-

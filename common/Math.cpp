@@ -6,9 +6,9 @@ int generateRandomNumber(int min, int max){
 }
 
 std::vector<Range> divideWindow() {
-    const int X0 = 300;
-    const int X1 = 900;
-    const int Y0 = 100;
+    const int X0 = 200;
+    const int X1 = 1000;
+    const int Y0 = 50;
     const int Y1 = 520;
     const int N  = 20;
     const int wide = (X1 - X0) / N;  

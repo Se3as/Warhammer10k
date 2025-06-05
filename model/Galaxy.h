@@ -20,8 +20,6 @@ private:
 
     Graph graph;
 
-    // vector<vector<Planet*>> planetarium;
-
     vector<Planet*> planetarium;
     
     static constexpr int latitude = 10;
@@ -41,6 +39,7 @@ public:
 
     Graph& getGraph();
 
+    const vector<Planet*>& getPlanets() const;
 
     const Planet* getPlanet(int index) const;
 

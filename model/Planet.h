@@ -22,6 +22,7 @@ public:
     void setSectorID(size_t id);
 
     size_t getSectorID() const;
+    string getName() const;
     
     void setPosX(int x);
     void setPosY(int y);

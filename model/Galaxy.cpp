@@ -59,7 +59,9 @@ const Planet* Galaxy::getPlanet(int index) const{
 const int Galaxy::getGalaxySize(){
     return planetarium.size();
 }
-
+const vector<Planet*>& Galaxy:: getPlanets() const{
+    return planetarium;
+}
 
 
 

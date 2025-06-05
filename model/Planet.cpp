@@ -28,6 +28,10 @@ int Planet::getPosY() const {
     return posY;
 }
 
+string Planet::getName() const {
+    return name;
+}
+
 Planet::~Planet() {
     
 }
