@@ -11,16 +11,18 @@ private:
 
     string name;
 
-    int life_points;
+    size_t life_points;
 
 public:
     Boss();
-    ~Boss();
+    ~Boss(){}
 
     string getBossID();
 
-    void setBossHP(int hp);
+    void setBossHP(size_t hp);
 
-    int getBossHP() const;
+    size_t getBossHP() const;
+
+    size_t receiveDamage(size_t damage);
     
 };

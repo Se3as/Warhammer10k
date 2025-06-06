@@ -48,18 +48,21 @@ void Controller::onBarracudaClick(Fl_Widget* w, void* userdata) {
 
 void Controller::onSaboteurClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    c->model.attack(POS_UNIT_2);
+    size_t bossLife = c->model.attack(POS_UNIT_2);
+    //c->view->attackOnBoss(bossLife);
 }
 // TODO: 3 more attack bottons 
 
 void Controller::onAnnihilatorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    // c->model.explore(POS_UNIT_3);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_3);
+    //c->view->explorePlanets(planetsDiscovered);
 }
 
 void Controller::onBattlerayClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    // c->model.explore(POS_UNIT_4);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
 }
 
 

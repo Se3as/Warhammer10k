@@ -6,7 +6,7 @@ using namespace std;
 size_t exaSearch(const vector<vector<Edge>>& adj,
                  vector<bool>& visited,
                  size_t origin,
-                 size_t destination) {
+                 size_t destination , size_t& iterations) {
     if (origin == destination)
         return 0;
 
@@ -15,7 +15,7 @@ size_t exaSearch(const vector<vector<Edge>>& adj,
 
     for (const Edge& edge : adj[origin]) {
         if (!visited[edge.id]) {
-            size_t result = exaSearch(adj, visited, edge.id, destination);
+            size_t result = exaSearch(adj, visited, edge.id, destination, iterations);
             if (result != numeric_limits<size_t>::max()) {
                 best = min(best, edge.dist + result);
             }

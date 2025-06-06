@@ -9,7 +9,7 @@ public:
     virtual size_t attack_iterations(const vector<vector<Edge>>& adj,
     vector<bool>& visited,
     size_t origin,
-    size_t destination) = 0;
+    size_t destination, size_t& iterations) = 0;
 
 };
     
@@ -19,7 +19,7 @@ public:
     size_t attack_iterations(const vector<vector<Edge>>& adj,
     vector<bool>& visited,
     size_t origin,
-    size_t destination);
+    size_t destination, size_t& iterations);
 };
 
 class MediumAssault : public AssaultCraft{
@@ -28,7 +28,7 @@ public:
     size_t attack_iterations(const vector<vector<Edge>>& adj,
     vector<bool>& visited,
     size_t origin,
-    size_t destination);
+    size_t destination, size_t& iterations);
 };
 
 class HeavyAssault : public AssaultCraft{
@@ -37,7 +37,7 @@ public:
     size_t attack_iterations(const vector<vector<Edge>>& adj,
     vector<bool>& visited,
     size_t origin,
-    size_t destination);
+    size_t destination, size_t& iterations);
 };
 
 class SupHeavyAssault : public AssaultCraft{
@@ -46,5 +46,5 @@ public:
     size_t attack_iterations(const vector<vector<Edge>>& adj,
     vector<bool>& visited,
     size_t origin,
-    size_t destination);
+    size_t destination, size_t& iterations);
 };

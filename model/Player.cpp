@@ -39,7 +39,12 @@ vector<bool> Player:: getPVisited(){
 }
 
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
-    size_t origin, size_t destination){
+    size_t origin, size_t destination, size_t& iterations) {
     return this->units[index]->attack_iterations(adj,
         pVisited, origin, destination);
 }
+
+vector<size_t> Player::explore(int index, const vector<vector<Edge>>& adj,
+    size_t planet, size_t& iterations){
+        return this->units[index]->explore( pVisited, adj, planet, iterations);
+    }

@@ -28,7 +28,7 @@ public:
         vector<bool>& visited, size_t origin, size_t destination) {}
 
     virtual vector<size_t> explore(vector<bool>& visited, 
-        vector<vector<Edge>>& adj, size_t origin) {}
+        const vector<vector<Edge>>& adj, size_t origin, size_t& iterations) {}
 
     virtual size_t map_neighbor(size_t numPlanets, vector<vector<Edge>>& adj,
         size_t origin, size_t destination) {}

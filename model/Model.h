@@ -7,6 +7,7 @@
 #include "Reader.h"
 #include "SpaceUnit.h"
 #include "Player.h"
+#include "Boss.h"
 
 using namespace std;
 
@@ -15,6 +16,9 @@ private:
     vector<Galaxy> galaxies;
     size_t actualGalaxy;
     Player player;
+    Boss boss;
+
+    static constexpr int BASE_DAMAGE = 1000;
     
 public:
     Model();
@@ -22,7 +26,8 @@ public:
 
     void setActualGalaxy(size_t y);
     size_t getActualGalaxy() const;
-    void attack(int index);
+    size_t attack(int index);
+    vector<size_t> explore(int index);
     void loadGalaxy(string& filename);
     void printGalaxy();
     // void printAlgorithms();

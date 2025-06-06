@@ -87,13 +87,29 @@ vector<Galaxy> Model::getGalaxies() {
     return galaxies;
 }
 
-void Model:: attack(int index){
+size_t Model:: attack(int index){
     
-Galaxy& galaxy = galaxies[actualGalaxy];
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t iterations = 0;
+    // Cost para el log?
     size_t cost = this->player.attack( index, galaxy.getGraph().getListAd(),
-    galaxy.getEntryPlanet(), galaxy.getExitPlanet());
-    // size_t damage = galaxy.getGalaxySize()/iterations;
-    // boss.receiveDamage(damage);
+    galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+    // Damage porque hay que actualizar vista vida del boss
+    size_t damage = BASE_DAMAGE/iterations;
+    size_t bossLife = this->boss.receiveDamage(damage);
+    return bossLife;
+}
+
+vector<size_t> Model:: explore(int index){
+    
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t iterations = 0;
+    // Cost para el log?
+    vector<size_t> planetsDiscovered = this->player.explore(index, galaxy.getGraph().getListAd(),
+    galaxy.getEntryPlanet(), iterations);
+    // TODO: ACTUALIZAR PLANETAS VISITADOS EN PLAYER
+
+    return planetsDiscovered;
 }
 
 // SpaceUnit* Model::setSpaceUnit(size_t& id) {

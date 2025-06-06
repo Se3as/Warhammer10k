@@ -6,15 +6,15 @@
 using namespace std;
 
 size_t exaSearchAcot(const vector<vector<Edge>>& adj,
-                     vector<bool>& visited, size_t origin, size_t destination) {
+                     vector<bool>& visited, size_t origin, size_t destination , size_t& iterations) {
     size_t best_cost = numeric_limits<size_t>::max();
-    dfs(adj, visited, origin, destination, 0, best_cost);
+    dfs(adj, visited, origin, destination,iterations, 0, best_cost);
     return best_cost;
 }
 
 
 size_t dfs(const vector<vector<Edge>>& adj, vector<bool>& visited,
-           size_t current, size_t destination, size_t cost, size_t& best_cost) {
+           size_t current, size_t destination , size_t& iterations, size_t cost, size_t& best_cost) {
 
     if (cost > COST_LIMIT || cost >= best_cost)
         return best_cost;
@@ -26,7 +26,7 @@ size_t dfs(const vector<vector<Edge>>& adj, vector<bool>& visited,
 
     for (const Edge& edge : adj[current]) {
         if (!visited[edge.id]) {
-            dfs(adj, visited, edge.id, destination, cost + edge.dist, best_cost);
+            dfs(adj, visited, edge.id, destination,iterations, cost + edge.dist, best_cost);
         }
     }
 
