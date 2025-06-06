@@ -16,7 +16,7 @@
 #define MAX_X 10
 #define MAX_Y 10
 
-Model::Model(): actualGalaxy(0) {}
+Model::Model(): actualGalaxy(0), player(5) {}
 Model::~Model() {}
 
 void Model::loadGalaxy(string& filename) {
@@ -31,7 +31,7 @@ void Model::loadGalaxy(string& filename) {
         string entryPlanet  = columns[1];
         string exitPlanet   = columns[2];
 
-        Galaxy galaxy(galaxyName, entryPlanet, exitPlanet);
+        Galaxy galaxy(galaxyName);
 
         size_t id = 0;
 
@@ -54,7 +54,8 @@ void Model::loadGalaxy(string& filename) {
             int y = coord.second;
 
             Planet* planet = new Planet(columns[i], x, y, id);
-            galaxy.addPlanet(planet);
+            
+            galaxy.addPlanet(planet, i, entryPlanet, exitPlanet);
             id++;
         }
 
@@ -86,33 +87,42 @@ vector<Galaxy> Model::getGalaxies() {
     return galaxies;
 }
 
-SpaceUnit* Model::setSpaceUnit(size_t& id) {
-    SpaceUnit* spaceUnit = nullptr;
-  if (id == 1) {
-       spaceUnit = new RapidSight("rapidSight", 100);
-  }
-  else if (id == 2) {
-       spaceUnit = new DeepProbe ("deepProbe", 100);  
-  }
-  else if (id == 3) {
-     spaceUnit = new Pathﬁnder ("pathfinder", 100);  
-  }
-  else if (id == 4) {
-     spaceUnit = new StarMapper ("starMapper", 100);  
-  }
-  else if (id == 5) {
-     spaceUnit = new LightAssault ("lightAssault", 100);  
-  } 
-  else if (id == 6) {
-     spaceUnit = new MediumAssault ("mediumAssault", 100);  
-  }
-    else if (id == 7) {
-     spaceUnit = new HeavyAssault ("heavyAssault", 100);  
-  } 
-  else if (id == 8) {
-     spaceUnit = new SupHeavyAssault ("supHeavyAssault", 100);  
-  }
-
-
-  return spaceUnit;
+void Model:: attack(int index){
+    
+Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t cost = this->player.attack( index, galaxy.getGraph().getListAd(),
+    galaxy.getEntryPlanet(), galaxy.getExitPlanet());
+    // size_t damage = galaxy.getGalaxySize()/iterations;
+    // boss.receiveDamage(damage);
 }
+
+// SpaceUnit* Model::setSpaceUnit(size_t& id) {
+//     SpaceUnit* spaceUnit = nullptr;
+//   if (id == 1) {
+//        spaceUnit = new RapidSight("rapidSight", 100);
+//   }
+//   else if (id == 2) {
+//        spaceUnit = new DeepProbe ("deepProbe", 100);  
+//   }
+//   else if (id == 3) {
+//      spaceUnit = new Pathﬁnder ("pathfinder", 100);  
+//   }
+//   else if (id == 4) {
+//      spaceUnit = new StarMapper ("starMapper", 100);  
+//   }
+//   else if (id == 5) {
+//      spaceUnit = new LightAssault ("lightAssault", 100);  
+//   } 
+//   else if (id == 6) {
+//      spaceUnit = new MediumAssault ("mediumAssault", 100);  
+//   }
+//     else if (id == 7) {
+//      spaceUnit = new HeavyAssault ("heavyAssault", 100);  
+//   } 
+//   else if (id == 8) {
+//      spaceUnit = new SupHeavyAssault ("supHeavyAssault", 100);  
+//   }
+
+
+//   return spaceUnit;
+// }

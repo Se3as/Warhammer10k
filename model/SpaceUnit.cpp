@@ -12,3 +12,4 @@ string SpaceUnit::getName(){
 void SpaceUnit::setName(string n){
     name = n;
 }
+

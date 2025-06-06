@@ -2,15 +2,22 @@
 #include <cstdlib> 
 #include <ctime>     
 
-Galaxy::Galaxy(string name, string entryPlanet, string exitPlanet):
-    name(name), entryPlanet(entryPlanet), exitPlanet(exitPlanet) , graph(0){
+Galaxy::Galaxy(string name):
+    name(name), graph(0){
         srand(time(0));
     }
 
 
 
-void Galaxy:: addPlanet(Planet* planet){
+void Galaxy:: addPlanet(Planet* planet, size_t index, string entryPlanet, 
+    string exitPlanet){
     planetarium.push_back(planet);
+    if(planet->getName() == entryPlanet){
+        this->entryPlanet = index;
+    }
+    else if (planet->getName() == exitPlanet){
+        this->exitPlanet = index;
+    }
 }
 
 void Galaxy::makeConnections() {
@@ -62,8 +69,13 @@ const int Galaxy::getGalaxySize(){
 const vector<Planet*>& Galaxy:: getPlanets() const{
     return planetarium;
 }
+const size_t& Galaxy:: getEntryPlanet() const{
+    return this->entryPlanet;
+}
 
-
+const size_t& Galaxy:: getExitPlanet() const{
+    return this->exitPlanet;
+}
 
 Galaxy::~Galaxy() {
 

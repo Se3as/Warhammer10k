@@ -38,23 +38,28 @@ void Controller:: connecctCallbacks(){
 
 void Controller::onInterceptorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-
+    // c->model.map_neighbor(POS_UNIT_0);
 }
 
 void Controller::onBarracudaClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
+    // c->model.map_all(POS_UNIT_1);
 }
 
 void Controller::onSaboteurClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
+    c->model.attack(POS_UNIT_2);
 }
+// TODO: 3 more attack bottons 
 
 void Controller::onAnnihilatorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
+    // c->model.explore(POS_UNIT_3);
 }
 
 void Controller::onBattlerayClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
+    // c->model.explore(POS_UNIT_4);
 }
 
 

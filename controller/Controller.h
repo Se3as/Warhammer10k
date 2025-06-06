@@ -15,6 +15,15 @@ private:
     View* view;
     Model& model;  
 
+    static constexpr int POS_UNIT_0 = 0;
+    static constexpr int POS_UNIT_1 = 1;
+    static constexpr int POS_UNIT_2 = 2;
+    static constexpr int POS_UNIT_3 = 3;
+    static constexpr int POS_UNIT_4 = 4;
+    static constexpr int POS_UNIT_5 = 5;
+    static constexpr int POS_UNIT_6 = 6;
+    static constexpr int POS_UNIT_7 = 7;
+
     static void onInterceptorClick(Fl_Widget* w, void* userdata);
     static void onBarracudaClick(Fl_Widget* w, void* userdata);
     static void onSaboteurClick(Fl_Widget* w, void* userdata);

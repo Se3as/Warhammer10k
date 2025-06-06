@@ -6,6 +6,7 @@
 #include "Galaxy.h"
 #include "Reader.h"
 #include "SpaceUnit.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class Model {
 private: 
     vector<Galaxy> galaxies;
     size_t actualGalaxy;
+    Player player;
     
 public:
     Model();
@@ -20,7 +22,7 @@ public:
 
     void setActualGalaxy(size_t y);
     size_t getActualGalaxy() const;
-
+    void attack(int index);
     void loadGalaxy(string& filename);
     void printGalaxy();
     // void printAlgorithms();
