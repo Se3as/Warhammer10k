@@ -1,6 +1,7 @@
 #include "View.h"
 #include "Controller.h"
 #include "Model.h"
+#include "View.h"
 
 int main(int argc, char** argv) {
 
