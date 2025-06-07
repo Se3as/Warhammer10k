@@ -115,8 +115,9 @@ size_t Model::attack(int index) {
                                       galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
     // Log del coste de ataque usando greedy
     // std::cout << "Cost of attack using greedy search: " << cost << std::endl;
+    // std::cout << "Cost of attack using local search: " << cost << std::endl;
 
-    std::cout << "Cost of attack using local search: " << cost << std::endl;
+    std::cout << "Cost of attack using exhaustive search: " << cost << std::endl;
 
     // Si el coste es infinito, significa que no se encontró un camino
     if (cost == std::numeric_limits<size_t>::max()) {
@@ -132,7 +133,9 @@ size_t Model::attack(int index) {
     if (iterations > 0) {
         // Log del cálculo de daño
         damage = BASE_DAMAGE / (iterations * iterations);
-    } 
+    } else {
+        damage = 0;
+    }
     // Log del daño
     std::cout << "Damage dealt: " << damage << std::endl;
 
