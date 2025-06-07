@@ -1,3 +1,5 @@
+
+#include <limits>
 #include <set>
 #include "Model.h"
 #include "Reader.h"
@@ -55,7 +57,7 @@ void Model::loadGalaxy(string& filename) {
 
             Planet* planet = new Planet(columns[i], x, y, id);
             
-            galaxy.addPlanet(planet, i, entryPlanet, exitPlanet);
+            galaxy.addPlanet(planet, id, entryPlanet, exitPlanet);
             id++;
         }
 
@@ -87,15 +89,54 @@ vector<Galaxy> Model::getGalaxies() {
     return galaxies;
 }
 
-size_t Model:: attack(int index){
-    
+size_t Model::attack(int index) {
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t iterations = 0;
-    // Cost para el log?
-    size_t cost = this->player.attack( index, galaxy.getGraph().getListAd(),
-    galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-    // Damage porque hay que actualizar vista vida del boss
-    size_t damage = BASE_DAMAGE/iterations;
+
+    // Previsualización del coste de entry planet hasta exit planet
+    auto adj = galaxy.getGraph().getListAd();
+    std::cout << "Adjacency list for entry planet (" << galaxy.getEntryPlanet() << "): ";
+    for (const auto& edge : adj[galaxy.getEntryPlanet()]) {
+        std::cout << "(to " << edge.id << ", dist " << edge.dist << ") ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Entry planet: " << galaxy.getEntryPlanet() << ", Exit planet: " << galaxy.getExitPlanet() << std::endl;
+
+    for (size_t i = 0; i < adj.size(); ++i) {
+        std::cout << "Planet " << i << ": ";
+        for (const auto& edge : adj[i]) {
+            std::cout << "(to " << edge.id << ", dist " << edge.dist << ") ";
+        }
+        std::cout << std::endl;
+    }
+
+    size_t cost = this->player.attack(index, adj,
+                                      galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+    // Log del coste de ataque usando greedy
+    // std::cout << "Cost of attack using greedy search: " << cost << std::endl;
+
+    std::cout << "Cost of attack: " << cost << std::endl;
+    
+    // Si el coste es infinito, significa que no se encontró un camino
+    if (cost == std::numeric_limits<size_t>::max()) {
+        std::cout << "No path found for attack!" << std::endl;
+        return this->boss.getBossHP(); // Don't deal damage if no path
+    }
+
+
+    // Log de iteraciones
+    std::cout << "Iterations: " << iterations << std::endl;
+
+    size_t damage = 0;
+    if (iterations > 0) {
+        // Log del cálculo de daño
+        damage = BASE_DAMAGE / (iterations * iterations);
+    } 
+    // Log del daño
+    std::cout << "Damage dealt: " << damage << std::endl;
+
+    // Log de vida del boss
     size_t bossLife = this->boss.receiveDamage(damage);
     return bossLife;
 }

@@ -25,7 +25,7 @@ public:
     void setName(string n);
     
     virtual size_t attack_iterations(const vector<vector<Edge>>& adj,
-        vector<bool>& visited, size_t origin, size_t destination) {}
+        vector<bool>& visited, size_t origin, size_t destination, size_t& iterations) {}
 
     virtual vector<size_t> explore(vector<bool>& visited, 
         const vector<vector<Edge>>& adj, size_t origin, size_t& iterations) {}
