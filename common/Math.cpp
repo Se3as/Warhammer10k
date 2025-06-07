@@ -42,3 +42,9 @@ pair<int, int> generateUniqueCoordinate(
 
     return coord;
 }
+
+size_t distanceTwoPoints(size_t x1, size_t y1, size_t x2, size_t y2) {
+    double dx = double(x2) - double(x1);
+    double dy = double(y2) - double(y1);
+    return sqrt(dx*dx + dy*dy);
+}
