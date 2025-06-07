@@ -1,113 +1,82 @@
 #include "Galaxy.h"
+#include <cstdlib> 
+#include <ctime>     
 
-Galaxy::Galaxy(string name, string entryPlanet, string exitPlanet):
-    name(name), entryPlanet(entryPlanet), exitPlanet(exitPlanet) , graph(0){}
-
-void Galaxy::chartist() {
-
-    planetarium = vector<vector<Planet*>> (latitude, vector<Planet*>
-        (longitude, nullptr)) ;
+Galaxy::Galaxy(string name):
+    name(name), graph(0){
+        srand(time(0));
+    }
 
 
-    // int id = 1;
-    // for (size_t i = 0; i < planetarium.size(); ++i) {
-    //     for (size_t j = 0; j < planetarium[i].size(); ++j) {
-    //         if (planetarium[i][j] == nullptr) {
-    //             planetarium[i][j] = new Planet("earth");
-    //             planetarium[i][j]->setPosX(i);
-    //             planetarium[i][j]->setPosY(j);
-    //             planetarium[i][j]->setSectorID(id);
 
-    //             for(int k = 1; k <= 100; ++k){
-    //                 if(planetarium[i][j]->getSectorID() != k){
-    //                     planetarium[i][j]->setWarp(k);
-    //                 }
-    //             }
-    //         }
-    //         id++;
-    //     }
-    // }
-
+void Galaxy:: addPlanet(Planet* planet, size_t index, string entryPlanet, 
+    string exitPlanet){
+    planetarium.push_back(planet);
+    if(planet->getName() == entryPlanet){
+        this->entryPlanet = index;
+    }
+    else if (planet->getName() == exitPlanet){
+        this->exitPlanet = index;
+    }
 }
 
-void Galaxy:: addPlanet(Planet* planet){
-    int posX = planet->getPosX();
-    int posY = planet->getPosY();
-    if (posX < this->latitude && posY < this->longitude) {
-        planetarium[posX][posY] = planet;
+void Galaxy::makeConnections() {
+    size_t n = planetarium.size();
+    this->graph = Graph(n);
+
+    vector<bool> connected(n, false);
+    connected[0] = true;
+    
+    for (size_t i = 1; i < n; i++) {
+        size_t j = rand() % i; 
+        size_t origin = planetarium[j]->getSectorID();
+        size_t destination = planetarium[i]->getSectorID();
+        this->graph.addCon(origin, destination, 1);
+        connected[i] = true;
     }
-    planets.push_back(planet);
 
-}
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = i + 1; j < n; j++) {
+            if (this->graph.hasEdge(i, j)) continue;
 
-void Galaxy:: makeConnections(){
-    this->graph = Graph(planets.size());
-    for (size_t i = 0; i < planets.size(); i++){
-        for (size_t j = i + 1; j < planets.size(); j++){
-            int pOrigen = planets[i]->getSectorID();
-            int pDestino = planets[j]->getSectorID();
-            // Solo para representar que existe la connexion, no es la distancia real
-            int distancia = 1;
-
-            this->graph.addCon(pOrigen, pDestino, distancia);
-        }
-    }
-    for (size_t i = 0; i < planets.size(); i++){
-        for (size_t j = i + 1; j < planets.size(); j++){
-            int pOrigen = planets[i]->getSectorID();
-            int pDestino = planets[j]->getSectorID();
-
-            int num = rand() % 3 + 1;
-            if(num == 3){
-                // Falta implementar validacion para ver si es nodo articulacion
-                this->graph.deleteCon(pOrigen, pDestino);
+            if (rand() % 3 < 1) {  
+                size_t origin = planetarium[i]->getSectorID();
+                size_t destination = planetarium[j]->getSectorID();
+                this->graph.addCon(origin, destination, 1);
             }
         }
-    }   
+    }
+}
+
+Graph& Galaxy:: getGraph(){
+    return this->graph;
 }
 
 void Galaxy::printer() {
     
-    //print for planet matriz display
-    for (size_t i = 0; i < planetarium.size(); ++i) {
-        for (size_t j = 0; j < planetarium[i].size(); ++j) {
-            if (planetarium[i][j] != nullptr) {
-                cout << "1 ";
-                //cout << planetarium[i][j]->getSectorID() << " ";
-            } else {
-                cout << "  ";
-            }
-        }
-        cout << "\n";
-    }
-    cout << "\n";
-
     this->graph.printList();
     this->graph.printMat();
     
-    
-    //print for warps for each planet
-    
-    // if (planetarium[0][0] != nullptr) {
-    //     cout << "\nWarps del planeta (0,0): \n";
-
-    //     for(int k = 0; k < 99; ++k){
-    //         if(planetarium[0][0]->getSectorID() != k){
-    //             cout<< planetarium[0][0]->getWarps(k) << " ";
-    //         }
-    //     }
-    // }
 }
 
+const Planet* Galaxy::getPlanet(int index) const{
+    return planetarium[index];
+}
+
+const int Galaxy::getGalaxySize(){
+    return planetarium.size();
+}
+const vector<Planet*>& Galaxy:: getPlanets() const{
+    return planetarium;
+}
+const size_t& Galaxy:: getEntryPlanet() const{
+    return this->entryPlanet;
+}
+
+const size_t& Galaxy:: getExitPlanet() const{
+    return this->exitPlanet;
+}
 
 Galaxy::~Galaxy() {
 
-    // //planet liberator (for the Emperor!)
-    // for (size_t i = 0; i < planetarium.size(); ++i) {
-    //     for (size_t j = 0; j < planetarium[i].size(); ++j) {
-    //         if (planetarium[i][j] != nullptr) {
-    //             delete planetarium[i][j];
-    //         }
-    //     }
-    // }
 }

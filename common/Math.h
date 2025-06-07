@@ -3,10 +3,23 @@
 #include <iostream>
 #include <math.h>
 #include <set>
+#include <vector>
 
 using namespace std;
 
-int generateRandomNumber(int min, int max);
+struct Edge {
+    size_t id;
+    size_t dist;
+};
 
-pair<int, int> generateUniqueCoordinate(set<pair<int, int>>& takenCoordinates, 
-    int max_X, int max_Y);
+struct Range {
+    int x_min, x_max;
+    int y_min, y_max;
+};
+
+int generateRandomNumber(int min, int max);
+vector<Range> divideWindow();
+
+pair<int, int> generateUniqueCoordinate(
+    const pair<int, int>& xRange,
+    const pair<int, int>& yRange);

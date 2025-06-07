@@ -1,36 +1,17 @@
+#include "View.h"
+#include "Controller.h"
 #include "Model.h"
 #include "View.h"
 
-//#include "Galaxy.h"
+int main(int argc, char** argv) {
 
-#include <iostream>
-
-using namespace std;
-
-int main() {
     Model model;
-    View view;
+    View* view = new View(model);      
+    Controller* controller = new Controller(model, view);
 
+    controller->run();
 
-    string test = "test.csv";
-    model.loadGalaxy(test);
-    model.printGalaxy();
-
-
-    view.show();
-
-    while(!view.exterminatused() && !view.abort()){
-        Fl::wait();
-    }
-    
-    cout<<"Battle in progress..."<<endl;
-
-
-    if(view.exterminatused() || view.abort()){
-        view.hide();
-        Fl::check();
-    }
-
-
+    delete controller;
+    delete view;
+    return 0;
 }
-

@@ -1,14 +1,14 @@
 #include "Planet.h"
 
-Planet::Planet(string name, int x, int y, int id) : name(name), posX(x), posY(y), sectorID(id){}
+Planet::Planet(string name, int x, int y, size_t id) : name(name), posX(x), posY(y), sectorID(id){}
 
 
 
-void Planet::setSectorID(int id){
+void Planet::setSectorID(size_t id){
     sectorID = id;
 }
 
-int Planet::getSectorID() const {
+size_t Planet::getSectorID() const {
     return sectorID;
 }
 
@@ -26,6 +26,10 @@ int Planet::getPosX() const {
 
 int Planet::getPosY() const {
     return posY;
+}
+
+string Planet::getName() const {
+    return name;
 }
 
 Planet::~Planet() {

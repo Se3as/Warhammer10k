@@ -1,0 +1,29 @@
+#include "SpaceUnit.h"
+#include <vector>
+#include "Math.h"
+
+class Mapper : public SpaceUnit {
+public:
+    Mapper(string n, int p): SpaceUnit(n, p) {}
+    virtual ~Mapper(){}
+
+    virtual size_t map_neighbor(size_t numPlanets, vector<vector<Edge>>& adj, size_t origin, size_t destination){}
+    virtual vector<vector<size_t>> map_all(size_t numPlanets, vector<vector<size_t>> &dist){}
+
+};
+
+class Pathﬁnder : public Mapper {
+public:
+    Pathﬁnder(string n, int p): Mapper(n, p) {}
+
+    size_t map_neighbor(size_t numPlanets, vector<vector<Edge>>& adj, size_t origin, size_t destination);
+
+};
+
+class StarMapper : public Mapper {
+public:
+    StarMapper(string n, int p): Mapper(n, p) {}
+
+   vector<vector<size_t>> map_all(size_t numPlanets, vector<vector<size_t>> &dist);
+
+};

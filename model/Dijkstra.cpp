@@ -1,55 +1,39 @@
-#include "Dijkstra.h"
+#include "Dijkstra.h">
 
+size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination) {
+    vector<size_t> dist(numPlanets, numeric_limits<size_t>::max());
+    dist[origin] = 0;
 
-std::pair<int, std::vector<Planet*>> Pathfinder::getCheapestPath(
-    Planet* start, 
-    Planet* target
-) {
+    priority_queue<Node> pq;
+    pq.push({origin, 0});
 
+    vector<bool> visited(numPlanets, false);
 
-    std::unordered_map<Planet*, int> min_cost;
-    std::unordered_map<Planet*, Planet*> previous_planet;
-    std::priority_queue<PlanetPriority> frontier;
+    while (!pq.empty()) {
+        Node current = pq.top();
+        pq.pop();
 
+        size_t planet = current.planet;
 
+        if (visited[planet])
+            continue;
 
-    // inicializa solo el nodo de partida
-    min_cost[start] = 0;
-    frontier.push({start, 0});
+        visited[planet] = true;
 
-    while (!frontier.empty()) {
+        if (planet == destination)
+            return dist[planet];
 
-        Planet* current = frontier.top().planet;
-        int current_cost = frontier.top().added_cost;
-        frontier.pop();
+        for (const auto& edge : adj[planet]) {
+            size_t neighbor = edge.id;
+            size_t distNeighbor = edge.dist;
 
-        if (current_cost > min_cost[current]) continue;
-        if (current == target) break;
-
-        // for (const auto& connection : current->connections) {   //VERIFICAR USAR CONNECTIONS CUANDO LAS CONEXIONES ENTRE PLANETAS ENGAN PESO 
-        //     Planet* neighbor = connection.first;
-        //     int travel_cost = connection.second;
-        //     int new_cost = current_cost + travel_cost;
-
-        //     // Si el vecino no está en min_cost, se añade automáticamente con INT_MAX
-        //     if (new_cost < min_cost[neighbor]) {
-        //         min_cost[neighbor] = new_cost;
-        //         previous_planet[neighbor] = current;
-        //         frontier.push({neighbor, new_cost});
-        //     }
-        // }
-    }
-
-    // Reconstrucción de la ruta (igual que antes)
-    std::vector<Planet*> path;
-    if (min_cost.find(target) != min_cost.end() && min_cost[target] != INT_MAX) {
-        Planet* current = target;
-        while (current != nullptr) {
-            path.push_back(current);
-            current = previous_planet[current];
+            if (!visited[neighbor] && dist[planet] != numeric_limits<size_t>::max() &&
+                dist[planet] + distNeighbor < dist[neighbor]) {
+                dist[neighbor] = dist[planet] + distNeighbor;
+                pq.push({neighbor, dist[neighbor]});
+            }
         }
-        std::reverse(path.begin(), path.end());
     }
-
-    return {min_cost[target], path};
+    
+    return numeric_limits<size_t>::max();
 }

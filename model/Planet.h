@@ -13,15 +13,16 @@ private:
 
     int posX;
     int posY;
-    int sectorID;
+    size_t sectorID;
 
 public:
-    Planet(string name, int x, int y, int id);
+    Planet(string name, int x, int y, size_t id);
     ~Planet();
 
-    void setSectorID(int id);
+    void setSectorID(size_t id);
 
-    int getSectorID() const;
+    size_t getSectorID() const;
+    string getName() const;
     
     void setPosX(int x);
     void setPosY(int y);
