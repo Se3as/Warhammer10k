@@ -116,15 +116,15 @@ size_t Model::attack(int index) {
     // Log del coste de ataque usando greedy
     // std::cout << "Cost of attack using greedy search: " << cost << std::endl;
     // std::cout << "Cost of attack using local search: " << cost << std::endl;
+    // std::cout << "Cost of attack using exhaustive search: " << cost << std::endl;
+    std::cout << "Cost of attack using exhaustive search bounded: " << cost << std::endl;
 
-    std::cout << "Cost of attack using exhaustive search: " << cost << std::endl;
 
     // Si el coste es infinito, significa que no se encontró un camino
     if (cost == std::numeric_limits<size_t>::max()) {
         std::cout << "No path found for attack!" << std::endl;
         return this->boss.getBossHP(); // Don't deal damage if no path
     }
-
 
     // Log de iteraciones
     std::cout << "Iterations: " << iterations << std::endl;

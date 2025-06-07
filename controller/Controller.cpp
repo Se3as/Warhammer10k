@@ -12,7 +12,7 @@ void Controller::run(){
     view->initialize();
     this->connecctCallbacks();
     view->show();
-    // std::cout << "LightAssault test, using greedy search. About to attack..." << std::endl;
+    // std::cout << "LightAssault test, greedy search. About to attack..." << std::endl;
     // size_t bossLife = this->model.attack(POS_UNIT_2);
     // std::cout << "Boss life after attack using greedy search: " << bossLife << std::endl;
 
@@ -20,10 +20,14 @@ void Controller::run(){
     // size_t bossLife = this->model.attack(POS_UNIT_3);
     // std::cout << "Boss life after attack local search: " << bossLife << std::endl;
 
-    std::cout << "HeavyAssault test, local search. About to attack..." << std::endl;
-    size_t bossLife = this->model.attack(POS_UNIT_4);
-    std::cout << "Boss life after attack local search: " << bossLife << std::endl;
-    
+    // std::cout << "HeavyAssault test, exhaustive search. About to attack..." << std::endl;
+    // size_t bossLife = this->model.attack(POS_UNIT_4);
+    // std::cout << "Boss life after attack exhaustive search: " << bossLife << std::endl;
+
+    std::cout << "SupHeavyAssault test, exhaustive search bounded. About to attack..." << std::endl;
+    size_t bossLife = this->model.attack(POS_UNIT_5);
+    std::cout << "Boss life after attack exhaustive search bounded: " << bossLife << std::endl;
+
     Fl::run();
 }
 void Controller:: connecctCallbacks(){
