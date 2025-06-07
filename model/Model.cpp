@@ -93,25 +93,7 @@ size_t Model::attack(int index) {
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t iterations = 0;
 
-    // Previsualización del coste de entry planet y sus vecinos
-    auto adj = galaxy.getGraph().getListAd();
-    std::cout << "Adjacency list for entry planet (" << galaxy.getEntryPlanet() << "): ";
-    for (const auto& edge : adj[galaxy.getEntryPlanet()]) {
-        std::cout << "(to " << edge.id << ", dist " << edge.dist << ") ";
-    }
-    std::cout << std::endl;
-
-    std::cout << "Entry planet: " << galaxy.getEntryPlanet() << ", Exit planet: " << galaxy.getExitPlanet() << std::endl;
-
-    for (size_t i = 0; i < adj.size(); ++i) {
-        std::cout << "Planet " << i << ": ";
-        for (const auto& edge : adj[i]) {
-            std::cout << "(to " << edge.id << ", dist " << edge.dist << ") ";
-        }
-        std::cout << std::endl;
-    }
-
-    size_t cost = this->player.attack(index, adj,
+    size_t cost = this->player.attack(index, galaxy.getGraph().getListAd(),
                                       galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
     // Log del coste de ataque usando greedy
     // std::cout << "Cost of attack using greedy search: " << cost << std::endl;
@@ -119,10 +101,9 @@ size_t Model::attack(int index) {
     // std::cout << "Cost of attack using exhaustive search: " << cost << std::endl;
     std::cout << "Cost of attack using exhaustive search bounded: " << cost << std::endl;
 
-
     // Si el coste es infinito, significa que no se encontró un camino
     if (cost == std::numeric_limits<size_t>::max()) {
-        std::cout << "No path found for attack!" << std::endl;
+        // std::cout << "No path found for attack!" << std::endl;
         return this->boss.getBossHP(); // Don't deal damage if no path
     }
 

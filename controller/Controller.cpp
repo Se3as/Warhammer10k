@@ -24,7 +24,7 @@ void Controller::run(){
     // size_t bossLife = this->model.attack(POS_UNIT_4);
     // std::cout << "Boss life after attack exhaustive search: " << bossLife << std::endl;
 
-    std::cout << "SupHeavyAssault test, exhaustive search bounded. About to attack..." << std::endl;
+    // std::cout << "SupHeavyAssault test, exhaustive search bounded. About to attack..." << std::endl;
     size_t bossLife = this->model.attack(POS_UNIT_5);
     std::cout << "Boss life after attack exhaustive search bounded: " << bossLife << std::endl;
 

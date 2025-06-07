@@ -40,9 +40,7 @@ vector<bool> Player:: getPVisited(){
 
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
     size_t origin, size_t destination, size_t& iterations) {
-    // create a local visited vector to avoid using the global one
-    vector<bool> visitedLocal = {};
-    visitedLocal.resize(adj.size(), true);
+    vector<bool> visitedLocal(adj.size(), false);
     return this->units[index]->attack_iterations(adj,
         visitedLocal, origin, destination, iterations);
 }
