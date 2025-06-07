@@ -5,6 +5,7 @@
 
 Player::Player(){
     pVisited = vector<bool>(0, false);
+    pMapped = vector<bool>(0, false);
     units.push_back(new Pathﬁnder("Pathfinder", 10));
     units.push_back(new StarMapper("StarMapper", 10));
     units.push_back(new LightAssault("LightAssault", 10));
@@ -32,11 +33,16 @@ int Player::getEterium() const {
 
 void Player::setPVisited(size_t numPlanets){
     pVisited = vector<bool>(numPlanets,false);
+    pMapped = vector<bool>(numPlanets,false);
     pVisited[0] = true;
 }
 
 vector<bool>& Player:: getPVisited(){
     return this->pVisited;
+}
+
+vector<bool>& Player:: getPMapped(){
+    return this->pMapped;
 }
 
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,

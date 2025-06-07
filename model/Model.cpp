@@ -181,6 +181,9 @@ size_t Model:: mapNeighbor(int index, size_t origin, size_t destination){
     size_t iterations = 0;
     size_t distance = this->player.mapNeighbor(index, numPlanets, galaxy.getGraph().getListAd(),
     origin, destination, iterations);
+    vector<bool>& mapped = this->player.getPMapped();
+    mapped[origin]= true;
+    mapped[destination]= true;
     return distance;
 }
 vector<vector<size_t>> Model:: mapAll(int index){
@@ -189,6 +192,13 @@ vector<vector<size_t>> Model:: mapAll(int index){
     size_t iterations = 0;
     vector<vector<size_t>> floydMat = this->player.mapAll(index, numPlanets,
         galaxy.getGraph().getMatAd(), iterations);
+    vector<bool>& visited = this->player.getPVisited();
+    vector<bool>& mapped = this->player.getPMapped();
+    for (int i = 0; i < visited.size(); i++){
+        if(visited[i]){
+            mapped[i]= true;
+        }
+    }
     return floydMat;
 }
 

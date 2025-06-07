@@ -12,6 +12,7 @@ private:
 
     string name;
     vector<bool> pVisited;
+    vector<bool> pMapped;
     int eterium;
     vector<SpaceUnit*> units;
 public:
@@ -38,4 +39,5 @@ public:
         &adj, size_t& iterations);
 
     vector<bool>& getPVisited();
+    vector<bool>& getPMapped();
 };
