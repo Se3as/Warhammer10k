@@ -14,9 +14,11 @@ void Galaxy:: addPlanet(Planet* planet, size_t index, string entryPlanet,
     planetarium.push_back(planet);
     if(planet->getName() == entryPlanet){
         this->entryPlanet = index;
+        cout<<endl<<index<<endl;
     }
     else if (planet->getName() == exitPlanet){
         this->exitPlanet = index;
+        cout<<endl<<index<<endl;
     }
 }
 
@@ -48,6 +50,7 @@ void Galaxy::makeConnections() {
         }
     }
 }
+
 
 Graph& Galaxy:: getGraph(){
     return this->graph;

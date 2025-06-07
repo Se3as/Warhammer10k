@@ -38,4 +38,6 @@ private:
     static void onMoneyClick(Fl_Widget* w, void* userdata);
     static void onPlanetClick(Fl_Widget* w, void* userdata);
 
+    static void OnEterTimeout(void* user_data);
+
 };
