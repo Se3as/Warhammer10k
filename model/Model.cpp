@@ -93,7 +93,7 @@ size_t Model::attack(int index) {
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t iterations = 0;
 
-    // Previsualización del coste de entry planet hasta exit planet
+    // Previsualización del coste de entry planet y sus vecinos
     auto adj = galaxy.getGraph().getListAd();
     std::cout << "Adjacency list for entry planet (" << galaxy.getEntryPlanet() << "): ";
     for (const auto& edge : adj[galaxy.getEntryPlanet()]) {
@@ -116,8 +116,8 @@ size_t Model::attack(int index) {
     // Log del coste de ataque usando greedy
     // std::cout << "Cost of attack using greedy search: " << cost << std::endl;
 
-    std::cout << "Cost of attack: " << cost << std::endl;
-    
+    std::cout << "Cost of attack using local search: " << cost << std::endl;
+
     // Si el coste es infinito, significa que no se encontró un camino
     if (cost == std::numeric_limits<size_t>::max()) {
         std::cout << "No path found for attack!" << std::endl;
