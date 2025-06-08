@@ -15,6 +15,9 @@ private:
     int posY;
     size_t sectorID;
 
+    bool mapped;
+    bool visited;
+
 public:
     Planet(string name, int x, int y, size_t id);
     ~Planet();
@@ -29,5 +32,11 @@ public:
 
     int getPosX() const;
     int getPosY() const;
+
+    void setMapped();
+    bool getMapped();
+
+    void setVisited();
+    bool getVisited();
 
 };

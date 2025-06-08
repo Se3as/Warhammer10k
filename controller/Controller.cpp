@@ -30,27 +30,33 @@ void Controller::run(){
 }
 void Controller:: connecctCallbacks(){
 
-    view->interceptor->callback(onInterceptorClick, this);
-    view->barracuda  ->callback(onBarracudaClick,  this);
-    view->saboteur   ->callback(onSaboteurClick,   this);
-    view->annihilator->callback(onAnnihilatorClick,this);
-    view->battleray  ->callback(onBattlerayClick,  this);
+    view->Agatus    ->callback(onAgatusClick, this);
+    view->Artemis   ->callback(onArtemisClick,  this);
+    view->Charopos   ->callback(onCharoposClick,   this);
+    view->Convict   ->callback(onConvictClick,this);
+    view->Impulse  ->callback(onImpulseClick,  this);
+    view->Reflector  ->callback(onReflectorClick,  this);
+    view->Stiger  ->callback(onStigerClick,  this);
+    view->Streuner  ->callback(onStreunerClick,  this);
 
     view->boss->callback(onBossClick, this);
 
     view->logout ->callback(onLogoutClick, this);
-    view->attack ->callback(onAttackClick, this);
-    view->explore->callback(onExploreClick,this);
-    view->mapper ->callback(onMapClick, this);
-    view->shop   ->callback(onShopClick, this);
+    //view->attack ->callback(onAttackClick, this);
+    //view->explore->callback(onExploreClick,this);
+    //view->mapper ->callback(onMapClick, this);
+    //view->shop   ->callback(onShopClick, this);
     view->money  ->callback(onMoneyClick, this);
 
     for (auto planetBtn : view->planets) {
         planetBtn->callback(onPlanetClick, this);
     }
+
+    view->gate->callback(onGateClick, this);
+
 }
 
-void Controller::onInterceptorClick(Fl_Widget* w, void* userdata) {
+void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     size_t origin = 0;
     size_t destination = 7;
@@ -62,7 +68,7 @@ void Controller::onInterceptorClick(Fl_Widget* w, void* userdata) {
     // c->view->mapNeighbor(origin,destination, dist);
 }
 
-void Controller::onBarracudaClick(Fl_Widget* w, void* userdata) {
+void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<vector<size_t>> originalMat = c->model.getMatAd();
     vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
@@ -73,7 +79,7 @@ void Controller::onBarracudaClick(Fl_Widget* w, void* userdata) {
     // c->view->mapAll(originalMat, floydMat);
 }
 
-void Controller::onSaboteurClick(Fl_Widget* w, void* userdata) {
+void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     size_t bossLife = c->model.attack(POS_UNIT_2);
     // Actualizar la bossLife.
@@ -88,7 +94,7 @@ void Controller::onSaboteurClick(Fl_Widget* w, void* userdata) {
 }
 // TODO: 3 more attack bottons 
 
-void Controller::onAnnihilatorClick(Fl_Widget* w, void* userdata) {
+void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_3);
     // Esto regresa un vector con los planetas explorados, recorrerlo y
@@ -96,7 +102,7 @@ void Controller::onAnnihilatorClick(Fl_Widget* w, void* userdata) {
     //c->view->explorePlanets(planetsDiscovered);
 }
 
-void Controller::onBattlerayClick(Fl_Widget* w, void* userdata) {
+void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
     // Esto regresa un vector con los planetas explorados, recorrerlo y
@@ -104,6 +110,23 @@ void Controller::onBattlerayClick(Fl_Widget* w, void* userdata) {
     //c->view->explorePlanets(planetsDiscovered);
 }
 
+void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
+}
+
+void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
+}
+
+void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
+}
 
 void Controller::onBossClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
@@ -115,33 +138,40 @@ void Controller::onLogoutClick(Fl_Widget* w, void* userdata) {
     c->view->hide();
 }
 
-void Controller::onAttackClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    c->view->attacking = !c->view->attacking;
+// void Controller::onAttackClick(Fl_Widget* w, void* userdata) {
+//     Controller* c = static_cast<Controller*>(userdata);
+//     c->view->attacking = !c->view->attacking;
 
-}
+// }
 
-void Controller::onExploreClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    c->view->exploring = !c->view->exploring;
+// void Controller::onExploreClick(Fl_Widget* w, void* userdata) {
+//     Controller* c = static_cast<Controller*>(userdata);
+//     c->view->exploring = !c->view->exploring;
 
-}
+// }
 
-void Controller::onMapClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    c->view->mapping = !c->view->mapping;
-}
+// void Controller::onMapClick(Fl_Widget* w, void* userdata) {
+//     Controller* c = static_cast<Controller*>(userdata);
+//     c->view->mapping = !c->view->mapping;
+// }
 
-void Controller::onShopClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    c->view->shopping = !c->view->shopping;
-}
+// void Controller::onShopClick(Fl_Widget* w, void* userdata) {
+//     Controller* c = static_cast<Controller*>(userdata);
+//     c->view->shopping = !c->view->shopping;
+// }
 
 void Controller::onMoneyClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     c->view->info->show();
     c->view->frame->redraw();
 }
+
+void Controller::onGateClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    c->view->nextGalaxy();
+    c->view->frame->redraw();
+}
+
 
 void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);

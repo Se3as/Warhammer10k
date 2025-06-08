@@ -24,5 +24,5 @@ public:
     size_t getBossHP() const;
 
     size_t receiveDamage(size_t damage);
-    
+
 };
