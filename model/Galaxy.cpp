@@ -3,9 +3,7 @@
 #include <ctime>     
 
 Galaxy::Galaxy(string name):
-    name(name), graph(0){
-        srand(time(0));
-    }
+    name(name), graph(0){}
 
 
 

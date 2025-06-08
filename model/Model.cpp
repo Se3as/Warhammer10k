@@ -53,6 +53,9 @@ void Model::loadGalaxy(string& filename) {
             int x = coord.first;
             int y = coord.second;
 
+            // cout<<x<<endl;
+            // cout<<y<<endl;
+
             Planet* planet = new Planet(columns[i], x, y, id);
             
             galaxy.addPlanet(planet, id, entryPlanet, exitPlanet);
@@ -137,10 +140,12 @@ void Model::printGalaxy() {
     galaxies[this->actualGalaxy].printer();
 }
 
-
-
 const Galaxy& Model::getGalaxy(int index) const {
     return galaxies[index];
+}
+
+void Model::nextGalaxy(){
+    actualGalaxy = actualGalaxy + 1;
 }
 
 size_t Model:: getActualGalaxy() const{

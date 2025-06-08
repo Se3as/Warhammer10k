@@ -16,7 +16,7 @@ private:
     vector<Galaxy> galaxies;
     size_t actualGalaxy;
     Player player;
-    Boss boss;
+    
 
     static constexpr int BASE_DAMAGE = 1000;
     
@@ -24,7 +24,9 @@ public:
     Model();
     ~Model();
 
-    void setActualGalaxy(size_t y);
+    Boss boss;
+
+    void nextGalaxy();
     size_t getActualGalaxy() const;
     // size_t attack(int index);
     size_t greedyAttack(int index);

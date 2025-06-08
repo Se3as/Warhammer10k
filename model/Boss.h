@@ -19,7 +19,7 @@ public:
 
     string getBossID();
 
-    void setBossHP(size_t hp);
+    void setBossHP();
 
     size_t getBossHP() const;
 

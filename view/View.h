@@ -130,8 +130,8 @@ private:
         const char* hover_text;
 
     public:
-        HoverButton(int X, int Y, int W, int H, const char* L, Fl_Box* hover_label = nullptr, const char* hover_msg = "")
-            : Fl_Button(X, Y, W, H, L), label_box(hover_label), hover_text(hover_msg) {}
+        HoverButton(int X, int Y, int W, int H, Fl_Box* hover_label = nullptr, const char* hover_msg = "")
+            : Fl_Button(X, Y, W, H), label_box(hover_label), hover_text(hover_msg) {}
 
         int handle(int event) override {
             switch (event) {
@@ -181,6 +181,8 @@ public:
 
     void nextGalaxy();
 
+    void newBoss();
+
     bool attacking;
     bool exploring;
     bool mapping;
@@ -205,10 +207,6 @@ public:
     Fl_Button* boss;
 
     Fl_Button* logout;
-    //Fl_Button* attack;
-    //Fl_Button* explore;
-    //Fl_Button* mapper;
-    //Fl_Button* shop;
     HoverButton* money;
 
     Fl_Box* info;
@@ -217,8 +215,14 @@ public:
     Fl_Box* mine_count;
     Fl_Box* boss_life;
 
+    Fl_Box* info_visited;
+    Fl_Box* info_mapped;
 
     std::vector<Fl_Button*> planets;
+
+
+
+    
 
 
 };

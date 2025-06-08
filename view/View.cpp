@@ -80,11 +80,6 @@ void View::load_maps() {
 
 }
 
-// void View::draw_line_between(int x1, int y1, int x2, int y2, Fl_Color color) {
-//     lineDrawer->set_points(x1, y1, x2, y2, color);
-// }
-
-
 //CARGA LAS NAVES
 void View::load_ships(){
     const string ship_catalog = "assets/gfx/ships";
@@ -161,12 +156,16 @@ void View::load_bosses(){
             bosses.push_back(boss);
         }
     }
+    newBoss();
+}
 
+
+void View::newBoss(){
     boss = new Fl_Button(BOSSX, BOSSY, BOSSSIZEX, BOSSSIZEY);
     boss->box(FL_NO_BOX);
     boss->image(bosses[random_boss_number()]);
-    // boss->callback(manage_boss_click, this);
 }
+
 
 // //CARGA LOS BOTONES MENUS
 void View::load_menus(){
@@ -199,7 +198,7 @@ void View::load_menus(){
     info->labelcolor(fl_rgb_color(85, 132, 156));
     info->align(FL_ALIGN_RIGHT);
     info->labelsize(18);
-    //info->hide();
+    info->hide();
 
     //LABEL PARA PLANETA VISITADO
     feedblack = new Fl_Box(INFOX, INFOY, INFOSIZEX, INFOSIZEY, "VISITED");
@@ -220,7 +219,7 @@ void View::load_menus(){
     boss_life->labelcolor(fl_rgb_color(85, 132, 156));
     boss_life->align(FL_ALIGN_RIGHT);
     boss_life->labelsize(18);
-    boss_life->hide();
+    //boss_life->hide();
     
     logout = new Fl_Button(MENUX, MENUY, MENUSIZEX, MENUSIZEY);
     logout->box(FL_NO_BOX);
@@ -228,35 +227,10 @@ void View::load_menus(){
     logout->clear_visible_focus();
     // logout->callback(manage_logout_click, this);
 
-    // attack = new Fl_Button((MENUX + MENUSPACE), MENUY, MENUSIZEX, MENUSIZEY);
-    // attack->box(FL_FLAT_BOX);
-    // attack->color(FL_WHITE);
-    // attack->image(icons["DO_attack"]);
-    // attack->clear_visible_focus();
-    // // attack->callback(manage_logout_click, this);
 
-    // explore = new Fl_Button((MENUX + (MENUSPACE * 2)), MENUY, MENUSIZEX, MENUSIZEY);
-    // explore->box(FL_FLAT_BOX);
-    // explore->color(FL_WHITE);
-    // explore->image(icons["DO_explore"]);
-    // explore->clear_visible_focus();
-    // // explore->callback(manage_logout_click, this);
 
-    // mapper = new Fl_Button((MENUX + (MENUSPACE * 3)), MENUY, MENUSIZEX, MENUSIZEY);
-    // mapper->box(FL_FLAT_BOX);
-    // mapper->color(FL_WHITE);
-    // mapper->image(icons["DO_map"]);
-    // mapper->clear_visible_focus();
-    // // mapper->callback(manage_logout_click, this);
 
-    // shop = new Fl_Button((MENUX + (MENUSPACE * 4)), MENUY, MENUSIZEX, MENUSIZEY);
-    // shop->box(FL_FLAT_BOX);
-    // shop->color(FL_WHITE);
-    // shop->image(icons["DO_shop"]);
-    // shop->clear_visible_focus();
-    // // shop->callback(manage_logout_click, this);
-
-    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, "Eterium label" , eterium, "Eterium");
+    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, eterium, "Eterium");
     money->box(FL_NO_BOX);
     money->image(icons["Eterium"]);
     money->clear_visible_focus();
@@ -271,18 +245,29 @@ void View::load_menus(){
     //gate->callback();
 
 }
+
+
+
+
 void View::load_planets() {
 
     const vector<Galaxy>& galaxies = model.getGalaxies();
     const Galaxy& galaxy = galaxies[model.getActualGalaxy()];   
     const vector<Planet*>& planetarium = galaxy.getPlanets();
 
+
+
     for (size_t p = 0; p < planetarium.size(); ++p) {
         const Planet* pl = planetarium[p];
         int x = pl->getPosX();
         int y = pl->getPosY();
+
+        // cout<<x<<endl;
+        // cout<<y<<endl;
+
         Fl_Button* btn = new Fl_Button(x, y, PLANETSIZEX, PLANETSIZEY);
         btn->box(FL_NO_BOX);
+        frame->add(btn);
 
         if(p < planetarium.size() - 1){
 
@@ -303,6 +288,9 @@ void View::load_planets() {
         if(p == (planetarium.size() - 1)){
             btn->image(icons["acm01"]);
             boss->position(x, y - 105);
+            boss_life->position(x + 30, y - 130);
+
+
             feedblack->position(x - 10, y + 70);  //<--- cambiar a planet info
 
 
@@ -316,20 +304,31 @@ void View::load_planets() {
 }
 
 void View::nextGalaxy(){
+
+    for (Fl_Button* btn : planets) {
+        frame->remove(btn); 
+        delete btn;       
+    }
+    planets.clear();  
+    
+
+    lineDrawer->clear_lines();
+
+    model.nextGalaxy();
+
+    load_planets();
+
     random_map_generation();
     random_boss_generation();
 
-    //ESTO DBERIA TENER OTRO LOAD PLANETS
-
-
 }
 
-//PONE LA LABEL DE FEEDBACK DEBAJO DEL PLANETA
-void View::planet_info(){
-    const vector<Galaxy>& galaxies = model.getGalaxies();
-    const Galaxy& galaxy = galaxies[model.getActualGalaxy()];   
-    const vector<Planet*>& planetarium = galaxy.getPlanets();
+// //PONE LA LABEL DE FEEDBACK DEBAJO DEL PLANETA
+// void View::planet_info(){
+//     const vector<Galaxy>& galaxies = model.getGalaxies();
+//     const Galaxy& galaxy = galaxies[model.getActualGalaxy()];   
+//     const vector<Planet*>& planetarium = galaxy.getPlanets();
 
     
 
-}
+// }

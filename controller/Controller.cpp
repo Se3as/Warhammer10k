@@ -15,6 +15,10 @@ void Controller::run(){
     Fl::add_timeout(1.0, OnEterTimeout, this);
     ////
     view->show();
+
+    boss_life_text = to_string(model.boss.getBossHP());
+    view->boss_life->label(boss_life_text.c_str());
+
     // Estos son pruebas para los algoritmos
     this->model.setPlayerVisitedPlanets();
     // Imprime los vecinos de cada nodo que son lo que devuelve cuando se manda la nava
@@ -59,10 +63,6 @@ void Controller:: connecctCallbacks(){
     view->boss->callback(onBossClick, this);
 
     view->logout ->callback(onLogoutClick, this);
-    //view->attack ->callback(onAttackClick, this);
-    //view->explore->callback(onExploreClick,this);
-    //view->mapper ->callback(onMapClick, this);
-    //view->shop   ->callback(onShopClick, this);
     view->money  ->callback(onMoneyClick, this);
 
     for (auto planetBtn : view->planets) {
@@ -73,27 +73,38 @@ void Controller:: connecctCallbacks(){
 
 }
 
+
+
+
+
+void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
+}
+
 void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     size_t origin = 0;
     size_t destination = 7;
-    size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
+    //size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
     // Hay que hacer que origin y destination sean los planetas que escoja el ususario
     // este regresa la distancia que hay entre ese planeta origen y su destino
     // crear una linea entre esos dos ojala de un color diferente a la de floyd
     // y colocar esa distancia en esa arista
     // c->view->mapNeighbor(origin,destination, dist);
+
+
+    cout << "soy agatus: " <<endl;
+
 }
 
-void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
+void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<vector<size_t>> originalMat = c->model.getMatAd();
-    vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
-    // La vista tiene que tomar el valor de las distancias para las aristas de la matrizOriginal
-    // solo si el valor en esa posicion no es invalido EN LAS DOS MATRICES
-    // es decir tiene que ser valido en ambas, colocar en la etiqueta los planetas ([i][j], i es un planeta, j otro)
-    // como mapeado y colocar las distancias en las aristas
-    // c->view->mapAll(originalMat, floydMat);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_3);
+    // Esto regresa un vector con los planetas explorados, recorrerlo y
+    // colocar en la etiqueta correspondiente como explorado.
+    //c->view->explorePlanets(planetsDiscovered);
 }
 
 void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
@@ -109,27 +120,12 @@ void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     //}
 
 }
-// TODO: 3 more attack bottons 
-
-void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_3);
-    // Esto regresa un vector con los planetas explorados, recorrerlo y
-    // colocar en la etiqueta correspondiente como explorado.
-    //c->view->explorePlanets(planetsDiscovered);
-}
 
 void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
     // Esto regresa un vector con los planetas explorados, recorrerlo y
     // colocar en la etiqueta correspondiente como explorado.
-    //c->view->explorePlanets(planetsDiscovered);
-}
-
-void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
     //c->view->explorePlanets(planetsDiscovered);
 }
 
@@ -145,6 +141,21 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
     //c->view->explorePlanets(planetsDiscovered);
 }
 
+void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    vector<vector<size_t>> originalMat = c->model.getMatAd();
+    vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
+    // La vista tiene que tomar el valor de las distancias para las aristas de la matrizOriginal
+    // solo si el valor en esa posicion no es invalido EN LAS DOS MATRICES
+    // es decir tiene que ser valido en ambas, colocar en la etiqueta los planetas ([i][j], i es un planeta, j otro)
+    // como mapeado y colocar las distancias en las aristas
+    // c->view->mapAll(originalMat, floydMat);
+}
+
+
+
+
+
 void Controller::onBossClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 }
@@ -155,28 +166,6 @@ void Controller::onLogoutClick(Fl_Widget* w, void* userdata) {
     c->view->hide();
 }
 
-// void Controller::onAttackClick(Fl_Widget* w, void* userdata) {
-//     Controller* c = static_cast<Controller*>(userdata);
-//     c->view->attacking = !c->view->attacking;
-
-// }
-
-// void Controller::onExploreClick(Fl_Widget* w, void* userdata) {
-//     Controller* c = static_cast<Controller*>(userdata);
-//     c->view->exploring = !c->view->exploring;
-
-// }
-
-// void Controller::onMapClick(Fl_Widget* w, void* userdata) {
-//     Controller* c = static_cast<Controller*>(userdata);
-//     c->view->mapping = !c->view->mapping;
-// }
-
-// void Controller::onShopClick(Fl_Widget* w, void* userdata) {
-//     Controller* c = static_cast<Controller*>(userdata);
-//     c->view->shopping = !c->view->shopping;
-// }
-
 void Controller::onMoneyClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     c->view->info->show();
@@ -186,7 +175,19 @@ void Controller::onMoneyClick(Fl_Widget* w, void* userdata) {
 void Controller::onGateClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     c->view->nextGalaxy();
+
+    for (auto planetBtn : c->view->planets) {
+        planetBtn->callback(onPlanetClick, c);
+    }
+
+    c->model.boss.setBossHP();
+
+    c->boss_life_text = to_string(c->model.boss.getBossHP());
+    c->view->boss_life->label(c->boss_life_text.c_str());
+
+
     c->view->frame->redraw();
+
 }
 
 
@@ -194,9 +195,11 @@ void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     for (size_t i = 0; i < c->view->planets.size(); ++i) {
         if (c->view->planets[i] == w) {
+            cout<<"soy el planeta: " << i <<endl;
             break;
         }
     }
+
 }
 
 void Controller::OnEterTimeout(void* user_data) {
