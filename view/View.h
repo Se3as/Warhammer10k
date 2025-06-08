@@ -221,9 +221,5 @@ public:
     std::vector<Fl_Button*> planets;
 
 
-
-    
-
-
 };
 

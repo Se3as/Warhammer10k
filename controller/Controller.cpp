@@ -74,20 +74,12 @@ void Controller:: connecctCallbacks(){
 }
 
 
-
-
-
 void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
     //c->view->explorePlanets(planetsDiscovered);
-}
 
-void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    size_t origin = 0;
-    size_t destination = 7;
-    //size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
+
     // Hay que hacer que origin y destination sean los planetas que escoja el ususario
     // este regresa la distancia que hay entre ese planeta origen y su destino
     // crear una linea entre esos dos ojala de un color diferente a la de floyd
@@ -95,21 +87,51 @@ void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     // c->view->mapNeighbor(origin,destination, dist);
 
 
-    cout << "soy agatus: " <<endl;
+}
+
+void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
+    Controller* c = static_cast<Controller*>(userdata);
+    
+    vector<vector<size_t>> originalMat = c->model.getMatAd();
+    vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
+
+
+    //size_t origin = 0;
+    //size_t destination = 7;
+    //size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
+    
+
+
+    // La vista tiene que tomar el valor de las distancias para las aristas de la matrizOriginal
+    // solo si el valor en esa posicion no es invalido EN LAS DOS MATRICES
+    // es decir tiene que ser valido en ambas, colocar en la etiqueta los planetas ([i][j], i es un planeta, j otro)
+    // como mapeado y colocar las distancias en las aristas
+    // c->view->mapAll(originalMat, floydMat);
+
+
+    //cout << "soy agatus: " <<endl;
 
 }
 
 void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_3);
-    // Esto regresa un vector con los planetas explorados, recorrerlo y
-    // colocar en la etiqueta correspondiente como explorado.
-    //c->view->explorePlanets(planetsDiscovered);
+    // size_t bossLife = c->model.attack(POS_UNIT_2);
+   
+    // Actualizar la bossLife.
+    //c->view->attackOnBoss(bossLife);
+    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
+    // del portal
+    // bool dead = c->model.isBossDead();
+    // if(dead){
+    //  c->view->bossDead();
+    //}
+
 }
 
 void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     // size_t bossLife = c->model.attack(POS_UNIT_2);
+   
     // Actualizar la bossLife.
     //c->view->attackOnBoss(bossLife);
     // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
@@ -123,35 +145,55 @@ void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
 
 void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
-    // Esto regresa un vector con los planetas explorados, recorrerlo y
-    // colocar en la etiqueta correspondiente como explorado.
-    //c->view->explorePlanets(planetsDiscovered);
+    // size_t bossLife = c->model.attack(POS_UNIT_2);
+   
+    // Actualizar la bossLife.
+    //c->view->attackOnBoss(bossLife);
+    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
+    // del portal
+    // bool dead = c->model.isBossDead();
+    // if(dead){
+    //  c->view->bossDead();
+    //}
+
 }
 
 void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
-    //c->view->explorePlanets(planetsDiscovered);
+    // size_t bossLife = c->model.attack(POS_UNIT_2);
+   
+    // Actualizar la bossLife.
+    //c->view->attackOnBoss(bossLife);
+    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
+    // del portal
+    // bool dead = c->model.isBossDead();
+    // if(dead){
+    //  c->view->bossDead();
+    //}
+
 }
 
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
     //c->view->explorePlanets(planetsDiscovered);
+
+    // Esto regresa un vector con los planetas explorados, recorrerlo y
+    // colocar en la etiqueta correspondiente como explorado.
+    //c->view->explorePlanets(planetsDiscovered);
+
 }
 
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<vector<size_t>> originalMat = c->model.getMatAd();
-    vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
-    // La vista tiene que tomar el valor de las distancias para las aristas de la matrizOriginal
-    // solo si el valor en esa posicion no es invalido EN LAS DOS MATRICES
-    // es decir tiene que ser valido en ambas, colocar en la etiqueta los planetas ([i][j], i es un planeta, j otro)
-    // como mapeado y colocar las distancias en las aristas
-    // c->view->mapAll(originalMat, floydMat);
-}
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+    //c->view->explorePlanets(planetsDiscovered);
 
+    // Esto regresa un vector con los planetas explorados, recorrerlo y
+    // colocar en la etiqueta correspondiente como explorado.
+    //c->view->explorePlanets(planetsDiscovered);
+
+}
 
 
 
@@ -199,7 +241,6 @@ void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
             break;
         }
     }
-
 }
 
 void Controller::OnEterTimeout(void* user_data) {
@@ -209,6 +250,8 @@ void Controller::OnEterTimeout(void* user_data) {
     // Llamar al view para que actualice el eterium
     // c->view->addEterium(totalEterium);
     // c->view->frame->redraw();
+
+
 
     Fl::repeat_timeout(1.0, OnEterTimeout, user_data);
 }

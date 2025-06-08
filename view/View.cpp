@@ -229,7 +229,7 @@ void View::load_menus(){
 
 
 
-
+    
     money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, eterium, "Eterium");
     money->box(FL_NO_BOX);
     money->image(icons["Eterium"]);
