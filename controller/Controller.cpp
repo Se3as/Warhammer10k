@@ -11,7 +11,7 @@
 #define DEEPPROBE 4
 
 Controller::Controller(Model& model, View* view)
-  : model(model),view(view){}
+  : model(model),view(view), planet_origin(100), planet_destination(100){}
 
 void Controller::run(){
     string test = "test.csv";
@@ -85,6 +85,18 @@ void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     // c->view->mapNeighbor(origin,destination, dist);
 
 
+
+
+    size_t origin = c->planet_origin; //USAR FLAGS PARA SABER LE NUMERO DEL PLANETA, DEVUELVO EL OBJETO PLANETA O SOLO UN INT?
+    size_t destination = c->planet_destination;  
+
+    size_t dist = c->model.mapNeighbor(POS_UNIT_4, c->planet_origin, c->planet_destination);
+
+    //MOSTRAR LA CONEXION
+    //c->view->lineDrawer->add_line(origin->x, origin->y, destination->x, destination->y, FL_YELLOW); 
+    //c->view->frame->redraw();
+
+
 }
 
 void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
@@ -109,8 +121,6 @@ void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     //size_t destination = 7;
     //size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
     
-
-
     // La vista tiene que tomar el valor de las distancias para las aristas de la matrizOriginal
     // solo si el valor en esa posicion no es invalido EN LAS DOS MATRICES
     // es decir tiene que ser valido en ambas, colocar en la etiqueta los planetas ([i][j], i es un planeta, j otro)
@@ -118,7 +128,31 @@ void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     // c->view->mapAll(originalMat, floydMat);
 
 
+
+
+
+
+    // for (size_t i = 0; i < numPlanets; ++i) {
+    //     for (size_t j = 0; j < numPlanets; ++j) {
+    //         size_t origDist = originalMat[i][j];
+    //         size_t floydDist = floydMat[i][j];
+
+    //         //VALIDAR AMBAS DISTANCIAS VLAIDAS
+    //         if (origDist != SIZE_MAX && floydDist != SIZE_MAX) {
+    //             //MOSTRAR EN LA VISTA QUE (i, j) ESTA MAPEADO CON LA DISTANCIA DE FLOYD 
+    //             cout<< (i, j, floydDist); 
+    //         }
+    //     }
+    // }
+
     //cout << "soy agatus: " <<endl;
+
+
+
+
+
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
 
 }
 
@@ -162,6 +196,8 @@ void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     //  c->view->bossDead();
     //}
 
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
 }
 
 // Attack button using local search algorithm
@@ -190,6 +226,8 @@ void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
         //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
     //}
 
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
 }
 
 // Attack button using exhaustive search algorithm
@@ -217,6 +255,10 @@ void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
         // Show a message indicating insufficient eterium or other thing
         //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
     //}
+
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
+
 }
 
 // Attack button using exhaustive search bounded algorithm
@@ -244,6 +286,11 @@ void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
         // Show a message indicating insufficient eterium or other thing
         //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
     //}
+
+
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
+
 }
 
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
@@ -260,6 +307,9 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
     // colocar en la etiqueta correspondiente como explorado.
     //c->view->explorePlanets(planetsDiscovered);
 
+
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
 }
 
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
@@ -276,6 +326,9 @@ void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     // colocar en la etiqueta correspondiente como explorado.
     //c->view->explorePlanets(planetsDiscovered);
 
+
+    c->planet_origin = DEFAULT;
+    c->planet_destination = DEFAULT;
 }
 
 
@@ -293,7 +346,13 @@ void Controller::onLogoutClick(Fl_Widget* w, void* userdata) {
 
 void Controller::onMoneyClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    c->view->info->show();
+    
+    if (c->view->eterium->visible()) {
+        c->view->eterium->hide();
+    } else {
+        c->view->eterium->show();
+    }
+
     c->view->frame->redraw();
 }
 
@@ -321,11 +380,43 @@ void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     for (size_t i = 0; i < c->view->planets.size(); ++i) {
         if (c->view->planets[i] == w) {
-            cout<<"soy el planeta: " << i <<endl;
+            //cout<<"soy el planeta: " << i <<endl;
             break;
         }
+
+        // Buscar qué planeta fue clickeado
+        for (size_t i = 0; i < c->view->planets.size(); ++i) {
+            if (c->view->planets[i] == w) {
+                size_t clickedPlanet = i;
+                cout << "soy el planeta: " << clickedPlanet << endl;
+
+                //ESTO SON LAS FLAGS
+                if (c->planet_origin == DEFAULT) {
+                    // Si origin no ha sido asignado 
+                    c->planet_origin = clickedPlanet;
+                } else if (c->planet_origin != DEFAULT && c->planet_destination == DEFAULT) {
+                    // Si origin ya fue asignado y destination no
+                    if (clickedPlanet != c->planet_origin) {
+                        c->planet_destination = clickedPlanet;
+                    }
+                    // Si se clickea el mismo planeta que origin, no hacer nada
+                } else if (c->planet_origin != DEFAULT && c->planet_destination != DEFAULT) {
+                    // Ambos ya fueron asignados, reiniciar
+                    c->planet_origin = clickedPlanet;
+                    c->planet_destination = DEFAULT;
+                }
+
+                break;
+            }
+        }
+
+
+        //MOVER LABEL VISITADO Y MAPEADO AL PLANETA 
+
     }
 }
+
+
 
 void Controller::OnEterTimeout(void* user_data) {
   Controller* c = static_cast<Controller*>(user_data);

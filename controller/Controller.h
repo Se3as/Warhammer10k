@@ -20,6 +20,11 @@ private:
     size_t origin;
     size_t destination;
 
+    int planet_origin;
+    int planet_destination;
+
+    static constexpr int DEFAULT= 100;
+
     static constexpr int POS_UNIT_0 = 0;
     static constexpr int POS_UNIT_1 = 1;
     static constexpr int POS_UNIT_2 = 2;

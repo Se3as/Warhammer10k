@@ -22,9 +22,9 @@ void View::hide(){
 
 void View::initialize() {
     load_maps();
+    load_menus();
     load_ships();
     load_bosses();
-    load_menus();
     load_planets();
 }
 
@@ -98,45 +98,45 @@ void View::load_ships(){
         }
     }
 
-    Reflector = new Fl_Button(SHIPX, SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Reflector = new HoverButton(SHIPX, SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "  Djikstra");
     Reflector->box(FL_NO_BOX);
     Reflector->image(ships["Reflector"]);
-    // Reflector->callback(manage_ship_click, this);
+    Reflector->clear_visible_focus();
 
-    Agatus = new Fl_Button((SHIPX + SHIPSPACE), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Agatus = new HoverButton((SHIPX + SHIPSPACE), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    Floyd");
     Agatus->box(FL_NO_BOX);
     Agatus->image(ships["Agatus"]);
-    // Agatus->callback(manage_ship_click, this);
+    Agatus->clear_visible_focus();
 
-    Convict = new Fl_Button((SHIPX + (SHIPSPACE * 2)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Convict = new HoverButton((SHIPX + (SHIPSPACE * 2)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Convict->box(FL_NO_BOX);
     Convict->image(ships["Convict"]);
-    // Convict->callback(manage_ship_click, this);
+    Convict->clear_visible_focus();
 
-    Charopos = new Fl_Button((SHIPX + (SHIPSPACE * 3)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Charopos = new HoverButton((SHIPX + (SHIPSPACE * 3)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Charopos->box(FL_NO_BOX);
     Charopos->image(ships["Charopos"]);
-    // Charopos->callback(manage_ship_click, this);
+    Charopos->clear_visible_focus();
 
-    Impulse = new Fl_Button((SHIPX + (SHIPSPACE * 4)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Impulse = new HoverButton((SHIPX + (SHIPSPACE * 4)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Impulse->box(FL_NO_BOX);
     Impulse->image(ships["Impulse"]);
-    // Impulse->callback(manage_ship_click, this);
+    Impulse->clear_visible_focus();
 
-    Stiger= new Fl_Button((SHIPX + (SHIPSPACE * 5)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Stiger= new HoverButton((SHIPX + (SHIPSPACE * 5)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Stiger->box(FL_NO_BOX);
     Stiger->image(ships["Stiger"]);
-    // Stiger->callback(manage_ship_click, this);
+    Stiger->clear_visible_focus();
 
-    Streuner= new Fl_Button((SHIPX + (SHIPSPACE * 6)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Streuner= new HoverButton((SHIPX + (SHIPSPACE * 6)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Streuner->box(FL_NO_BOX);
     Streuner->image(ships["Streuner"]);
-    // Streuner->callback(manage_ship_click, this);
+    Streuner->clear_visible_focus();
 
-    Artemis= new Fl_Button((SHIPX + (SHIPSPACE * 7)), SHIPY, SHIPSIZEX, SHIPSIZEY);
+    Artemis= new HoverButton((SHIPX + (SHIPSPACE * 7)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
     Artemis->box(FL_NO_BOX);
     Artemis->image(ships["Artemis"]);
-    // Artemis->callback(manage_ship_click, this);
+    Artemis->clear_visible_focus();
 
 }
 
@@ -186,12 +186,37 @@ void View::load_menus(){
         }
     }
 
+    info_eterium = new Fl_Box(ETERIUMX, ETERIUMY, ETERIUMSIZEX, ETERIUMSIZEY);
+    info_eterium->labelcolor(fl_rgb_color(85, 132, 156));
+    info_eterium->align(FL_ALIGN_RIGHT);
+    info_eterium->labelsize(18);
+    info_eterium->hide();
+
+    info_ship = new Fl_Box(MENUX, MENUY + 30, INFOSIZEY, INFOSIZEX);
+    info_ship->labelcolor(fl_rgb_color(85, 132, 156));
+    info_ship->align(FL_ALIGN_RIGHT);
+    info_ship->labelsize(18);
+    info_ship->hide();
+
+    info_visited = new Fl_Box(MENUX, MENUY + 30, INFOSIZEY, INFOSIZEX, "Visitado");
+    info_visited->labelcolor(fl_rgb_color(85, 132, 156));
+    info_visited->align(FL_ALIGN_RIGHT);
+    info_visited->labelsize(18);
+    info_visited->hide();
+
+    info_mapped = new Fl_Box(MENUX, MENUY + 30, INFOSIZEY, INFOSIZEX, "Mapeado");
+    info_mapped->labelcolor(fl_rgb_color(85, 132, 156));
+    info_mapped->align(FL_ALIGN_RIGHT);
+    info_mapped->labelsize(18);
+    info_mapped->hide();
+
+
     //LABEL PARA EL ETERIUM
-    eterium = new Fl_Box(ETERIUMX, ETERIUMY, ETERIUMSIZEX, ETERIUMSIZEY);
+    eterium = new Fl_Box((MENUX + (MENUSPACE - 50)), MENUY + 30, INFOSIZEY, INFOSIZEX, "1000");
     eterium->labelcolor(fl_rgb_color(85, 132, 156));
     eterium->align(FL_ALIGN_RIGHT);
     eterium->labelsize(18);
-    //eterium->hide();
+    eterium->hide();
 
     //LABEL PARA FEEDBACK
     info = new Fl_Box(INFOX, INFOY, INFOSIZEX, INFOSIZEY, "PLAYER PLAYING");
@@ -199,13 +224,6 @@ void View::load_menus(){
     info->align(FL_ALIGN_RIGHT);
     info->labelsize(18);
     info->hide();
-
-    //LABEL PARA PLANETA VISITADO
-    feedblack = new Fl_Box(INFOX, INFOY, INFOSIZEX, INFOSIZEY, "VISITED");
-    feedblack->labelcolor(fl_rgb_color(85, 132, 156));
-    feedblack->align(FL_ALIGN_RIGHT);
-    feedblack->labelsize(18);
-    //feedblack->hide();
 
     //LABEL PARA CONTADOR DE MINAS
     mine_count = new Fl_Box(MINEINFOX, MINEINFOY, INFOSIZEX, INFOSIZEY, "MINES ACQUIRED: ");
@@ -227,15 +245,12 @@ void View::load_menus(){
     logout->clear_visible_focus();
     // logout->callback(manage_logout_click, this);
 
-
-
-    
-    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, eterium, "Eterium");
+    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, info_eterium, "Eterium");
     money->box(FL_NO_BOX);
     money->image(icons["Eterium"]);
     money->clear_visible_focus();
-    // money->callback(manage_money_click, this);
-
+    
+    
     Fl_PNG_Image* gate_temp = new Fl_PNG_Image("assets/gfx/icons/kappagate.png");
     Fl_Image* gate_icon = gate_temp->copy(GATESIZEX, GATESIZEY);
     delete gate_temp;
@@ -275,23 +290,20 @@ void View::load_planets() {
             int x2 = pl2->getPosX();
             int y2 = pl2->getPosY();
 
-            //ejemplo de linea de otro color
-            if(p == 1){
-                lineDrawer->add_line(x, y, x2, y2, FL_YELLOW);
-            } else {
-                lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
-            }
+            // //ejemplo de linea de otro color
+            // if(p == 1){
+            //     lineDrawer->add_line(x, y, x2, y2, FL_YELLOW);
+            // } else {
+            //     lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
+            // }
 
-
+            lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
         }
 
         if(p == (planetarium.size() - 1)){
             btn->image(icons["acm01"]);
             boss->position(x, y - 105);
-            boss_life->position(x + 30, y - 130);
-
-
-            feedblack->position(x - 10, y + 70);  //<--- cambiar a planet info
+            boss_life->position(x + 25, y - 130);
 
 
         } else {

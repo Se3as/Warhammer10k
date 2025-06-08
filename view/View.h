@@ -211,14 +211,15 @@ public:
 
     Fl_Box* info;
     Fl_Box* eterium;
-    Fl_Box* feedblack;
     Fl_Box* mine_count;
     Fl_Box* boss_life;
 
     Fl_Box* info_visited;
     Fl_Box* info_mapped;
+    Fl_Box* info_eterium;
+    Fl_Box* info_ship;
 
-    std::vector<Fl_Button*> planets;
+    vector<Fl_Button*> planets;
 
     void updateBossLife(int bossLife);
     void updateEterium(int eterium);
