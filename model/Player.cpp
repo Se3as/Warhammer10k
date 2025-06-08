@@ -4,6 +4,7 @@
 #include "Cartographer.h"
 
 Player::Player(){
+    eterium = 1000 ;
     pVisited = vector<bool>(0, false);
     pMapped = vector<bool>(0, false);
     units.push_back(new Pathﬁnder("Pathfinder", 10));

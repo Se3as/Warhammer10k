@@ -64,9 +64,11 @@ void Controller:: connecctCallbacks(){
 
 void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
-    //c->view->explorePlanets(planetsDiscovered);
-
+    size_t origin = 0;
+    size_t destination = 7;
+    size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
+    size_t solo = 0;
+    cout<<endl<<"Dijkstra "<<dist<<" "<<endl;
 
     // Hay que hacer que origin y destination sean los planetas que escoja el ususario
     // este regresa la distancia que hay entre ese planeta origen y su destino
@@ -79,11 +81,22 @@ void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
 
 void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    
+
     vector<vector<size_t>> originalMat = c->model.getMatAd();
     vector<vector<size_t>> floydMat = c->model.mapAll(POS_UNIT_1);
 
-
+        cout<< " Prueba de floyd"<< endl;
+    cout << "Matriz de adyacencia:\n";
+    for (size_t i = 0; i < originalMat[0].size(); ++i) {
+        for (size_t j = 0; j < originalMat[0].size(); ++j) {
+            if (floydMat[i][j] == INVALID) {
+                cout << "INVALID ";
+            } else {
+                cout << floydMat[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
     //size_t origin = 0;
     //size_t destination = 7;
     //size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
@@ -226,8 +239,13 @@ void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
 }
 
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+      Controller* c = static_cast<Controller*>(userdata);
+    int index = 6;
+    vector<size_t> planetsDiscovered = c->model.explore(index);
+    cout<<endl;
+    for (int i = 0 ; i < planetsDiscovered.size(); i++){
+        cout<<" "<< planetsDiscovered[i]<<" "<<endl;
+    }
     //c->view->explorePlanets(planetsDiscovered);
 
     // Esto regresa un vector con los planetas explorados, recorrerlo y
@@ -237,8 +255,13 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
 }
 
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
-    Controller* c = static_cast<Controller*>(userdata);
-    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_4);
+     Controller* c = static_cast<Controller*>(userdata);
+    vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_7);
+        cout<<endl;
+    for (int i = 0 ; i < planetsDiscovered.size(); i++){
+        cout<<" "<< planetsDiscovered[i]<<" "<<endl;
+    }
+    cout<<endl;
     //c->view->explorePlanets(planetsDiscovered);
 
     // Esto regresa un vector con los planetas explorados, recorrerlo y
