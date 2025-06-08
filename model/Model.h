@@ -8,6 +8,10 @@
 #include "SpaceUnit.h"
 #include "Player.h"
 #include "Boss.h"
+#include "Log.h"
+
+#include <chrono>
+using namespace std::chrono;
 
 using namespace std;
 
@@ -25,7 +29,8 @@ public:
 
     Player player;  // Change to private if needed
     Boss boss;
-
+    Log log;
+    duration<double> elapsed;
     void nextGalaxy();
     size_t getActualGalaxy() const;
     // Get an index of assault ship and attack the boss

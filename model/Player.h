@@ -14,11 +14,12 @@ private:
     vector<bool> pVisited;
     vector<bool> pMapped;
     int eterium;
-    vector<SpaceUnit*> units;
+
 public:
     Player();
     ~Player(){}
-
+    vector<SpaceUnit*> units;
+    
     void setPlayerID(string id);
 
     void addEterium(int coin);
