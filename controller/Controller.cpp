@@ -25,6 +25,23 @@ void Controller::run(){
     this->model.probarDijkstra();
     // Imprime la matriz con las minimas distancias
     this->model.probarFloyd();
+
+    std::cout << "LightAssault test, greedy search. About to attack..." << std::endl;
+    size_t bossLife1 = this->model.greedyAttack(POS_UNIT_2);
+    std::cout << "Boss life after attack using greedy search: " << bossLife1 << std::endl;
+
+    std::cout << "MediumAssault test, local search. About to attack..." << std::endl;
+    size_t bossLife2 = this->model.localAttack(POS_UNIT_3);
+    std::cout << "Boss life after attack local search: " << bossLife2 << std::endl;
+
+    std::cout << "HeavyAssault test, exhaustive search. About to attack..." << std::endl;
+    size_t bossLife3 = this->model.exhaustiveAttack(POS_UNIT_4);
+    std::cout << "Boss life after attack exhaustive search: " << bossLife3 << std::endl;
+
+    std::cout << "SupHeavyAssault test, exhaustive search bounded. About to attack..." << std::endl;
+    size_t bossLife4 = this->model.exhaustiveBoundedAttack(POS_UNIT_5);
+    std::cout << "Boss life after attack exhaustive search bounded: " << bossLife4 << std::endl;
+
     /////////////
     Fl::run();
 }
@@ -81,7 +98,7 @@ void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
 
 void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    size_t bossLife = c->model.attack(POS_UNIT_2);
+    // size_t bossLife = c->model.attack(POS_UNIT_2);
     // Actualizar la bossLife.
     //c->view->attackOnBoss(bossLife);
     // Preguntar en el modelo si el boss murio y si si que aparezcal el boton

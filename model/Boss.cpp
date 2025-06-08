@@ -15,6 +15,11 @@ size_t Boss::getBossHP() const {
     return life_points;
 }
 
-size_t Boss:: receiveDamage(size_t damage){
-    return this->life_points - damage;
+size_t Boss::receiveDamage(size_t damage) {
+    if (damage >= life_points) {
+        life_points = 0;
+    } else {
+        life_points -= damage;
+    }
+    return life_points;
 }

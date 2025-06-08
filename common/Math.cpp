@@ -1,4 +1,5 @@
 #include "Math.h"
+#include <cmath>
 
 int generateRandomNumber(int min, int max){
     int num = min + rand() % (max - min + 1);
@@ -46,5 +47,5 @@ pair<int, int> generateUniqueCoordinate(
 size_t distanceTwoPoints(size_t x1, size_t y1, size_t x2, size_t y2) {
     double dx = double(x2) - double(x1);
     double dy = double(y2) - double(y1);
-    return sqrt(dx*dx + dy*dy);
+    return static_cast<size_t>(sqrt(dx*dx + dy*dy));
 }

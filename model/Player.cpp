@@ -48,7 +48,7 @@ vector<bool>& Player:: getPMapped(){
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
     size_t origin, size_t destination, size_t& iterations) {
     return this->units[index]->attack_iterations(adj,
-         pVisited, origin, destination);
+         pVisited, origin, destination, iterations);
 }
 
 vector<size_t> Player::explore(int index, const vector<vector<Edge>>& adj,

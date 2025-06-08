@@ -26,7 +26,11 @@ public:
 
     void setActualGalaxy(size_t y);
     size_t getActualGalaxy() const;
-    size_t attack(int index);
+    // size_t attack(int index);
+    size_t greedyAttack(int index);
+    size_t localAttack(int index);
+    size_t exhaustiveAttack(int index);
+    size_t exhaustiveBoundedAttack(int index);
     vector<size_t> explore(int index);
     void loadGalaxy(string& filename);
     void printGalaxy();
