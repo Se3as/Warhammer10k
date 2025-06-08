@@ -1,10 +1,14 @@
 #include "Controller.h"
 #include <FL/Fl.H>     
 #include <FL/fl_draw.H> 
+#define PATHFINDER 1
+#define STARMAPPER 4
 #define LIGHT_ASSAULT 1
 #define MEDIUM_ASSAULT 2
 #define HEAVY_ASSAULT 3
 #define SUP_HEAVY_ASSAULT 4
+#define RAPIDSIGHT 1
+#define DEEPPROBE 4
 
 Controller::Controller(Model& model, View* view)
   : model(model),view(view){}
@@ -64,11 +68,15 @@ void Controller:: connecctCallbacks(){
 
 void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    size_t origin = 0;
-    size_t destination = 7;
-    size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
-    size_t solo = 0;
-    cout<<endl<<"Dijkstra "<<dist<<" "<<endl;
+    size_t costExplore = PATHFINDER;
+    if(c->model.player.deductEterium(costExplore)){
+        c->view->mapping = true;
+    }
+
+
+    // size_t dist = c->model.mapNeighbor(POS_UNIT_0, origin, destination);
+    // size_t solo = 0;
+    // cout<<endl<<"Dijkstra "<<dist<<" "<<endl;
 
     // Hay que hacer que origin y destination sean los planetas que escoja el ususario
     // este regresa la distancia que hay entre ese planeta origen y su destino
@@ -302,6 +310,7 @@ void Controller::onGateClick(Fl_Widget* w, void* userdata) {
     c->boss_life_text = to_string(c->model.boss.getBossHP());
     c->view->boss_life->label(c->boss_life_text.c_str());
 
+    c->model.setPlayerVisitedPlanets();
 
     c->view->frame->redraw();
 

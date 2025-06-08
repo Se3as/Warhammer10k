@@ -19,12 +19,12 @@ public:
     Player();
     ~Player(){}
     vector<SpaceUnit*> units;
-    
+
     void setPlayerID(string id);
 
     void addEterium(int coin);
 
-    void deductEterium(int coin);
+    bool deductEterium(int coin);
 
     int getEterium() const;
 

@@ -27,8 +27,13 @@ void Player::addEterium(int coin){
     eterium += coin;
 }
 
-void Player::deductEterium(int coin) {
-    eterium -= coin;
+bool Player::deductEterium(int coin) {
+    bool enoughMoney = false;
+    if (coin <= eterium){
+        eterium - coin;
+        enoughMoney = true;
+    } 
+    return enoughMoney;
 }
 
 int Player::getEterium() const {

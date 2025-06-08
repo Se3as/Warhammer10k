@@ -17,6 +17,9 @@ private:
 
     string boss_life_text;
 
+    size_t origin;
+    size_t destination;
+
     static constexpr int POS_UNIT_0 = 0;
     static constexpr int POS_UNIT_1 = 1;
     static constexpr int POS_UNIT_2 = 2;
