@@ -7,14 +7,14 @@ Player::Player(){
     eterium = 1000 ;
     pVisited = vector<bool>(0, false);
     pMapped = vector<bool>(0, false);
-    units.push_back(new Pathﬁnder("Pathfinder", 10));
-    units.push_back(new StarMapper("StarMapper", 10));
-    units.push_back(new LightAssault("LightAssault", 10));
-    units.push_back(new MediumAssault("MediumAssault", 10));
-    units.push_back(new HeavyAssault("HeavyAssault", 10));
-    units.push_back(new SupHeavyAssault("SupHeavyAssault", 10));
-    units.push_back(new RapidSight("RapidSight", 10));
-    units.push_back(new DeepProbe("DeepProbe", 10));
+    units.push_back(new Pathﬁnder("Dijkstra", 10));
+    units.push_back(new StarMapper("FloydWarshall", 10));
+    units.push_back(new LightAssault("GreedySearch", 10));
+    units.push_back(new MediumAssault("LocalSearch", 10));
+    units.push_back(new HeavyAssault("ExhaustiveSearch", 10));
+    units.push_back(new SupHeavyAssault("ExhaustiveSearchAcot", 10));
+    units.push_back(new RapidSight("DFS", 10));
+    units.push_back(new DeepProbe("BFS", 10));
 
 }
 
