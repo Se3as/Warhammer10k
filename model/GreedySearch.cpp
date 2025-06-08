@@ -20,19 +20,12 @@ size_t greedySearch(const vector<vector<Edge>>& adj, vector<bool>& /*visited*/, 
             if (!visited[edge.id])
                 neighbors.push_back(edge);
         }
-        /*
-        std::cout << "Current: " << current << ", neighbors: ";
-        for (const Edge& edge : neighbors) {
-            std::cout << edge.id << " ";
-        }
-        std::cout << std::endl;
-        */
 
         // No encontró vecinos no visitados porque siempre escoge el camino con
         // menos costo, por eso no hay camino
         if (neighbors.empty()) {
             std::cout << "GreedySearch: No path found from " << current << std::endl;
-            return std::numeric_limits<size_t>::max();
+            return numeric_limits<size_t>::max();
         }
 
         // Select the neighbor with the smallest distance (greedy)

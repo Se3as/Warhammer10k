@@ -3,8 +3,9 @@
 #include "Starship.h"
 #include "Cartographer.h"
 
-Player::Player(size_t numPlanets): pVisited(numPlanets,false){
-    pVisited[0] = true;
+Player::Player(){
+    pVisited = vector<bool>(0, false);
+    pMapped = vector<bool>(0, false);
     units.push_back(new Pathﬁnder("Pathfinder", 10));
     units.push_back(new StarMapper("StarMapper", 10));
     units.push_back(new LightAssault("LightAssault", 10));
@@ -30,22 +31,38 @@ int Player::getEterium() const {
     return eterium;
 }
 
-void Player::addPVisited(size_t pVisitado){
-    this->pVisited[pVisitado] = true;
+void Player::setPVisited(size_t numPlanets){
+    pVisited = vector<bool>(numPlanets,false);
+    pMapped = vector<bool>(numPlanets,false);
+    pVisited[0] = true;
 }
 
-vector<bool> Player:: getPVisited(){
+vector<bool>& Player:: getPVisited(){
     return this->pVisited;
+}
+
+vector<bool>& Player:: getPMapped(){
+    return this->pMapped;
 }
 
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
     size_t origin, size_t destination, size_t& iterations) {
-    vector<bool> visitedLocal(adj.size(), false);
     return this->units[index]->attack_iterations(adj,
-        visitedLocal, origin, destination, iterations);
+         pVisited, origin, destination, iterations);
 }
 
 vector<size_t> Player::explore(int index, const vector<vector<Edge>>& adj,
     size_t planet, size_t& iterations){
         return this->units[index]->explore( pVisited, adj, planet, iterations);
+}
+
+
+size_t Player:: mapNeighbor(int index, size_t numPlanets, const vector<vector<Edge>>& adj,
+        size_t origin, size_t destination, size_t& iterations){
+        return this->units[index]->map_neighbor(numPlanets, adj, origin, 
+            destination, pVisited, iterations);
     }
+vector<vector<size_t>> Player:: mapAll(int index, size_t numPlanets, const vector<vector<size_t>> 
+    &adj, size_t& iterations){
+    return this->units[index]->map_all(numPlanets, adj, pVisited, iterations);
+}

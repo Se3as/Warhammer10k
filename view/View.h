@@ -36,9 +36,14 @@ private:
     static constexpr int MAPX         = 0;
     static constexpr int MAPY         = 0;
 
+    static constexpr int GATESIZEX    = 90;
+    static constexpr int GATESIZEY    = 100;
+    static constexpr int GATEX        = 1180;
+    static constexpr int GATEY        = 200;
+
     static constexpr int SHIPSIZEX    = 70;
     static constexpr int SHIPSIZEY    = 60;
-    static constexpr int SHIPX        = 400;
+    static constexpr int SHIPX        = 250;
     static constexpr int SHIPY        = 640;
     static constexpr int SHIPSPACE    = 100;
 
@@ -51,12 +56,7 @@ private:
     static constexpr int MENUSIZEY    = 50;
     static constexpr int MENUX        = 20;
     static constexpr int MENUY        = 650;
-    static constexpr int MENUSPACE    = 52;
-
-    static constexpr int INFOSIZEX    = 0;
-    static constexpr int INFOSIZEY    = 0;
-    static constexpr int INFOX        = 280;
-    static constexpr int INFOY        = 635;
+    static constexpr int MENUSPACE    = 1190;
 
     static constexpr int PLANETNUMBER = 20;
     static constexpr int PLANETSIZEX  = 50;
@@ -65,16 +65,99 @@ private:
     static constexpr int PLANETY      = 100;
     static constexpr int PLANETSPACING = 60;
 
-    
     static constexpr int number_of_maps   = 11;
     static constexpr int number_of_bosses = 5;
 
+    static constexpr int INFOSIZEX    = 0;
+    static constexpr int INFOSIZEY    = 0;
+    static constexpr int INFOX        = 5;
+    static constexpr int INFOY        = 10;
+
+    static constexpr int ETERIUMSIZEX    = 0;
+    static constexpr int ETERIUMSIZEY    = 0;
+    static constexpr int ETERIUMX        = 1190;
+    static constexpr int ETERIUMY        = 630;
+
+    static constexpr int MINEINFOX        = 540;
+    static constexpr int MINEINFOY        = 10;
 
     void load_maps();
     void load_ships();
     void load_bosses();
     void load_menus();
     void load_planets();
+
+
+
+
+    class LineDrawer : public Fl_Widget {
+    private:
+        struct Line {
+            int x1, y1, x2, y2;
+            Fl_Color color;
+        };
+
+        std::vector<Line> lines;
+
+    public:
+        LineDrawer(int X, int Y, int W, int H)
+            : Fl_Widget(X, Y, W, H) {}
+
+        void add_line(int x1, int y1, int x2, int y2, Fl_Color color = FL_WHITE){
+            lines.push_back({x1, y1, x2, y2, color});
+            redraw();
+        }
+
+        void clear_lines(){
+            lines.clear();
+            redraw();
+        }
+
+        void draw() override {
+            for (const Line& line : lines){
+                fl_color(line.color);
+                fl_line(line.x1, line.y1, line.x2, line.y2);
+            }
+        }
+    };
+
+    LineDrawer* lineDrawer; 
+
+
+
+    class HoverButton : public Fl_Button {
+        Fl_Box* label_box;
+        const char* hover_text;
+
+    public:
+        HoverButton(int X, int Y, int W, int H, Fl_Box* hover_label = nullptr, const char* hover_msg = "")
+            : Fl_Button(X, Y, W, H), label_box(hover_label), hover_text(hover_msg) {}
+
+        int handle(int event) override {
+            switch (event) {
+                case FL_ENTER:
+                    if (label_box) {
+                        label_box->label(hover_text);
+                        label_box->position(this->x() - 10, this->y() - 20); 
+                        label_box->show();
+                    }
+                    return 1;
+
+                case FL_LEAVE:
+                    if (label_box) {
+                        label_box->hide();
+                    }
+                    return 1;
+
+                default:
+                    return Fl_Button::handle(event);
+            }
+        }
+    };
+
+
+
+
 
 public:
     View(Model& model);
@@ -91,9 +174,14 @@ public:
     int random_boss_number();
     void random_boss_generation();
 
+    void planet_info();
 
     bool aborted() const { return escape; }
     bool winCondition() const { return conquered; }
+
+    void nextGalaxy();
+
+    void newBoss();
 
     bool attacking;
     bool exploring;
@@ -105,23 +193,33 @@ public:
     Fl_Window* frame;
     Fl_Box* background;
 
-    Fl_Button* interceptor;
-    Fl_Button* barracuda;
-    Fl_Button* saboteur;
-    Fl_Button* annihilator;
-    Fl_Button* battleray;
+    Fl_Button* gate;
+
+    Fl_Button* Reflector;
+    Fl_Button* Agatus;
+    Fl_Button* Charopos;
+    Fl_Button* Convict;
+    Fl_Button* Impulse;
+    Fl_Button* Stiger;
+    Fl_Button* Streuner;
+    Fl_Button* Artemis;
 
     Fl_Button* boss;
 
     Fl_Button* logout;
-    Fl_Button* attack;
-    Fl_Button* explore;
-    Fl_Button* mapper;
-    Fl_Button* shop;
-    Fl_Button* money;
+    HoverButton* money;
 
     Fl_Box* info;
+    Fl_Box* eterium;
+    Fl_Box* feedblack;
+    Fl_Box* mine_count;
+    Fl_Box* boss_life;
+
+    Fl_Box* info_visited;
+    Fl_Box* info_mapped;
 
     std::vector<Fl_Button*> planets;
+
+
 };
 

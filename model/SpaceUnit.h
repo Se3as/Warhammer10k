@@ -27,12 +27,12 @@ public:
     virtual size_t attack_iterations(const vector<vector<Edge>>& adj,
         vector<bool>& visited, size_t origin, size_t destination, size_t& iterations) {}
 
-    virtual vector<size_t> explore(vector<bool>& visited, 
+    virtual vector<size_t> explore(vector<bool>& visited,
         const vector<vector<Edge>>& adj, size_t origin, size_t& iterations) {}
 
-    virtual size_t map_neighbor(size_t numPlanets, vector<vector<Edge>>& adj,
-        size_t origin, size_t destination) {}
+    virtual size_t map_neighbor(size_t numPlanets, const vector<vector<Edge>>& adj,
+        size_t origin, size_t destination, vector<bool> visited, size_t& iterations) {}
 
     virtual vector<vector<size_t>> map_all(size_t numPlanets,
-        vector<vector<size_t>> &dist) {}
+        const vector<vector<size_t>> &dist, vector<bool> pVisited, size_t& iterations) {}
 };

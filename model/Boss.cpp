@@ -7,8 +7,8 @@ string Boss::getBossID(){
     return name;
 }
 
-void Boss::setBossHP(size_t hp){
-    life_points = hp;
+void Boss::setBossHP(){
+    life_points = 100;
 }
 
 size_t Boss::getBossHP() const {

@@ -12,10 +12,11 @@ private:
 
     string name;
     vector<bool> pVisited;
+    vector<bool> pMapped;
     int eterium;
     vector<SpaceUnit*> units;
 public:
-    Player(size_t numPlanets);
+    Player();
     ~Player(){}
 
     void setPlayerID(string id);
@@ -24,7 +25,7 @@ public:
 
     int getEterium() const;
 
-    void addPVisited(size_t);
+    void setPVisited(size_t numPlanets);
 
     size_t attack(int index, const vector<vector<Edge>>& adj,
     size_t origin, size_t destination, size_t& iterations);
@@ -32,8 +33,11 @@ public:
     vector<size_t> explore(int index, const vector<vector<Edge>>& adj,
         size_t planet, size_t& iterations);
 
-    size_t map_neighbor(int index, size_t numPlanets, vector<vector<Edge>>& adj,
-        size_t planet, size_t& iterations);
+    size_t mapNeighbor(int index, size_t numPlanets, const vector<vector<Edge>>& adj,
+        size_t origin, size_t destination, size_t& iterations);
+    vector<vector<size_t>> mapAll(int index, size_t numPlanets, const vector<vector<size_t>> 
+        &adj, size_t& iterations);
 
-    vector<bool> getPVisited();
+    vector<bool>& getPVisited();
+    vector<bool>& getPMapped();
 };
