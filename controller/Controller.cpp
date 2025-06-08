@@ -1,6 +1,10 @@
 #include "Controller.h"
 #include <FL/Fl.H>     
 #include <FL/fl_draw.H> 
+#define LIGHT_ASSAULT 1
+#define MEDIUM_ASSAULT 2
+#define HEAVY_ASSAULT 3
+#define SUP_HEAVY_ASSAULT 4
 
 Controller::Controller(Model& model, View* view)
   : model(model),view(view){}
@@ -29,22 +33,6 @@ void Controller::run(){
     this->model.probarDijkstra();
     // Imprime la matriz con las minimas distancias
     this->model.probarFloyd();
-
-    std::cout << "LightAssault test, greedy search. About to attack..." << std::endl;
-    size_t bossLife1 = this->model.greedyAttack(POS_UNIT_2);
-    std::cout << "Boss life after attack using greedy search: " << bossLife1 << std::endl;
-
-    std::cout << "MediumAssault test, local search. About to attack..." << std::endl;
-    size_t bossLife2 = this->model.localAttack(POS_UNIT_3);
-    std::cout << "Boss life after attack local search: " << bossLife2 << std::endl;
-
-    std::cout << "HeavyAssault test, exhaustive search. About to attack..." << std::endl;
-    size_t bossLife3 = this->model.exhaustiveAttack(POS_UNIT_4);
-    std::cout << "Boss life after attack exhaustive search: " << bossLife3 << std::endl;
-
-    std::cout << "SupHeavyAssault test, exhaustive search bounded. About to attack..." << std::endl;
-    size_t bossLife4 = this->model.exhaustiveBoundedAttack(POS_UNIT_5);
-    std::cout << "Boss life after attack exhaustive search bounded: " << bossLife4 << std::endl;
 
     /////////////
     Fl::run();
@@ -113,10 +101,37 @@ void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
 
 }
 
+// Attack button using Greedy Search algorithm
 void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
+
+    size_t costOfAttack = LIGHT_ASSAULT; // cost defined at the top of this file
+
+    // TODO(any) check this c->model.player.getEterium();
+    // cout << "Eterium before attack: " << currentEterium << endl;
+
+    // if the player has enough eterium, attack the boss
+    // if (c->model.player.getEterium() >= costOfAttack) {
+        c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
+        // c->view->updateEterium(c->model.player.getEterium());
+        std::cout << "LightAssault start. About to attack..." << std::endl;
+        size_t bossLife = c->model.attack(POS_UNIT_2);
+        std::cout << "Boss life after attack: " << bossLife << std::endl;
+        // c->view->updateBossLife(bossLife);
+
+        // Check if the boss is dead and update the view accordingly
+        // Also show the portal button if the boss is dead
+        if (c->model.boss.getBossHP() == 0) {
+            // c->view->bossDead();  // TODO(any) Define this method
+            // c->view->showPortalButton(); // TODO(any) Define this method
+        }
+    // } else {
+        // Show a message indicating insufficient eterium or other thing
+        // c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
+    // }
+
+    // Instructions to follow
     // size_t bossLife = c->model.attack(POS_UNIT_2);
-   
     // Actualizar la bossLife.
     //c->view->attackOnBoss(bossLife);
     // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
@@ -128,49 +143,86 @@ void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
 
 }
 
+// Attack button using local search algorithm
 void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    // size_t bossLife = c->model.attack(POS_UNIT_2);
-   
-    // Actualizar la bossLife.
-    //c->view->attackOnBoss(bossLife);
-    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
-    // del portal
-    // bool dead = c->model.isBossDead();
-    // if(dead){
-    //  c->view->bossDead();
+
+    size_t costOfAttack = MEDIUM_ASSAULT; // cost defined at the top of this file
+
+    // if the player has enough eterium, attack the boss
+    // if (c->model.player.getEterium() >= costOfAttack) {
+        c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
+        // c->view->updateEterium(c->model.player.getEterium());
+        std::cout << "MediumAssault start. About to attack..." << std::endl;
+        size_t bossLife = c->model.attack(POS_UNIT_3);
+        std::cout << "Boss life after attack: " << bossLife << std::endl;
+        // c->view->updateBossLife(bossLife);
+
+        // Check if the boss is dead and update the view accordingly
+        // Also show the portal button if the boss is dead
+        if (c->model.boss.getBossHP() == 0) {
+            //c->view->bossDead();  // TODO(any) Define this method
+            //c->view->showPortalButton(); // TODO(any) Define this method
+        }
+    // } else {
+        // Show a message indicating insufficient eterium or other thing
+        //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
     //}
 
 }
 
+// Attack button using exhaustive search algorithm
 void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    // size_t bossLife = c->model.attack(POS_UNIT_2);
-   
-    // Actualizar la bossLife.
-    //c->view->attackOnBoss(bossLife);
-    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
-    // del portal
-    // bool dead = c->model.isBossDead();
-    // if(dead){
-    //  c->view->bossDead();
-    //}
 
+    size_t costOfAttack = HEAVY_ASSAULT; // cost defined at the top of this file
+
+    // if the player has enough eterium, attack the boss
+    // if (c->model.player.getEterium() >= costOfAttack) {
+        c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
+        // c->view->updateEterium(c->model.player.getEterium());
+        std::cout << "HeavyAssault start. About to attack..." << std::endl;
+        size_t bossLife = c->model.attack(POS_UNIT_4);
+        std::cout << "Boss life after attack: " << bossLife << std::endl;
+        // c->view->updateBossLife(bossLife);
+
+        // Check if the boss is dead and update the view accordingly
+        // Also show the portal button if the boss is dead
+        if (c->model.boss.getBossHP() == 0) {
+            //c->view->bossDead();  // TODO(any) Define this method
+            //c->view->showPortalButton(); // TODO(any) Define this method
+        }
+    // } else {
+        // Show a message indicating insufficient eterium or other thing
+        //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
+    //}
 }
 
+// Attack button using exhaustive search bounded algorithm
 void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    // size_t bossLife = c->model.attack(POS_UNIT_2);
-   
-    // Actualizar la bossLife.
-    //c->view->attackOnBoss(bossLife);
-    // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
-    // del portal
-    // bool dead = c->model.isBossDead();
-    // if(dead){
-    //  c->view->bossDead();
-    //}
 
+    size_t costOfAttack = SUP_HEAVY_ASSAULT; // cost defined at the top of this file
+
+    // if the player has enough eterium, attack the boss
+    // if (c->model.player.getEterium() >= costOfAttack) {
+        c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
+        // c->view->updateEterium(c->model.player.getEterium());
+        std::cout << "SuperHeavyAssault start. About to attack..." << std::endl;
+        size_t bossLife = c->model.attack(POS_UNIT_5);
+        std::cout << "Boss life after attack: " << bossLife << std::endl;
+        // c->view->updateBossLife(bossLife);
+
+        // Check if the boss is dead and update the view accordingly
+        // Also show the portal button if the boss is dead
+        if (c->model.boss.getBossHP() == 0) {
+            //c->view->bossDead();  // TODO(any) Define this method
+            //c->view->showPortalButton(); // TODO(any) Define this method
+        }
+    // } else {
+        // Show a message indicating insufficient eterium or other thing
+        //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
+    //}
 }
 
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {

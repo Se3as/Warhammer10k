@@ -156,130 +156,63 @@ vector<Galaxy> Model::getGalaxies() {
     return galaxies;
 }
 
-size_t Model::greedyAttack(int index) {
+size_t Model::attack(int index) {
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t iterations = 0;
-    size_t cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                                      galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-    // Log del coste de ataque usando greedy
-    std::cout << "Cost of attack using greedy search: " << cost << std::endl;
+    size_t cost = 0;
+    switch (index) {
+        case 2: // LightAssault, Greedy Search
+            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
+                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+                // Log del coste de ataque usando greedy
+            std::cout << "Cost of attack using greedy search: " << cost
+                << std::endl;
+            break;
+        case 3: // MediumAssault, Local Search
+            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
+                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+            // Log del coste de ataque usando local search
+            std::cout << "Cost of attack using local search: " << cost
+                << std::endl;
+            break;
+        case 4: // HeavyAssault, Exhaustive Search
+            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
+                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+            // Log del coste de ataque usando exhaustive search
+            std::cout << "Cost of attack using exhaustive search: " << cost
+                << std::endl;
+            break;
+        case 5: // SupHeavyAssault, Exhaustive Search Bounded
+            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
+                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+            std::cout << "Cost of attack using exhaustive search bounded: " <<
+                cost << std::endl;
+            break;
+        default:
+            std::cout << "Invalid attack index!" << std::endl;
+            return this->boss.getBossHP(); // Don't deal damage if invalid index
+    }
     
-        // Si el coste es infinito, significa que no se encontró un camino
+    // If the cost is infinite, it means no path was found
     if (cost == std::numeric_limits<size_t>::max()) {
-        // std::cout << "No path found for attack!" << std::endl;
+        std::cout << "No path found to attack the boss." << std::endl;
         return this->boss.getBossHP(); // Don't deal damage if no path
     }
 
-    // Log de iteraciones
+    // Log of iterations
     std::cout << "Iterations: " << iterations << std::endl;
 
     size_t damage = 0;
     if (iterations > 0) {
-        // Log del cálculo de daño
+        // Log of damage calculation
         damage = BASE_DAMAGE / (iterations * iterations);
     } else {
         damage = 0;
     }
-    // Log del daño
+    // Log of damage
     std::cout << "Damage dealt: " << damage << std::endl;
 
-    // Log de vida del boss
-    size_t bossLife = this->boss.receiveDamage(damage);
-    return bossLife;
-}
-
-size_t Model::localAttack(int index) {
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t iterations = 0;
-    size_t cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                                      galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-    // Log del coste de ataque usando local search
-    std::cout << "Cost of attack using local search: " << cost << std::endl;
-
-    // Si el coste es infinito, significa que no se encontró un camino
-    if (cost == std::numeric_limits<size_t>::max()) {
-        // std::cout << "No path found for attack!" << std::endl;
-        return this->boss.getBossHP(); // Don't deal damage if no path
-    }
-
-    // Log de iteraciones
-    std::cout << "Iterations: " << iterations << std::endl;
-
-    size_t damage = 0;
-    if (iterations > 0) {
-        // Log del cálculo de daño
-        damage = BASE_DAMAGE / (iterations * iterations);
-    } else {
-        damage = 0;
-    }
-    // Log del daño
-    std::cout << "Damage dealt: " << damage << std::endl;
-
-    // Log de vida del boss
-    size_t bossLife = this->boss.receiveDamage(damage);
-    return bossLife;
-}
-
-size_t Model::exhaustiveAttack(int index) {
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t iterations = 0;
-    size_t cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                                      galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-    // Log del coste de ataque usando exhaustive search
-    std::cout << "Cost of attack using exhaustive search: " << cost << std::endl;
-
-    // Si el coste es infinito, significa que no se encontró un camino
-    if (cost == std::numeric_limits<size_t>::max()) {
-        // std::cout << "No path found for attack!" << std::endl;
-        return this->boss.getBossHP(); // Don't deal damage if no path
-    }
-
-    // Log de iteraciones
-    std::cout << "Iterations: " << iterations << std::endl;
-
-    size_t damage = 0;
-    if (iterations > 0) {
-        // Log del cálculo de daño
-        damage = BASE_DAMAGE / (iterations * iterations);
-    } else {
-        damage = 0;
-    }
-    // Log del daño
-    std::cout << "Damage dealt: " << damage << std::endl;
-
-    // Log de vida del boss
-    size_t bossLife = this->boss.receiveDamage(damage);
-    return bossLife;
-}
-
-size_t Model::exhaustiveBoundedAttack(int index) {
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t iterations = 0;
-    size_t cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                                      galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-    // Log del coste de ataque usando exhaustive search bounded
-    std::cout << "Cost of attack using exhaustive search bounded: " << cost << std::endl;
-
-    // Si el coste es infinito, significa que no se encontró un camino
-    if (cost == std::numeric_limits<size_t>::max()) {
-        // std::cout << "No path found for attack!" << std::endl;
-        return this->boss.getBossHP(); // Don't deal damage if no path
-    }
-
-    // Log de iteraciones
-    std::cout << "Iterations: " << iterations << std::endl;
-
-    size_t damage = 0;
-    if (iterations > 0) {
-        // Log del cálculo de daño
-        damage = BASE_DAMAGE / (iterations * iterations);
-    } else {
-        damage = 0;
-    }
-    // Log del daño
-    std::cout << "Damage dealt: " << damage << std::endl;
-
-    // Log de vida del boss
+    // Log of boss life
     size_t bossLife = this->boss.receiveDamage(damage);
     return bossLife;
 }

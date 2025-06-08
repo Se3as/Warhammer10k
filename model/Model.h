@@ -15,7 +15,6 @@ class Model {
 private: 
     vector<Galaxy> galaxies;
     size_t actualGalaxy;
-    Player player;
     
 
     static constexpr int BASE_DAMAGE = 1000;
@@ -24,15 +23,13 @@ public:
     Model();
     ~Model();
 
+    Player player;  // Change to private if needed
     Boss boss;
 
     void nextGalaxy();
     size_t getActualGalaxy() const;
-    // size_t attack(int index);
-    size_t greedyAttack(int index);
-    size_t localAttack(int index);
-    size_t exhaustiveAttack(int index);
-    size_t exhaustiveBoundedAttack(int index);
+    // Get an index of assault ship and attack the boss
+    size_t attack(int index);
     vector<size_t> explore(int index);
     void loadGalaxy(string& filename);
     void printGalaxy();
