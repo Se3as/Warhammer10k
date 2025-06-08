@@ -23,6 +23,8 @@ public:
 
     void addEterium(int coin);
 
+    void deductEterium(int coin);
+
     int getEterium() const;
 
     void setPVisited(size_t numPlanets);

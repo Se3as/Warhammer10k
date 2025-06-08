@@ -5,7 +5,8 @@
 #include <iostream>
 using namespace std;
 
-size_t greedySearch(const vector<vector<Edge>>& adj, vector<bool>& /*visited*/, size_t origin, size_t destination, size_t& iterations) {
+size_t greedySearch(const vector<vector<Edge>>& adj, vector<bool>& /*visited*/,
+                    size_t origin, size_t destination, size_t& iterations) {
     size_t current = origin;
     size_t totalCost = 0;
     vector<bool> visited(adj.size(), false);
@@ -24,12 +25,12 @@ size_t greedySearch(const vector<vector<Edge>>& adj, vector<bool>& /*visited*/, 
         // No encontró vecinos no visitados porque siempre escoge el camino con
         // menos costo, por eso no hay camino
         if (neighbors.empty()) {
-            std::cout << "GreedySearch: No path found from " << current << std::endl;
             return numeric_limits<size_t>::max();
         }
 
         // Select the neighbor with the smallest distance (greedy)
-        auto best = min_element(neighbors.begin(), neighbors.end(), [](const Edge& a, const Edge& b) {
+        auto best = min_element(neighbors.begin(), neighbors.end(),
+                                [](const Edge& a, const Edge& b) {
             return a.dist < b.dist;
         });
 

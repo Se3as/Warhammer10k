@@ -332,3 +332,13 @@ void View::nextGalaxy(){
     
 
 // }
+
+// Update the boss life after the player attacks the boss
+void View::updateBossLife(int bossLife) {
+    // boss_life->label(std::to_string(bossLife).c_str());
+}
+
+// Update the eterium after the player collects or spends it
+void View::updateEterium(int eterium) {
+    // money->label(std::to_string(eterium).c_str());
+}

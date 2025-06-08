@@ -35,5 +35,7 @@ size_t exaSearch(const vector<vector<Edge>>& adj,
                  size_t destination, size_t& iterations) {
     vector<bool> visited(adj.size(), false);
     iterations = 0;
-    return exaSearchRecursive(adj, visited, origin, destination, iterations);
+    size_t best_cost = numeric_limits<size_t>::max();
+    best_cost = exaSearchRecursive(adj, visited, origin, destination, iterations);
+    return best_cost;
 }

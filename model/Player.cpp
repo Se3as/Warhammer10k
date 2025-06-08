@@ -26,6 +26,9 @@ void Player::addEterium(int coin){
     eterium += coin;
 }
 
+void Player::deductEterium(int coin) {
+    eterium -= coin;
+}
 
 int Player::getEterium() const {
     return eterium;

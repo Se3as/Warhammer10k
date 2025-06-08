@@ -220,6 +220,6 @@ public:
 
     std::vector<Fl_Button*> planets;
 
-
+    void updateBossLife(int bossLife);
+    void updateEterium(int eterium);
 };
-
