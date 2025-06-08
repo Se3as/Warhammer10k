@@ -30,8 +30,18 @@ public:
     vector<size_t> explore(int index);
     void loadGalaxy(string& filename);
     void printGalaxy();
-    // void printAlgorithms();
+    void probarBFS();
+    void probarDFS();
+    void probarDijkstra();
+    void probarFloyd();
+    int increaseEterium(int eterium);
+    void setPlayerVisitedPlanets();
+
+    size_t mapNeighbor(int index, size_t origin, size_t destination);
+    vector<vector<size_t>> mapAll(int index);
+
     vector<Galaxy> getGalaxies();
+    vector<vector<size_t>> getMatAd();
 
     SpaceUnit* setSpaceUnit(size_t& id) ;
 

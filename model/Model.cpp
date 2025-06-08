@@ -16,7 +16,7 @@
 #define MAX_X 10
 #define MAX_Y 10
 
-Model::Model(): actualGalaxy(0), player(5) {}
+Model::Model(): actualGalaxy(0){}
 Model::~Model() {}
 
 void Model::loadGalaxy(string& filename) {
@@ -55,7 +55,7 @@ void Model::loadGalaxy(string& filename) {
 
             Planet* planet = new Planet(columns[i], x, y, id);
             
-            galaxy.addPlanet(planet, i, entryPlanet, exitPlanet);
+            galaxy.addPlanet(planet, id, entryPlanet, exitPlanet);
             id++;
         }
 
@@ -63,16 +63,80 @@ void Model::loadGalaxy(string& filename) {
         galaxies.push_back(move(galaxy));
     }
 }
+void Model:: setPlayerVisitedPlanets(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    this->player.setPVisited(numPlanets);
+}
+void Model:: probarBFS(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+    vector<bool>& visited = this->player.getPVisited();
+    cout<<endl<<"Prueba BFS"<<endl;
+    for(size_t i = 0; i < numPlanets; ++i){
+        vector<size_t> prueba = bfs_neighbors(visited, galaxy.getGraph().getListAd(), i, iterations);
+        for (size_t j = 0; j < prueba.size(); j++){
+            cout<<" "<< prueba[j] <<" ";
+        }
+        cout<<endl;
+    }
+}
+
+void Model:: probarDFS(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    vector<bool>& visited = this->player.getPVisited();
+    size_t iterations = 0;
+    cout<<endl<<"Prueba DFS"<<endl;
+    for(size_t i = 0; i < numPlanets; ++i){
+        vector<size_t> prueba = dfs_set_depth(visited, galaxy.getGraph().getListAd(), 0, iterations);
+        for (size_t j = 0; j < prueba.size(); j++){
+            cout<<" "<< prueba[j] <<" ";
+        }
+        cout<<endl;
+        iterations = 0;
+    }
+}
+
+void Model::probarDijkstra(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    vector<bool>& visited = this->player.getPVisited();
+    size_t iterations = 0;
+    cout<< "Prueba Dijkstra "<<endl;
+    size_t distancia = dijkstra(numPlanets, galaxy.getGraph().getListAd(), 0, 7, visited, iterations);
+    cout<< " "<< distancia <<" "<<endl;
+}
+
+void Model::probarFloyd(){
+
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    vector<bool>& visited = this->player.getPVisited();
+    size_t iterations = 0;
+    vector<vector<size_t>> matAd = floydWarshall( numPlanets,galaxy.getGraph().getMatAd(), visited, iterations);
+    cout<< " Prueba de floyd"<< endl;
+    cout << "Matriz de adyacencia:\n";
+    for (size_t i = 0; i < numPlanets; ++i) {
+        for (size_t j = 0; j < numPlanets; ++j) {
+            if (matAd[i][j] == INVALID) {
+                cout << "INVALID ";
+            } else {
+                cout << matAd[i][j] << " ";
+            }
+        }
+        cout << endl;
+    }
+ 
+}
+
+
 
 void Model::printGalaxy() {
     galaxies[this->actualGalaxy].printer();
 }
 
-// void Model::printAlgorithms(){
-//     Graph& graph = galaxies[this->actualGalaxy].getGraph();
-
-
-//  }
 
 
 const Galaxy& Model::getGalaxy(int index) const {
@@ -107,38 +171,43 @@ vector<size_t> Model:: explore(int index){
     // Cost para el log?
     vector<size_t> planetsDiscovered = this->player.explore(index, galaxy.getGraph().getListAd(),
     galaxy.getEntryPlanet(), iterations);
-    // TODO: ACTUALIZAR PLANETAS VISITADOS EN PLAYER
 
     return planetsDiscovered;
 }
 
-// SpaceUnit* Model::setSpaceUnit(size_t& id) {
-//     SpaceUnit* spaceUnit = nullptr;
-//   if (id == 1) {
-//        spaceUnit = new RapidSight("rapidSight", 100);
-//   }
-//   else if (id == 2) {
-//        spaceUnit = new DeepProbe ("deepProbe", 100);  
-//   }
-//   else if (id == 3) {
-//      spaceUnit = new Pathﬁnder ("pathfinder", 100);  
-//   }
-//   else if (id == 4) {
-//      spaceUnit = new StarMapper ("starMapper", 100);  
-//   }
-//   else if (id == 5) {
-//      spaceUnit = new LightAssault ("lightAssault", 100);  
-//   } 
-//   else if (id == 6) {
-//      spaceUnit = new MediumAssault ("mediumAssault", 100);  
-//   }
-//     else if (id == 7) {
-//      spaceUnit = new HeavyAssault ("heavyAssault", 100);  
-//   } 
-//   else if (id == 8) {
-//      spaceUnit = new SupHeavyAssault ("supHeavyAssault", 100);  
-//   }
+size_t Model:: mapNeighbor(int index, size_t origin, size_t destination){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+    size_t distance = this->player.mapNeighbor(index, numPlanets, galaxy.getGraph().getListAd(),
+    origin, destination, iterations);
+    vector<bool>& mapped = this->player.getPMapped();
+    mapped[origin]= true;
+    mapped[destination]= true;
+    return distance;
+}
+vector<vector<size_t>> Model:: mapAll(int index){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+    vector<vector<size_t>> floydMat = this->player.mapAll(index, numPlanets,
+        galaxy.getGraph().getMatAd(), iterations);
+    vector<bool>& visited = this->player.getPVisited();
+    vector<bool>& mapped = this->player.getPMapped();
+    for (int i = 0; i < visited.size(); i++){
+        if(visited[i]){
+            mapped[i]= true;
+        }
+    }
+    return floydMat;
+}
 
+vector<vector<size_t>> Model:: getMatAd(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    return galaxy.getGraph().getMatAd();
+}
 
-//   return spaceUnit;
-// }
+int Model::increaseEterium(int eterium){
+    player.addEterium(eterium);
+    return player.getEterium();
+}

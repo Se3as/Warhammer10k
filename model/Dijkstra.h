@@ -18,5 +18,5 @@ struct Node {
     }
 };
 
-size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination);
+size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination, vector<bool> pVisited, size_t& iterations);
 
