@@ -274,24 +274,23 @@ void View::load_planets() {
         btn->box(FL_NO_BOX);
         frame->add(btn);
 
-        if(p < planetarium.size() - 1){
+        // if(p < planetarium.size() - 1){
 
-            const Planet* pl2 = planetarium[p + 1];
-            int x2 = pl2->getPosX();
-            int y2 = pl2->getPosY();
+        //     const Planet* pl2 = planetarium[p + 1];
+        //     int x2 = pl2->getPosX();
+        //     int y2 = pl2->getPosY();
 
-            //lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
-        }
+        //     lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
+        // }
 
-        if(p == (planetarium.size() - 1)){
+        if(p == 0){
+            btn->image(icons["aglm01"]);
+        } else if(p == (planetarium.size() - 1)){
             btn->image(icons["acm01"]);
             boss->position(x, y - 105);
             boss_life->position(x + 25, y - 130);
-
-
         } else {
             btn->image(icons["planet"]);
-
         }
         planets.push_back(btn);
     }
