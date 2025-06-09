@@ -72,7 +72,7 @@ void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     const Galaxy& galaxy = galaxies[c->model.getActualGalaxy()];   
     const vector<Planet*>& planetarium = galaxy.getPlanets();
 
-    if(!c->check_defaults()){
+    if(c->check_defaults()){
 
         size_t costExplore = PATHFINDER;
         if(c->model.player.deductEterium(costExplore)){
@@ -214,7 +214,7 @@ void Controller::shipsAttacks(Fl_Widget* w, void* userdata, size_t costOfAttack)
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
+    if(c->check_defaults()){
 
         int index = 6;
         vector<size_t> planetsDiscovered = c->model.explore(index);
@@ -235,7 +235,7 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if (!c->check_defaults()) {
+    if (c->check_defaults()) {
 
         vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_7);
             cout<<endl;
