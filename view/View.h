@@ -121,9 +121,7 @@ private:
         }
     };
 
-    LineDrawer* lineDrawer; 
-
-
+     
 
     class HoverButton : public Fl_Button {
         Fl_Box* label_box;
@@ -138,7 +136,7 @@ private:
                 case FL_ENTER:
                     if (label_box) {
                         label_box->label(hover_text);
-                        label_box->position(this->x() - 10, this->y() - 20); 
+                        label_box->position(this->x() - 25, this->y() - 20); 
                         label_box->show();
                     }
                     return 1;
@@ -162,6 +160,8 @@ private:
 public:
     View(Model& model);
     ~View();
+
+    LineDrawer* lineDrawer;
 
     void initialize();
 

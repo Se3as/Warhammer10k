@@ -98,46 +98,45 @@ void View::load_ships(){
         }
     }
 
-    Reflector = new HoverButton(SHIPX, SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "  Djikstra");
+    Reflector = new HoverButton(SHIPX, SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, " Pathfinder");
     Reflector->box(FL_NO_BOX);
     Reflector->image(ships["Reflector"]);
     Reflector->clear_visible_focus();
 
-    Agatus = new HoverButton((SHIPX + SHIPSPACE), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    Floyd");
+    Agatus = new HoverButton((SHIPX + SHIPSPACE), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "StarMapper");
     Agatus->box(FL_NO_BOX);
     Agatus->image(ships["Agatus"]);
     Agatus->clear_visible_focus();
 
-    Convict = new HoverButton((SHIPX + (SHIPSPACE * 2)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Convict = new HoverButton((SHIPX + (SHIPSPACE * 2)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "Asalto Ligero");
     Convict->box(FL_NO_BOX);
     Convict->image(ships["Convict"]);
     Convict->clear_visible_focus();
 
-    Charopos = new HoverButton((SHIPX + (SHIPSPACE * 3)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Charopos = new HoverButton((SHIPX + (SHIPSPACE * 3)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "Asalto Medio");
     Charopos->box(FL_NO_BOX);
     Charopos->image(ships["Charopos"]);
     Charopos->clear_visible_focus();
 
-    Impulse = new HoverButton((SHIPX + (SHIPSPACE * 4)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Impulse = new HoverButton((SHIPX + (SHIPSPACE * 4)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "Asalto Pesado");
     Impulse->box(FL_NO_BOX);
     Impulse->image(ships["Impulse"]);
     Impulse->clear_visible_focus();
 
-    Stiger= new HoverButton((SHIPX + (SHIPSPACE * 5)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Stiger= new HoverButton((SHIPX + (SHIPSPACE * 5)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "Asalto Pesado+");
     Stiger->box(FL_NO_BOX);
     Stiger->image(ships["Stiger"]);
     Stiger->clear_visible_focus();
 
-    Streuner= new HoverButton((SHIPX + (SHIPSPACE * 6)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Streuner= new HoverButton((SHIPX + (SHIPSPACE * 6)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "RapidSight");
     Streuner->box(FL_NO_BOX);
     Streuner->image(ships["Streuner"]);
     Streuner->clear_visible_focus();
 
-    Artemis= new HoverButton((SHIPX + (SHIPSPACE * 7)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "    NAME");
+    Artemis= new HoverButton((SHIPX + (SHIPSPACE * 7)), SHIPY, SHIPSIZEX, SHIPSIZEY, info_ship, "DeepProbe");
     Artemis->box(FL_NO_BOX);
     Artemis->image(ships["Artemis"]);
     Artemis->clear_visible_focus();
-
 }
 
 //CARGA LOS BOSSES
@@ -212,7 +211,7 @@ void View::load_menus(){
 
 
     //LABEL PARA EL ETERIUM
-    eterium = new Fl_Box((MENUX + (MENUSPACE - 50)), MENUY + 30, INFOSIZEY, INFOSIZEX, "1000");
+    eterium = new Fl_Box((MENUX + (MENUSPACE - 50)), MENUY + 30, INFOSIZEY, INFOSIZEX, "0");
     eterium->labelcolor(fl_rgb_color(85, 132, 156));
     eterium->align(FL_ALIGN_RIGHT);
     eterium->labelsize(18);
@@ -230,22 +229,19 @@ void View::load_menus(){
     mine_count->labelcolor(fl_rgb_color(85, 132, 156));
     mine_count->align(FL_ALIGN_RIGHT);
     mine_count->labelsize(18);
-    //mine_count->hide();
 
     //LABEL PARA LA VIDA DEL BOOS
     boss_life = new Fl_Box(INFOX, INFOY, INFOSIZEX, INFOSIZEY, "BOSS LIFE: ");
     boss_life->labelcolor(fl_rgb_color(85, 132, 156));
     boss_life->align(FL_ALIGN_RIGHT);
     boss_life->labelsize(18);
-    //boss_life->hide();
     
     logout = new Fl_Button(MENUX, MENUY, MENUSIZEX, MENUSIZEY);
     logout->box(FL_NO_BOX);
     logout->image(icons["DO_logout"]);
     logout->clear_visible_focus();
-    // logout->callback(manage_logout_click, this);
 
-    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, info_eterium, "Eterium");
+    money = new HoverButton((MENUX + (MENUSPACE)), MENUY, MENUSIZEX, MENUSIZEY, info_eterium, "Excavador");
     money->box(FL_NO_BOX);
     money->image(icons["Eterium"]);
     money->clear_visible_focus();
@@ -257,11 +253,7 @@ void View::load_menus(){
     gate = new Fl_Button(GATEX, GATEY, GATESIZEX, GATESIZEY);
     gate->box(FL_NO_BOX);
     gate->image(gate_icon);
-    //gate->callback();
-
 }
-
-
 
 
 void View::load_planets() {
@@ -277,9 +269,6 @@ void View::load_planets() {
         int x = pl->getPosX();
         int y = pl->getPosY();
 
-        // cout<<x<<endl;
-        // cout<<y<<endl;
-
         Fl_Button* btn = new Fl_Button(x, y, PLANETSIZEX, PLANETSIZEY);
         btn->box(FL_NO_BOX);
         frame->add(btn);
@@ -290,14 +279,7 @@ void View::load_planets() {
             int x2 = pl2->getPosX();
             int y2 = pl2->getPosY();
 
-            // //ejemplo de linea de otro color
-            // if(p == 1){
-            //     lineDrawer->add_line(x, y, x2, y2, FL_YELLOW);
-            // } else {
-            //     lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
-            // }
-
-            lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
+            //lineDrawer->add_line(x, y, x2, y2, FL_WHITE);
         }
 
         if(p == (planetarium.size() - 1)){

@@ -11,17 +11,19 @@ public:
     void connecctCallbacks();
     void run(); 
 
+    void planet_defaults();
+
+    bool check_defaults();
+
 private:
     View* view;
     Model& model;  
 
     string boss_life_text;
+    string eterium_text;
 
-    size_t origin;
-    size_t destination;
-
-    int planet_origin;
-    int planet_destination;
+    size_t planet_origin;
+    size_t planet_destination;
 
     static constexpr int DEFAULT= 100;
 
@@ -50,5 +52,5 @@ private:
 
     static void onGateClick(Fl_Widget* w, void* userdata);
 
-    static void OnEterTimeout(void* user_data);
+    static void updateIntervals(void* user_data);
 };

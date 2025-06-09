@@ -257,6 +257,7 @@ size_t Model:: mapNeighbor(int index, size_t origin, size_t destination){
     mapped[destination]= true;
     return distance;
 }
+
 vector<vector<size_t>> Model:: mapAll(int index){
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t numPlanets = galaxy.getGalaxySize();
