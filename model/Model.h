@@ -21,7 +21,7 @@ private:
     size_t actualGalaxy;
     
 
-    static constexpr int BASE_DAMAGE = 1000;
+    static constexpr int BASE_DAMAGE = 10000;
     
 public:
     Model();

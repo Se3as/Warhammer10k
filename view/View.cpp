@@ -229,6 +229,7 @@ void View::load_menus(){
     mine_count->labelcolor(fl_rgb_color(85, 132, 156));
     mine_count->align(FL_ALIGN_RIGHT);
     mine_count->labelsize(18);
+    mine_count->hide();
 
     //LABEL PARA LA VIDA DEL BOOS
     boss_life = new Fl_Box(INFOX, INFOY, INFOSIZEX, INFOSIZEY, "BOSS LIFE: ");
@@ -329,10 +330,13 @@ void View::nextGalaxy(){
 
 // Update the boss life after the player attacks the boss
 void View::updateBossLife(int bossLife) {
-    // boss_life->label(std::to_string(bossLife).c_str());
-}
-
-// Update the eterium after the player collects or spends it
-void View::updateEterium(int eterium) {
-    // money->label(std::to_string(eterium).c_str());
+    if (bossLife > 0) {
+        boss_life->label(to_string(bossLife).c_str());
+        boss_life->redraw();
+    } else {
+        boss_life->label("BOSS DEFEATED");
+        info->label("GO TO NEXT MAP");
+        info->show();
+        frame->redraw();
+    }
 }

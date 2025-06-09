@@ -14,6 +14,7 @@ private:
     vector<bool> pVisited;
     vector<bool> pMapped;
     int eterium;
+    int mines;
 
 public:
     Player();
@@ -43,4 +44,9 @@ public:
 
     vector<bool>& getPVisited();
     vector<bool>& getPMapped();
+
+    bool allVisited() const;
+
+    int getMines() const;
+    void setMines();
 };

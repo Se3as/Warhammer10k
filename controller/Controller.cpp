@@ -3,10 +3,10 @@
 #include <FL/fl_draw.H> 
 #define PATHFINDER 1
 #define STARMAPPER 4
-#define LIGHT_ASSAULT 1
-#define MEDIUM_ASSAULT 2
-#define HEAVY_ASSAULT 3
-#define SUP_HEAVY_ASSAULT 4
+#define LIGHT_ASSAULT 500
+#define MEDIUM_ASSAULT 200
+#define HEAVY_ASSAULT 300
+#define SUP_HEAVY_ASSAULT 400
 #define RAPIDSIGHT 1
 #define DEEPPROBE 4
 
@@ -18,7 +18,7 @@ void Controller::run(){
     model.loadGalaxy(test);
     model.printGalaxy();
     view->initialize();
-    this->connecctCallbacks();
+    this->connectCallbacks();
     // El eterium se actualiza solo
     Fl::add_timeout(1.0, updateIntervals, this);
     ////
@@ -30,18 +30,17 @@ void Controller::run(){
     // Estos son pruebas para los algoritmos
     this->model.setPlayerVisitedPlanets();
     // Imprime los vecinos de cada nodo que son lo que devuelve cuando se manda la nava
-    this->model.probarBFS();
+    //this->model.probarBFS();
     // En este momento no imprime nada porque todos los nodos fueron visitados por BFS
-    this->model.probarDFS();
+    //this->model.probarDFS();
     // Imprime la minima distancia que hay entre nodo 0 y 7, debe ser igual al valor de esa posicion del floyd
-    this->model.probarDijkstra();
+    //this->model.probarDijkstra();
     // Imprime la matriz con las minimas distancias
-    this->model.probarFloyd();
+    //this->model.probarFloyd();
 
-    /////////////
     Fl::run();
 }
-void Controller:: connecctCallbacks(){
+void Controller:: connectCallbacks(){
 
     view->Agatus    ->callback(onAgatusClick, this);
     view->Artemis   ->callback(onArtemisClick,  this);
@@ -141,51 +140,11 @@ void Controller::onAgatusClick(Fl_Widget* w, void* userdata) {
 }
 
 
-
-
-
 // Attack button using Greedy Search algorithm
 void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
-
-        size_t costOfAttack = LIGHT_ASSAULT; // cost defined at the top of this file
-
-        // TODO(any) check this c->model.player.getEterium();
-        // cout << "Eterium before attack: " << currentEterium << endl;
-
-        // if the player has enough eterium, attack the boss
-        // if (c->model.player.getEterium() >= costOfAttack) {
-            c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
-            // c->view->updateEterium(c->model.player.getEterium());
-            std::cout << "LightAssault start. About to attack..." << std::endl;
-            size_t bossLife = c->model.attack(POS_UNIT_2);
-            std::cout << "Boss life after attack: " << bossLife << std::endl;
-            // c->view->updateBossLife(bossLife);
-
-            // Check if the boss is dead and update the view accordingly
-            // Also show the portal button if the boss is dead
-            if (c->model.boss.getBossHP() == 0) {
-                // c->view->bossDead();  // TODO(any) Define this method
-                // c->view->showPortalButton(); // TODO(any) Define this method
-            }
-        // } else {
-            // Show a message indicating insufficient eterium or other thing
-            // c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
-        // }
-
-        // Instructions to follow
-        // size_t bossLife = c->model.attack(POS_UNIT_2);
-        // Actualizar la bossLife.
-        //c->view->attackOnBoss(bossLife);
-        // Preguntar en el modelo si el boss murio y si si que aparezcal el boton
-        // del portal
-        // bool dead = c->model.isBossDead();
-        // if(dead){
-        //  c->view->bossDead();
-        //}
-    }
+    shipsAttacks(w, userdata, LIGHT_ASSAULT);
 
     c->planet_defaults();
 }
@@ -194,30 +153,7 @@ void Controller::onConvictClick(Fl_Widget* w, void* userdata) {
 void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
-
-        size_t costOfAttack = MEDIUM_ASSAULT; // cost defined at the top of this file
-
-        // if the player has enough eterium, attack the boss
-        // if (c->model.player.getEterium() >= costOfAttack) {
-            c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
-            // c->view->updateEterium(c->model.player.getEterium());
-            std::cout << "MediumAssault start. About to attack..." << std::endl;
-            size_t bossLife = c->model.attack(POS_UNIT_3);
-            std::cout << "Boss life after attack: " << bossLife << std::endl;
-            // c->view->updateBossLife(bossLife);
-
-            // Check if the boss is dead and update the view accordingly
-            // Also show the portal button if the boss is dead
-            if (c->model.boss.getBossHP() == 0) {
-                //c->view->bossDead();  // TODO(any) Define this method
-                //c->view->showPortalButton(); // TODO(any) Define this method
-            }
-        // } else {
-            // Show a message indicating insufficient eterium or other thing
-            //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
-        //}
-    }
+    shipsAttacks(w, userdata, MEDIUM_ASSAULT);
 
     c->planet_defaults();
 }
@@ -226,30 +162,7 @@ void Controller::onCharoposClick(Fl_Widget* w, void* userdata) {
 void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
-
-        size_t costOfAttack = HEAVY_ASSAULT; // cost defined at the top of this file
-
-        // if the player has enough eterium, attack the boss
-        // if (c->model.player.getEterium() >= costOfAttack) {
-            c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
-            // c->view->updateEterium(c->model.player.getEterium());
-            std::cout << "HeavyAssault start. About to attack..." << std::endl;
-            size_t bossLife = c->model.attack(POS_UNIT_4);
-            std::cout << "Boss life after attack: " << bossLife << std::endl;
-            // c->view->updateBossLife(bossLife);
-
-            // Check if the boss is dead and update the view accordingly
-            // Also show the portal button if the boss is dead
-            if (c->model.boss.getBossHP() == 0) {
-                //c->view->bossDead();  // TODO(any) Define this method
-                //c->view->showPortalButton(); // TODO(any) Define this method
-            }
-        // } else {
-            // Show a message indicating insufficient eterium or other thing
-            //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
-        //}
-    }
+    shipsAttacks(w, userdata, HEAVY_ASSAULT);
 
     c->planet_defaults();
 }
@@ -258,32 +171,44 @@ void Controller::onImpulseClick(Fl_Widget* w, void* userdata) {
 void Controller::onStigerClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
-    
-        size_t costOfAttack = SUP_HEAVY_ASSAULT; // cost defined at the top of this file
-
-        // if the player has enough eterium, attack the boss
-        // if (c->model.player.getEterium() >= costOfAttack) {
-            c->model.player.deductEterium(costOfAttack); // Deduct eterium cost
-            // c->view->updateEterium(c->model.player.getEterium());
-            std::cout << "SuperHeavyAssault start. About to attack..." << std::endl;
-            size_t bossLife = c->model.attack(POS_UNIT_5);
-            std::cout << "Boss life after attack: " << bossLife << std::endl;
-            // c->view->updateBossLife(bossLife);
-
-            // Check if the boss is dead and update the view accordingly
-            // Also show the portal button if the boss is dead
-            if (c->model.boss.getBossHP() == 0) {
-                //c->view->bossDead();  // TODO(any) Define this method
-                //c->view->showPortalButton(); // TODO(any) Define this method
-            }
-        // } else {
-            // Show a message indicating insufficient eterium or other thing
-            //c->view->showInsufficientEteriumMessage(); // TODO(any) Define this method
-        //}
-    }
+    shipsAttacks(w, userdata, SUP_HEAVY_ASSAULT);
 
     c->planet_defaults();
+}
+
+void Controller::shipsAttacks(Fl_Widget* w, void* userdata, size_t costOfAttack) {
+    Controller* c = static_cast<Controller*>(userdata);
+
+    size_t selectShip = 0;
+    if (c->model.player.allVisited()) {
+        switch (costOfAttack) {
+            case LIGHT_ASSAULT:
+                std::cout << "Light Assault selected." << std::endl;
+                selectShip = POS_UNIT_2; // Light Assault ship
+                break;
+            case MEDIUM_ASSAULT:
+                std::cout << "Medium Assault selected." << std::endl;
+                selectShip = POS_UNIT_3; // Medium Assault ship 
+                break;
+            case HEAVY_ASSAULT:
+                std::cout << "Heavy Assault selected." << std::endl;
+                selectShip = POS_UNIT_4; // Heavy Assault ship
+                break;
+            case SUP_HEAVY_ASSAULT:
+                std::cout << "Super Heavy Assault selected." << std::endl;
+                selectShip = POS_UNIT_5; // Super Heavy Assault ship
+                break;
+            default:
+                std::cout << "Unknown assault type." << std::endl;
+                return; // Exit if the assault type is unknown
+        }
+        // if the player has enough eterium, attack the boss
+        if (c->model.player.deductEterium(costOfAttack)) {
+                size_t bossLife = c->model.attack(selectShip);
+                std::cout << "Boss life after attack: " << bossLife << std::endl;
+                c->view->updateBossLife(bossLife);
+        }  
+    }
 }
 
 void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
@@ -310,7 +235,7 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if(!c->check_defaults()){
+    if (!c->check_defaults()) {
 
         vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_7);
             cout<<endl;
@@ -366,26 +291,47 @@ void Controller::onGateClick(Fl_Widget* w, void* userdata) {
 
         c->model.boss.setBossHP();
 
-        // c->boss_life_text = to_string(c->model.boss.getBossHP());
-        // c->view->boss_life->label(c->boss_life_text.c_str());
+        c->model.player.setMines();
+
+        c->view->info->hide();
 
         c->model.setPlayerVisitedPlanets();
 
         c->view->frame->redraw();
 
+
         c->planet_defaults();
     }
     
     c->planet_defaults();
+
+
 }
 
 
 void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
-    
+
+    const vector<Galaxy>& galaxies = c->model.getGalaxies();
+    const Galaxy& galaxy = galaxies[c->model.getActualGalaxy()];   
+    const vector<Planet*>& planetarium = galaxy.getPlanets();
+
     //buscar el planeta que fue clickeado
     for (size_t i = 0; i < c->view->planets.size(); ++i) {
         if (c->view->planets[i] == w) {
+
+            vector<bool> visited = c->model.player.getPVisited();
+            if (visited[i]) {
+                c->view->info_visited->position(planetarium[i]->getPosX() - 10, planetarium[i]->getPosY() + 55);
+                c->view->info_visited->show();
+            }
+            vector<bool> mapped = c->model.player.getPMapped();
+            if (mapped[i]) {
+                c->view->info_mapped->position(planetarium[i]->getPosX() - 10, planetarium[i]->getPosY() + 75);
+                c->view->info_mapped->show();
+            }
+            c->view->frame->redraw();
+
             size_t clickedPlanet = i;
             
             //logica de seleccion mejorada
@@ -420,8 +366,8 @@ void Controller::onPlanetClick(Fl_Widget* w, void* userdata) {
 void Controller::updateIntervals(void* user_data) {
   Controller* c = static_cast<Controller*>(user_data);
 
-    int totalEterium = c->model.increaseEterium(100);
-    
+    int totalEterium = c->model.increaseEterium(100 * c->model.player.getMines());
+
     // Llamar al view para que actualice el eterium
     c->eterium_text = to_string(totalEterium);
     c->view->eterium->label(c->eterium_text.c_str());

@@ -8,7 +8,7 @@ class Controller {
 public:
 
     Controller(Model& model, View* view);
-    void connecctCallbacks();
+    void connectCallbacks();
     void run(); 
 
     void planet_defaults();
@@ -42,6 +42,7 @@ private:
     static void onConvictClick(Fl_Widget* w, void* userdata);
     static void onImpulseClick(Fl_Widget* w, void* userdata);
     static void onReflectorClick(Fl_Widget* w, void* userdata);
+    static void shipsAttacks(Fl_Widget* w, void* userdata, size_t costOfAttack);
     static void onStigerClick(Fl_Widget* w, void* userdata);
     static void onStreunerClick(Fl_Widget* w, void* userdata);
 

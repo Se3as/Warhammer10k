@@ -74,6 +74,7 @@ void Model:: setPlayerVisitedPlanets(){
     size_t numPlanets = galaxy.getGalaxySize();
     this->player.setPVisited(numPlanets);
 }
+
 void Model:: probarBFS(){
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t numPlanets = galaxy.getGalaxySize();

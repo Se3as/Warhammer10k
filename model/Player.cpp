@@ -7,6 +7,7 @@ Player::Player(){
     eterium = 1000 ;
     pVisited = vector<bool>(0, false);
     pMapped = vector<bool>(0, false);
+    mines = 1;
     units.push_back(new Pathﬁnder("Dijkstra", 10));
     units.push_back(new StarMapper("FloydWarshall", 10));
     units.push_back(new LightAssault("GreedySearch", 10));
@@ -30,7 +31,7 @@ void Player::addEterium(int coin){
 bool Player::deductEterium(int coin) {
     bool enoughMoney = false;
     if (coin <= eterium){
-        eterium - coin;
+        eterium -= coin;
         enoughMoney = true;
     } 
     return enoughMoney;
@@ -54,6 +55,16 @@ vector<bool>& Player:: getPMapped(){
     return this->pMapped;
 }
 
+bool Player::allVisited() const {
+    for (bool visited : this->pVisited) {
+        if (!visited) return false;
+    }
+    for (bool mapped : this->pMapped) {
+        if (!mapped) return false;
+    }
+    return true;
+}
+
 size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
     size_t origin, size_t destination, size_t& iterations) {
     return this->units[index]->attack_iterations(adj,
@@ -74,4 +85,12 @@ size_t Player:: mapNeighbor(int index, size_t numPlanets, const vector<vector<Ed
 vector<vector<size_t>> Player:: mapAll(int index, size_t numPlanets, const vector<vector<size_t>> 
     &adj, size_t& iterations){
     return this->units[index]->map_all(numPlanets, adj, pVisited, iterations);
+}
+
+int Player::getMines() const {
+    return mines;
+}
+
+void Player::setMines() {
+    mines++;
 }

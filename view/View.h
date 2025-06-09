@@ -222,5 +222,6 @@ public:
     vector<Fl_Button*> planets;
 
     void updateBossLife(int bossLife);
-    void updateEterium(int eterium);
+    // void bossDead();
+    // void showPortalButton();
 };

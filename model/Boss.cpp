@@ -1,6 +1,6 @@
 #include "Boss.h"
 
-Boss::Boss() : name("Horus"), life_points(100) {}
+Boss::Boss() : name("Horus"), life_points(1000) {}
 
 
 string Boss::getBossID(){
@@ -8,7 +8,7 @@ string Boss::getBossID(){
 }
 
 void Boss::setBossHP(){
-    life_points = 100;
+    life_points = 1000;
 }
 
 size_t Boss::getBossHP() const {
