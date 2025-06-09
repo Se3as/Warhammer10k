@@ -23,3 +23,5 @@ vector<Range> divideWindow();
 pair<int, int> generateUniqueCoordinate(
     const pair<int, int>& xRange,
     const pair<int, int>& yRange);
+
+size_t distanceTwoPoints(size_t x1, size_t y1, size_t x2, size_t y2);

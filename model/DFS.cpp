@@ -1,20 +1,40 @@
 #include "DFS.h"
+#include "DFS.h"
 
-vector<size_t> dfs(size_t planet, vector<bool>& visited, vector<vector<Edge>>& adj, int depth, int maxDepth) {
-    vector<size_t> newPVisited;
+vector<size_t> dfs_set_depth(vector<bool>& visited, const vector<vector<Edge>>& adj,
+    size_t planet, size_t& iterations){
+    const int maxDepth = 3;
+    int depth = 0;
+    return dfs_acot( visited, adj, planet, iterations, depth, maxDepth);
+}
 
-    if (depth > maxDepth) return newPVisited;
+vector<size_t> dfs_acot( vector<bool>& visited, const vector<vector<Edge>>& adj,
+    size_t planet, size_t& iterations, int& depth, int maxDepth){
+    vector<size_t> result;
 
-    visited[planet] = true;
+    if (depth >= maxDepth)
+        return result;
 
-    for (const auto& edge : adj[planet]) {
-        size_t neighborPlanet = edge.id;
+    ++iterations;
 
-        if (!visited[neighborPlanet]) {
-            auto partialPath = dfs(neighborPlanet, visited, adj, depth + 1, maxDepth);
-            newPVisited.insert(newPVisited.end(), partialPath.begin(), partialPath.end());
+    if (!visited[planet]) {
+        visited[planet] = true;
+        result.push_back(planet);
+        ++depth;
+        if (depth >= maxDepth)
+            return result;
+    }
+
+    for (const Edge& e : adj[planet]) {
+        if (depth >= maxDepth)
+            break;
+        size_t neighbor = e.id;
+        if (!visited[neighbor]) {
+            auto sub = dfs_acot(visited, adj, neighbor, iterations, depth, maxDepth);
+            result.insert(result.end(), sub.begin(), sub.end());
         }
     }
 
-    return newPVisited;
+    return result;
 }
+

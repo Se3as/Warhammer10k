@@ -3,11 +3,10 @@
 #include "FloydWarshall.h"
 
 
-size_t Pathﬁnder:: map_neighbor(size_t numPlanets, vector<vector<Edge>>& adj, size_t origin, size_t destination){
-    return dijkstra(numPlanets, adj, origin, destination);
+size_t Pathﬁnder:: map_neighbor(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination, vector<bool>pVisited, size_t& iterations){
+    return dijkstra(numPlanets, adj, origin, destination, pVisited, iterations);
 }
 
- vector<vector<size_t>> StarMapper:: map_all(size_t numPlanets, vector<vector<size_t>> &dist){
-    return floydWarshall( numPlanets,  dist);
+ vector<vector<size_t>> StarMapper:: map_all(size_t numPlanets, const vector<vector<size_t>> &dist, vector<bool> pVisited, size_t& iterations){
+    return floydWarshall( numPlanets,  dist, pVisited, iterations);
 }
-

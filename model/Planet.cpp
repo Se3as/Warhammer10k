@@ -1,6 +1,6 @@
 #include "Planet.h"
 
-Planet::Planet(string name, int x, int y, size_t id) : name(name), posX(x), posY(y), sectorID(id){}
+Planet::Planet(string name, int x, int y, size_t id) : name(name), posX(x), posY(y), sectorID(id), mapped(false){}
 
 
 
@@ -11,6 +11,23 @@ void Planet::setSectorID(size_t id){
 size_t Planet::getSectorID() const {
     return sectorID;
 }
+
+void Planet::setMapped(){
+    mapped = true;
+}
+
+bool Planet::getMapped(){
+    return mapped;
+}
+
+void Planet::setVisited(){
+    visited = true;
+}
+
+bool Planet::getVisited(){
+    return visited;
+}
+
 
 void Planet::setPosX(int x){
     posX = x;
