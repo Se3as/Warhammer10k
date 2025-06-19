@@ -1,6 +1,5 @@
 #include "Log.h"
 
-// Constructor
 Log::Log() {
     srand(static_cast<unsigned>(time(0)));
 }
@@ -10,12 +9,10 @@ Log::~Log() {
     }
 }
 
-// Get CSV Stream
 ofstream& Log::getCsv() {
     return csv;
 }
 
-// Open CSV File
 void Log::openCsv() {
     if (!csv.is_open()) {
         csv.open("resultado.csv");
@@ -23,21 +20,20 @@ void Log::openCsv() {
     }
 }
 
-// Close CSV File
 void Log::closeCsv() {
     if (csv.is_open()) {
         csv.close();
     }
 }
 
-// Register Insert Operation
 void Log::register_noAttack(int iterations, string name, double time) {
+    time *= 1000000.0;
     csv << name << "," << iterations << ",0," << time << "\n";
     csv.flush(); 
 }
 
-// Register Insert Operation
 void Log::register_attack(int iterations, string name, size_t daño, double time) {
+    time *= 1000000.0;
     csv << name << "," << iterations << ","<< daño <<"," << time << "\n";
     csv.flush(); 
 }

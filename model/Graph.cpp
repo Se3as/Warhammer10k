@@ -12,7 +12,6 @@ vector<vector<size_t>> Graph:: getMatAd(){
     return matAd;
 }
 
-// Para ue no se vea cargado origin: ID planeta origen destination: ID planeta destino
 void Graph::addCon(size_t origin, size_t destination, size_t distance) {
     
     matAd[origin][destination] = distance;
@@ -21,7 +20,7 @@ void Graph::addCon(size_t origin, size_t destination, size_t distance) {
     listAd[origin].push_back({destination, distance});
     listAd[destination].push_back({origin, distance});
 }
-// Para ue no se vea cargado origin: ID planeta origen destination: ID planeta destino
+
 void Graph::deleteCon(size_t origin, size_t destination) {
 
     matAd[origin][destination] = INVALID;

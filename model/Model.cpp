@@ -56,9 +56,6 @@ void Model::loadGalaxy(string& filename) {
             int x = coord.first;
             int y = coord.second;
 
-            // cout<<x<<endl;
-            // cout<<y<<endl;
-
             Planet* planet = new Planet(columns[i], x, y, id);
             
             galaxy.addPlanet(planet, id, entryPlanet, exitPlanet);
@@ -76,6 +73,92 @@ void Model:: setPlayerVisitedPlanets(){
 }
 
 
+size_t Model::attack(int index) {
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t iterations = 0;
+    size_t cost = 0;
+
+    high_resolution_clock::time_point start = high_resolution_clock::now();
+    cost = this->player.attack(index, galaxy.getGraph().getListAd(),
+        galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
+    high_resolution_clock::time_point end = high_resolution_clock::now();
+    elapsed = end - start;
+
+    if (cost == std::numeric_limits<size_t>::max()) {
+        return this->boss.getBossHP(); 
+    }
+
+    size_t damage = 0;
+    if (iterations > 0) {
+        damage = BASE_DAMAGE / (iterations * iterations);
+    }
+
+    log.register_attack(iterations,player.units[index]->getName(), damage, elapsed.count());
+
+    size_t bossLife = this->boss.receiveDamage(damage);
+    return bossLife;
+}
+
+vector<size_t> Model:: explore(int index, int planet_destination){
+    
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t iterations = 0;
+
+    high_resolution_clock::time_point start = high_resolution_clock::now();
+    vector<size_t> planetsDiscovered = this->player.explore(index, galaxy.getGraph().getListAd(),
+        galaxy.getEntryPlanet(), iterations, planet_destination);
+    high_resolution_clock::time_point end = high_resolution_clock::now();
+    elapsed = end - start;
+
+    log.register_noAttack(iterations,player.units[index]->getName(), elapsed.count());
+
+
+    return planetsDiscovered;
+}
+
+size_t Model:: mapNeighbor(int index, size_t origin, size_t destination){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+
+    high_resolution_clock::time_point start = high_resolution_clock::now();
+    size_t distance = this->player.mapNeighbor(index, numPlanets, galaxy.getGraph().getListAd(),
+        origin, destination, iterations);
+    high_resolution_clock::time_point end = high_resolution_clock::now();
+    elapsed = end - start;
+
+    log.register_noAttack(iterations,player.units[index]->getName(), elapsed.count());
+
+    vector<bool>& mapped = this->player.getPMapped();
+    mapped[origin]= true;
+    mapped[destination]= true;
+
+    return distance;
+}
+
+vector<vector<size_t>> Model:: mapAll(int index){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+
+    high_resolution_clock::time_point start = high_resolution_clock::now();
+    vector<vector<size_t>> floydMat = this->player.mapAll(index, numPlanets,
+        galaxy.getGraph().getMatAd(), iterations);
+    high_resolution_clock::time_point end = high_resolution_clock::now();
+    elapsed = end - start;
+
+    log.register_noAttack(iterations,player.units[index]->getName(), elapsed.count());
+    
+    vector<bool>& visited = this->player.getPVisited();
+    vector<bool>& mapped = this->player.getPMapped();
+    for (int i = 0; i < visited.size(); i++){
+        if(visited[i]){
+            mapped[i]= true;
+        }
+    }
+
+    return floydMat;
+}
 
 void Model::probarDijkstra(){
     Galaxy& galaxy = galaxies[actualGalaxy];
@@ -109,88 +192,6 @@ void Model::probarFloyd(){
  
 }
 
-
-
-void Model::printGalaxy() {
-    galaxies[this->actualGalaxy].printer();
-}
-
-const Galaxy& Model::getGalaxy(int index) const {
-    return galaxies[index];
-}
-
-void Model::nextGalaxy(){
-    actualGalaxy = actualGalaxy + 1;
-}
-
-size_t Model:: getActualGalaxy() const{
-    return this->actualGalaxy;
-}
-
-vector<Galaxy> Model::getGalaxies() {
-    return galaxies;
-}
-
-size_t Model::attack(int index) {
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t iterations = 0;
-    size_t cost = 0;
-    switch (index) {
-        case 2: // LightAssault, Greedy Search
-            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-                // Log del coste de ataque usando greedy
-            std::cout << "Cost of attack using greedy search: " << cost
-                << std::endl;
-            break;
-        case 3: // MediumAssault, Local Search
-            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-            // Log del coste de ataque usando local search
-            std::cout << "Cost of attack using local search: " << cost
-                << std::endl;
-            break;
-        case 4: // HeavyAssault, Exhaustive Search
-            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-            // Log del coste de ataque usando exhaustive search
-            std::cout << "Cost of attack using exhaustive search: " << cost
-                << std::endl;
-            break;
-        case 5: // SupHeavyAssault, Exhaustive Search Bounded
-            cost = this->player.attack(index, galaxy.getGraph().getListAd(),
-                galaxy.getEntryPlanet(), galaxy.getExitPlanet(), iterations);
-            std::cout << "Cost of attack using exhaustive search bounded: " <<
-                cost << std::endl;
-            break;
-        default:
-            std::cout << "Invalid attack index!" << std::endl;
-            return this->boss.getBossHP(); // Don't deal damage if invalid index
-    }
-    
-    // If the cost is infinite, it means no path was found
-    if (cost == std::numeric_limits<size_t>::max()) {
-        std::cout << "No path found to attack the boss." << std::endl;
-        return this->boss.getBossHP(); // Don't deal damage if no path
-    }
-
-    // Log of iterations
-    std::cout << "Iterations: " << iterations << std::endl;
-
-    size_t damage = 0;
-    if (iterations > 0) {
-        // Log of damage calculation
-        damage = BASE_DAMAGE / (iterations * iterations);
-    } else {
-        damage = 0;
-    }
-    // Log of damage
-    std::cout << "Damage dealt: " << damage << std::endl;
-
-    // Log of boss life
-    size_t bossLife = this->boss.receiveDamage(damage);
-    return bossLife;
-}
 void Model:: probarBFS(){
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t numPlanets = galaxy.getGalaxySize();
@@ -221,65 +222,25 @@ void Model:: probarDFS(){
         iterations = 0;
     }
 }
-vector<size_t> Model:: explore(int index, int planet_destination){
-    
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t iterations = 0;
-    // Cost para el log?
-    high_resolution_clock::time_point start = high_resolution_clock::now();
-    vector<size_t> planetsDiscovered = this->player.explore(index, galaxy.getGraph().getListAd(),
-    galaxy.getEntryPlanet(), iterations, planet_destination);
-    high_resolution_clock::time_point end = high_resolution_clock::now();
-    elapsed = end - start;
 
-    double time = this->elapsed.count() * 1000000.0;
-    log.register_noAttack(iterations,player.units[index]->getName(), time);
-
-
-    return planetsDiscovered;
+void Model::printGalaxy() {
+    galaxies[this->actualGalaxy].printer();
 }
 
-size_t Model:: mapNeighbor(int index, size_t origin, size_t destination){
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t numPlanets = galaxy.getGalaxySize();
-    size_t iterations = 0;
-
-    high_resolution_clock::time_point start = high_resolution_clock::now();
-    size_t distance = this->player.mapNeighbor(index, numPlanets, galaxy.getGraph().getListAd(),
-    origin, destination, iterations);
-    high_resolution_clock::time_point end = high_resolution_clock::now();
-    elapsed = end - start;
-
-    double time = this->elapsed.count() * 1000000.0;
-    log.register_noAttack(iterations,player.units[index]->getName(), time);
-
-    vector<bool>& mapped = this->player.getPMapped();
-    mapped[origin]= true;
-    mapped[destination]= true;
-    return distance;
+const Galaxy& Model::getGalaxy(int index) const {
+    return galaxies[index];
 }
 
-vector<vector<size_t>> Model:: mapAll(int index){
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t numPlanets = galaxy.getGalaxySize();
-    size_t iterations = 0;
-    high_resolution_clock::time_point start = high_resolution_clock::now();
-    vector<vector<size_t>> floydMat = this->player.mapAll(index, numPlanets,
-        galaxy.getGraph().getMatAd(), iterations);
-    high_resolution_clock::time_point end = high_resolution_clock::now();
-    elapsed = end - start;
+void Model::nextGalaxy(){
+    actualGalaxy = actualGalaxy + 1;
+}
 
-    double time = this->elapsed.count() * 1000000.0;
-    log.register_noAttack(iterations,player.units[index]->getName(), time);
-    
-    vector<bool>& visited = this->player.getPVisited();
-    vector<bool>& mapped = this->player.getPMapped();
-    for (int i = 0; i < visited.size(); i++){
-        if(visited[i]){
-            mapped[i]= true;
-        }
-    }
-    return floydMat;
+size_t Model:: getActualGalaxy() const{
+    return this->actualGalaxy;
+}
+
+vector<Galaxy> Model::getGalaxies() {
+    return galaxies;
 }
 
 vector<vector<size_t>> Model:: getMatAd(){
@@ -290,4 +251,11 @@ vector<vector<size_t>> Model:: getMatAd(){
 int Model::increaseEterium(int eterium){
     player.addEterium(eterium);
     return player.getEterium();
+}
+
+bool Model:: notFinished(){
+    bool notFinished = true;
+    if(getActualGalaxy() == (galaxies.size()-1))
+        notFinished = false;
+    return notFinished;
 }

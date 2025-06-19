@@ -281,30 +281,34 @@ void Controller::onMoneyClick(Fl_Widget* w, void* userdata) {
 void Controller::onGateClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
     
+    bool notFinished = c->model.notFinished();
     if(c->model.boss.getBossHP() <= 0){         //<---- COMPROBAR QUE SE ACTUALIZA LA VIDA DEL BOSS!!!!
+        if (notFinished){
+            c->view->nextGalaxy();
 
-        c->view->nextGalaxy();
+            for (auto planetBtn : c->view->planets) {
+                planetBtn->callback(onPlanetClick, c);
+            }
 
-        for (auto planetBtn : c->view->planets) {
-            planetBtn->callback(onPlanetClick, c);
+            c->model.boss.setBossHP();
+
+            c->model.player.setMines();
+
+            c->view->info->hide();
+
+            c->model.setPlayerVisitedPlanets();
+
+            c->view->frame->redraw();
+
+
+            c->planet_defaults();
         }
-
-        c->model.boss.setBossHP();
-
-        c->model.player.setMines();
-
-        c->view->info->hide();
-
-        c->model.setPlayerVisitedPlanets();
-
-        c->view->frame->redraw();
-
-
-        c->planet_defaults();
-    }
-    
+        else{
+            c->view->hide();
+        }
+}
     c->planet_defaults();
-
+    
 
 }
 

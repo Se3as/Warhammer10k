@@ -7,8 +7,8 @@ public:
     Mapper(string n, int p): SpaceUnit(n, p) {}
     virtual ~Mapper(){}
 
-    virtual size_t map_neighbor(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination, vector<bool> pVisited, size_t& iterations){}
-    virtual vector<vector<size_t>> map_all(size_t numPlanets, const vector<vector<size_t>> &dist, vector<bool> pVisited, size_t& iterations){}
+    virtual size_t map_neighbor(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origin, size_t destination, vector<bool> pVisited, size_t& iterations);
+    virtual vector<vector<size_t>> map_all(size_t numPlanets, const vector<vector<size_t>> &dist, vector<bool> pVisited, size_t& iterations);
 
 };
 

@@ -24,19 +24,15 @@ public:
     void setPlayerID(string id);
 
     void addEterium(int coin);
-
     bool deductEterium(int coin);
-
     int getEterium() const;
 
     void setPVisited(size_t numPlanets);
 
     size_t attack(int index, const vector<vector<Edge>>& adj,
-    size_t origin, size_t destination, size_t& iterations);
-
+        size_t origin, size_t destination, size_t& iterations);
     vector<size_t> explore(int index, const vector<vector<Edge>>& adj,
         size_t planet, size_t& iterations, int planet_destination);
-
     size_t mapNeighbor(int index, size_t numPlanets, const vector<vector<Edge>>& adj,
         size_t origin, size_t destination, size_t& iterations);
     vector<vector<size_t>> mapAll(int index, size_t numPlanets, const vector<vector<size_t>> 
@@ -44,7 +40,6 @@ public:
 
     vector<bool>& getPVisited();
     vector<bool>& getPMapped();
-
     bool allVisited() const;
 
     int getMines() const;
