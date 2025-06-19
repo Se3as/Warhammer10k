@@ -3,11 +3,8 @@
 #include <limits>
 using namespace std;
 
-// Helper recursive function
-size_t exaSearchRecursive(const vector<vector<Edge>>& adj,
-                          vector<bool>& visited,
-                          size_t origin,
-                          size_t destination, size_t& iterations) {
+size_t exaSearchRecursive(const vector<vector<Edge>>& adj, vector<bool>& visited, size_t origin,
+        size_t destination, size_t& iterations) {
     iterations++;
     if (origin == destination)
         return 0;
@@ -24,15 +21,12 @@ size_t exaSearchRecursive(const vector<vector<Edge>>& adj,
         }
     }
 
-    visited[origin] = false; // Backtrack
+    visited[origin] = false; 
     return best;
 }
 
-// Main function to call
-size_t exaSearch(const vector<vector<Edge>>& adj,
-                 vector<bool>& /*visited*/,
-                 size_t origin,
-                 size_t destination, size_t& iterations) {
+size_t exaSearch(const vector<vector<Edge>>& adj, vector<bool>&, size_t origin, size_t destination,
+      size_t& iterations) {
     vector<bool> visited(adj.size(), false);
     iterations = 0;
     size_t best_cost = numeric_limits<size_t>::max();

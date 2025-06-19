@@ -167,7 +167,7 @@ void Model::probarDijkstra(){
     size_t iterations = 0;
     cout<< "Prueba Dijkstra "<<endl;
     size_t distancia = dijkstra(numPlanets, galaxy.getGraph().getListAd(), 0, 7, visited, iterations);
-    cout<< " "<< distancia <<" "<<endl;
+    cout<< "Distancia minima entre planeta 0 y 7 : "<< distancia <<" "<<endl;
 }
 
 void Model::probarFloyd(){
