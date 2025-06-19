@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir -p build
 
 g++ -std=c++17 -g \
-    -Isrc -Imodel -Icommon \
-    src/*.cpp model/*.cpp common/*.cpp \
-    -o build/Warhammer10k
+    -Isrc -Imodel -Icommon -Iview -Icontroller  \
+    src/*.cpp model/*.cpp common/*.cpp controller/*.cpp view/*.cpp  \
+    $(fltk-config --cxxflags) $(fltk-config --ldflags) -lfltk_images \
+    -o ./Warhammer10k

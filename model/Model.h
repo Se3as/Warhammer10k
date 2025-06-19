@@ -35,7 +35,7 @@ public:
     size_t getActualGalaxy() const;
     // Get an index of assault ship and attack the boss
     size_t attack(int index);
-    vector<size_t> explore(int index);
+    vector<size_t> explore(int index, int planet_destination);
     void loadGalaxy(string& filename);
     void printGalaxy();
     void probarBFS();

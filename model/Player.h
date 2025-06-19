@@ -35,7 +35,7 @@ public:
     size_t origin, size_t destination, size_t& iterations);
 
     vector<size_t> explore(int index, const vector<vector<Edge>>& adj,
-        size_t planet, size_t& iterations);
+        size_t planet, size_t& iterations, int planet_destination);
 
     size_t mapNeighbor(int index, size_t numPlanets, const vector<vector<Edge>>& adj,
         size_t origin, size_t destination, size_t& iterations);

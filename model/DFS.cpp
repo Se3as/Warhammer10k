@@ -26,6 +26,7 @@ vector<size_t> dfs_acot( vector<bool>& visited, const vector<vector<Edge>>& adj,
     }
 
     for (const Edge& e : adj[planet]) {
+        ++iterations;
         if (depth >= maxDepth)
             break;
         size_t neighbor = e.id;

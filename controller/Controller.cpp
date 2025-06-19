@@ -30,14 +30,14 @@ void Controller::run(){
     // Estos son pruebas para los algoritmos
     this->model.setPlayerVisitedPlanets();
     // Imprime los vecinos de cada nodo que son lo que devuelve cuando se manda la nava
-    //this->model.probarBFS();
+    this->model.probarDFS();
+     this->model.probarBFS();
     // En este momento no imprime nada porque todos los nodos fueron visitados por BFS
-    //this->model.probarDFS();
     // Imprime la minima distancia que hay entre nodo 0 y 7, debe ser igual al valor de esa posicion del floyd
-    //this->model.probarDijkstra();
+     this->model.probarDijkstra();
     // Imprime la matriz con las minimas distancias
-    //this->model.probarFloyd();
-
+     this->model.probarFloyd();
+    this->model.setPlayerVisitedPlanets();
     Fl::run();
 }
 void Controller:: connectCallbacks(){
@@ -68,12 +68,12 @@ void Controller:: connectCallbacks(){
 void Controller::onReflectorClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    const vector<Galaxy>& galaxies = c->model.getGalaxies();
-    const Galaxy& galaxy = galaxies[c->model.getActualGalaxy()];   
-    const vector<Planet*>& planetarium = galaxy.getPlanets();
 
-    if(c->check_defaults()){
 
+    if(c->planet_origin != 100 && c->planet_destination != 100){
+        const vector<Galaxy>& galaxies = c->model.getGalaxies();
+        const Galaxy& galaxy = galaxies[c->model.getActualGalaxy()];   
+        const vector<Planet*>& planetarium = galaxy.getPlanets();
         size_t costExplore = PATHFINDER;
         if(c->model.player.deductEterium(costExplore)){
             c->view->mapping = true;
@@ -217,7 +217,7 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
     if(c->check_defaults()){
 
         int index = 6;
-        vector<size_t> planetsDiscovered = c->model.explore(index);
+        vector<size_t> planetsDiscovered = c->model.explore(index, c->planet_origin);
         cout<<endl;
         for (int i = 0 ; i < planetsDiscovered.size(); i++){
             cout<<" "<< planetsDiscovered[i]<<" "<<endl;
@@ -235,9 +235,9 @@ void Controller::onStreunerClick(Fl_Widget* w, void* userdata) {
 void Controller::onArtemisClick(Fl_Widget* w, void* userdata) {
     Controller* c = static_cast<Controller*>(userdata);
 
-    if (c->check_defaults()) {
+    if (!c->check_defaults()) {
 
-        vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_7);
+        vector<size_t> planetsDiscovered = c->model.explore(POS_UNIT_7, c->planet_origin);
             cout<<endl;
         for (int i = 0 ; i < planetsDiscovered.size(); i++){
             cout<<" "<< planetsDiscovered[i]<<" "<<endl;

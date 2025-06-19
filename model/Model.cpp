@@ -75,36 +75,7 @@ void Model:: setPlayerVisitedPlanets(){
     this->player.setPVisited(numPlanets);
 }
 
-void Model:: probarBFS(){
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t numPlanets = galaxy.getGalaxySize();
-    size_t iterations = 0;
-    vector<bool>& visited = this->player.getPVisited();
-    cout<<endl<<"Prueba BFS"<<endl;
-    for(size_t i = 0; i < numPlanets; ++i){
-        vector<size_t> prueba = bfs_neighbors(visited, galaxy.getGraph().getListAd(), i, iterations);
-        for (size_t j = 0; j < prueba.size(); j++){
-            cout<<" "<< prueba[j] <<" ";
-        }
-        cout<<endl;
-    }
-}
 
-void Model:: probarDFS(){
-    Galaxy& galaxy = galaxies[actualGalaxy];
-    size_t numPlanets = galaxy.getGalaxySize();
-    vector<bool>& visited = this->player.getPVisited();
-    size_t iterations = 0;
-    cout<<endl<<"Prueba DFS"<<endl;
-    for(size_t i = 0; i < numPlanets; ++i){
-        vector<size_t> prueba = dfs_set_depth(visited, galaxy.getGraph().getListAd(), 0, iterations);
-        for (size_t j = 0; j < prueba.size(); j++){
-            cout<<" "<< prueba[j] <<" ";
-        }
-        cout<<endl;
-        iterations = 0;
-    }
-}
 
 void Model::probarDijkstra(){
     Galaxy& galaxy = galaxies[actualGalaxy];
@@ -220,15 +191,44 @@ size_t Model::attack(int index) {
     size_t bossLife = this->boss.receiveDamage(damage);
     return bossLife;
 }
+void Model:: probarBFS(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    size_t iterations = 0;
+    vector<bool>& visited = this->player.getPVisited();
+    cout<<endl<<"Prueba BFS"<<endl;
+    for(size_t i = 0; i < numPlanets; ++i){
+        vector<size_t> prueba = bfs_neighbors(visited, galaxy.getGraph().getListAd(), i, iterations);
+        for (size_t j = 0; j < prueba.size(); j++){
+            cout<<" "<< prueba[j] <<" ";
+        }
+        cout<<endl;
+    }
+}
 
-vector<size_t> Model:: explore(int index){
+void Model:: probarDFS(){
+    Galaxy& galaxy = galaxies[actualGalaxy];
+    size_t numPlanets = galaxy.getGalaxySize();
+    vector<bool>& visited = this->player.getPVisited();
+    size_t iterations = 0;
+    cout<<endl<<"Prueba DFS"<<endl;
+    for(size_t i = 0; i < numPlanets; ++i){
+        vector<size_t> prueba = dfs_set_depth(visited, galaxy.getGraph().getListAd(), 0, iterations);
+        for (size_t j = 0; j < prueba.size(); j++){
+            cout<<" "<< prueba[j] <<" ";
+        }
+        cout<<endl;
+        iterations = 0;
+    }
+}
+vector<size_t> Model:: explore(int index, int planet_destination){
     
     Galaxy& galaxy = galaxies[actualGalaxy];
     size_t iterations = 0;
     // Cost para el log?
     high_resolution_clock::time_point start = high_resolution_clock::now();
     vector<size_t> planetsDiscovered = this->player.explore(index, galaxy.getGraph().getListAd(),
-    galaxy.getEntryPlanet(), iterations);
+    galaxy.getEntryPlanet(), iterations, planet_destination);
     high_resolution_clock::time_point end = high_resolution_clock::now();
     elapsed = end - start;
 

@@ -12,7 +12,7 @@ size_t dijkstra(size_t numPlanets, const vector<vector<Edge>>& adj, size_t origi
     while (!pq.empty()) {
         Node current = pq.top();
         pq.pop();
-
+        iterations++;
         size_t planet = current.planet;
 
         if (visited[planet])

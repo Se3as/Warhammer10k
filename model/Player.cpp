@@ -72,8 +72,8 @@ size_t Player:: attack(int index, const vector<vector<Edge>>& adj,
 }
 
 vector<size_t> Player::explore(int index, const vector<vector<Edge>>& adj,
-    size_t planet, size_t& iterations){
-        return this->units[index]->explore( pVisited, adj, planet, iterations);
+    size_t planet, size_t& iterations, int planet_destination){
+        return this->units[index]->explore( pVisited, adj, planet, iterations, planet_destination);
 }
 
 
