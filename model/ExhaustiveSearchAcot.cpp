@@ -17,6 +17,7 @@ size_t dfs(const vector<vector<Edge>>& adj, vector<bool>& visited, size_t curren
     visited[current] = true;
 
     for (const Edge& edge : adj[current]) {
+        iterations++;
         if (!visited[edge.id]) {
             dfs(adj, visited, edge.id, destination,iterations, cost + edge.dist, best_cost);
         }

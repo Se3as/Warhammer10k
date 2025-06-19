@@ -13,6 +13,7 @@ size_t exaSearchRecursive(const vector<vector<Edge>>& adj, vector<bool>& visited
     size_t best = numeric_limits<size_t>::max();
 
     for (const Edge& edge : adj[origin]) {
+        iterations++;
         if (!visited[edge.id]) {
             size_t result = exaSearchRecursive(adj, visited, edge.id, destination, iterations);
             if (result != numeric_limits<size_t>::max()) {
